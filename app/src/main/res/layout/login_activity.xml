@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawablePadding="@dimen/x8"
+        android:drawableTop="@mipmap/login_icon"
+        android:text="萝岗消防库存管理系统"
+        android:layout_marginTop="@dimen/x50"
+        android:textColor="@color/textTitleColor"
+        android:textSize="17sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/x12"
+        android:layout_marginRight="@dimen/x12"
+        android:layout_marginTop="@dimen/x36"
+        android:background="@drawable/login_ll_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="@dimen/x12"
+                android:paddingRight="@dimen/x12"
+                android:paddingTop="@dimen/x5"
+                android:paddingBottom="@dimen/x5"
+                android:src="@mipmap/login_user_icon" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginTop="@dimen/x5"
+                android:background="@color/dddddd" />
+
+            <example.com.stockapp.view.graphs.CleanableEditText
+                android:id="@+id/tvLoginUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textSize="14sp"
+                android:drawableRight="@mipmap/login_delete"
+                android:hint="用户名"
+                android:paddingRight="@dimen/x12"
+                android:paddingBottom="@dimen/x12"
+                android:paddingTop="@dimen/x12" />
+
+            <ImageView
+                android:id="@+id/tvLoginUserDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/x6"
+                android:visibility="gone"
+                android:src="@mipmap/login_delete" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dddddd" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="@dimen/x12"
+                android:paddingRight="@dimen/x12"
+                android:paddingTop="@dimen/x5"
+                android:paddingBottom="@dimen/x5"
+                android:src="@mipmap/password_icon" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginTop="@dimen/x5"
+                android:background="@color/dddddd" />
+
+            <EditText
+                android:id="@+id/tvLoginPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:layout_weight="1"
+                android:background="@null"
+                android:paddingLeft="@dimen/x8"
+                android:textSize="14sp"
+                android:hint="密码"
+                android:paddingBottom="@dimen/x12"
+                android:paddingTop="@dimen/x12" />
+
+            <ImageView
+                android:id="@+id/tvLoginPasswordDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/x6"
+                android:layout_marginRight="@dimen/x3"
+                android:src="@mipmap/login_password_open" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_confir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/x13"
+        android:layout_marginRight="@dimen/x13"
+        android:layout_marginTop="@dimen/x19"
+        android:background="@drawable/btn_corner"
+        android:padding="@dimen/x9"
+        android:text="@string/longin"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
+</LinearLayout>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f2f1f1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/home_page" />
+
+        <LinearLayout
+            android:id="@+id/llHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x22"
+            android:layout_marginRight="@dimen/x22"
+            android:layout_marginTop="@dimen/x130"
+            android:background="@drawable/home_bottom_bg"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/x10"
+                    android:drawableTop="@mipmap/out_inventory"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="出库"
+                    android:textColor="@color/textHome"
+                    android:textSize="@dimen/text28px" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/homeLineColor" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/x10"
+                    android:drawableTop="@mipmap/in_inventory"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="入库"
+                    android:textColor="@color/textHome"
+                    android:textSize="@dimen/text28px" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/homeLineColor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/x10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/x10"
+                    android:drawableTop="@mipmap/home_pan"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="盘点"
+                    android:textColor="@color/textHome"
+                    android:textSize="@dimen/text28px" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/homeLineColor" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/x10"
+                    android:drawableTop="@mipmap/home_ku"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="库存"
+                    android:textColor="@color/textHome"
+                    android:textSize="@dimen/text28px" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/llHome"
+            android:layout_marginLeft="@dimen/x22"
+            android:layout_marginRight="@dimen/x22"
+            android:paddingBottom="@dimen/x24"
+            android:background="@drawable/home_bottom_bg_bottom"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/x8"
+                android:paddingTop="@dimen/x12">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="- 即将过期商品 -"
+                    android:textColor="@color/textHome"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/x12"
+                    android:drawablePadding="@dimen/x5"
+                    android:drawableRight="@mipmap/home_more_right"
+                    android:text="更多"
+                    android:textColor="@color/textHomered"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x18"
+                android:layout_marginRight="@dimen/x18"
+                android:layout_marginTop="@dimen/x4"
+                android:layout_marginBottom="@dimen/x4"
+                android:padding="@dimen/x5">
+
+                <ImageView
+                    android:id="@+id/iv_advertoral_icon"
+                    android:layout_marginLeft="@dimen/x4"
+                    android:layout_marginRight="@dimen/x9"
+                    android:paddingTop="@dimen/x5"
+                    android:src="@mipmap/advertol_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_advertoral_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5"
+                    android:layout_toRightOf="@id/iv_advertoral_icon"
+                    android:text="雷军晒小米5年员工福利"
+                    android:textColor="@color/textHome"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_advertoral_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/iv_advertoral_icon"
+                    android:layout_toRightOf="@id/iv_advertoral_icon"
+                    android:textColor="@color/textHomeGray"
+                    android:textSize="13sp"
+                    android:text="采用次数：12" />
+
+                <TextView
+                    android:id="@+id/tv_advertoral_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/tv_advertoral_num"
+                    android:layout_marginTop="@dimen/x8"
+                    android:textColor="@color/textHomeGray"
+                    android:textSize="13sp"
+                    android:layout_toRightOf="@id/iv_advertoral_icon"
+                    android:text="作者：科技美学" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/homeLineColor"
+                android:layout_height="0.8dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x18"
+                android:layout_marginRight="@dimen/x18"
+                android:layout_marginTop="@dimen/x4"
+                android:layout_marginBottom="@dimen/x4"
+                android:padding="@dimen/x5">
+
+                <ImageView
+                    android:id="@+id/iv_advertoral_icon1"
+                    android:layout_marginLeft="@dimen/x4"
+                    android:layout_marginRight="@dimen/x9"
+                    android:paddingTop="@dimen/x5"
+                    android:src="@mipmap/advertol_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_advertoral_title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5"
+                    android:layout_toRightOf="@id/iv_advertoral_icon1"
+                    android:text="雷军晒小米5年员工福利"
+                    android:textColor="@color/textHome"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_advertoral_num1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/iv_advertoral_icon1"
+                    android:layout_toRightOf="@id/iv_advertoral_icon1"
+                    android:textColor="@color/textHomeGray"
+                    android:textSize="13sp"
+                    android:text="采用次数：12" />
+
+                <TextView
+                    android:id="@+id/tv_advertoral_author1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/tv_advertoral_num1"
+                    android:layout_marginTop="@dimen/x8"
+                    android:textColor="@color/textHomeGray"
+                    android:textSize="13sp"
+                    android:layout_toRightOf="@id/iv_advertoral_icon1"
+                    android:text="作者：科技美学" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>
