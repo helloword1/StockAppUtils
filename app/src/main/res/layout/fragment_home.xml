@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y90" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/x18"
+        android:paddingLeft="@dimen/x4"
+        android:paddingRight="@dimen/x4"
+        android:paddingTop="@dimen/x18">
+
+        <TextView
+            android:id="@+id/outInventory"
+            style="@style/home_text_style"
+            android:drawableBottom="@mipmap/ic_launcher"
+            android:text="出库" />
+
+        <View style="@style/lineHeightStyle" />
+
+        <TextView
+            android:id="@+id/inInventory"
+            style="@style/home_text_style"
+            android:drawableBottom="@mipmap/ic_launcher"
+            android:text="入库" />
+
+        <View style="@style/lineHeightStyle" />
+
+        <TextView
+            android:id="@+id/showInventory"
+            style="@style/home_text_style"
+            android:drawableBottom="@mipmap/ic_launcher"
+            android:text="盘点" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x12"
+        android:background="@color/linetColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x8"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/x12"
+            android:text="即将&amp;过期商品"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x8"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/x6"
+            android:drawableRight="@mipmap/ic_launcher"
+            android:gravity="right|center_vertical"
+            android:paddingRight="@dimen/x12"
+            android:text="更多"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            android:id="@+id/tvMore"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/glOutDateGoods"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/x6" />
+</LinearLayout>

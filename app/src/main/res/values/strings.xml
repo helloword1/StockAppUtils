@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">StockApp</string>
+    <string name="inventorySystem">萝岗消防库存管理系统</string>
+    <string name="longin">登录</string>
+</resources>
