@@ -2,9 +2,11 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/graphs/CleanableEditText.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/graphs/PopWindowUtils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/tools/ApplicationConfiguration.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/tools/LogUtils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/btn_corner.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/tv_strok_all.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/tv_strok_down.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/advertol_icon.png" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />

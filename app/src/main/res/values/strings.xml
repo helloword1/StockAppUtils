@@ -2,4 +2,9 @@
     <string name="app_name">StockApp</string>
     <string name="inventorySystem">萝岗消防库存管理系统</string>
     <string name="longin">登录</string>
+    <string name="inInventory">入库</string>
+    <string name="checkInventory">盘点</string>
+    <string name="inventory">库存商品</string>
+    <string name="more">更多</string>
+    <string name="outInventory">出库</string>
 </resources>

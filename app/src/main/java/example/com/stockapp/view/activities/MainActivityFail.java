@@ -27,7 +27,7 @@ public class MainActivityFail extends BaseActivity implements BottomTabBar.OnSel
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         manager = getSupportFragmentManager();
         tb = (BottomTabBar) findViewById(R.id.tb);
         tb.setManager(manager);

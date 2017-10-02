@@ -17,8 +17,8 @@
             android:id="@+id/llHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x22"
-            android:layout_marginRight="@dimen/x22"
+            android:layout_marginLeft="@dimen/x12"
+            android:layout_marginRight="@dimen/x12"
             android:layout_marginTop="@dimen/x130"
             android:background="@drawable/home_bottom_bg"
             android:orientation="vertical">
@@ -37,6 +37,7 @@
                     android:gravity="center"
                     android:padding="12dp"
                     android:text="出库"
+                    android:id="@+id/outInventory"
                     android:textColor="@color/textHome"
                     android:textSize="@dimen/text28px" />
 
@@ -53,6 +54,7 @@
                     android:drawableTop="@mipmap/in_inventory"
                     android:gravity="center"
                     android:padding="12dp"
+                    android:id="@+id/InInventory"
                     android:text="入库"
                     android:textColor="@color/textHome"
                     android:textSize="@dimen/text28px" />
@@ -78,6 +80,7 @@
                     android:gravity="center"
                     android:padding="12dp"
                     android:text="盘点"
+                    android:id="@+id/homePan"
                     android:textColor="@color/textHome"
                     android:textSize="@dimen/text28px" />
 
@@ -95,6 +98,7 @@
                     android:gravity="center"
                     android:padding="12dp"
                     android:text="库存"
+                    android:id="@+id/homeKu"
                     android:textColor="@color/textHome"
                     android:textSize="@dimen/text28px" />
             </LinearLayout>
@@ -104,8 +108,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/llHome"
-            android:layout_marginLeft="@dimen/x22"
-            android:layout_marginRight="@dimen/x22"
+            android:layout_marginLeft="@dimen/x12"
+            android:layout_marginRight="@dimen/x12"
             android:paddingBottom="@dimen/x24"
             android:background="@drawable/home_bottom_bg_bottom"
             android:orientation="vertical">
@@ -132,8 +136,9 @@
                     android:drawablePadding="@dimen/x5"
                     android:drawableRight="@mipmap/home_more_right"
                     android:text="更多"
+                    android:id="@+id/homeMore"
                     android:textColor="@color/textHomered"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -143,6 +148,7 @@
                 android:layout_marginRight="@dimen/x18"
                 android:layout_marginTop="@dimen/x4"
                 android:layout_marginBottom="@dimen/x4"
+                android:id="@+id/GoodOne"
                 android:padding="@dimen/x5">
 
                 <ImageView
@@ -160,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/x5"
                     android:layout_toRightOf="@id/iv_advertoral_icon"
-                    android:text="雷军晒小米5年员工福利"
+                    android:text="999感冒冲剂"
                     android:textColor="@color/textHome"
                     android:textSize="14sp" />
 
@@ -172,7 +178,7 @@
                     android:layout_toRightOf="@id/iv_advertoral_icon"
                     android:textColor="@color/textHomeGray"
                     android:textSize="13sp"
-                    android:text="采用次数：12" />
+                    android:text="有效期：12" />
 
                 <TextView
                     android:id="@+id/tv_advertoral_author"
@@ -183,7 +189,7 @@
                     android:textColor="@color/textHomeGray"
                     android:textSize="13sp"
                     android:layout_toRightOf="@id/iv_advertoral_icon"
-                    android:text="作者：科技美学" />
+                    android:text="库存量：100" />
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
@@ -196,6 +202,7 @@
                 android:layout_marginRight="@dimen/x18"
                 android:layout_marginTop="@dimen/x4"
                 android:layout_marginBottom="@dimen/x4"
+                android:id="@+id/GoodTwo"
                 android:padding="@dimen/x5">
 
                 <ImageView
@@ -213,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/x5"
                     android:layout_toRightOf="@id/iv_advertoral_icon1"
-                    android:text="雷军晒小米5年员工福利"
+                    android:text="999感冒冲剂"
                     android:textColor="@color/textHome"
                     android:textSize="14sp" />
 
@@ -225,7 +232,7 @@
                     android:layout_toRightOf="@id/iv_advertoral_icon1"
                     android:textColor="@color/textHomeGray"
                     android:textSize="13sp"
-                    android:text="采用次数：12" />
+                    android:text="有效期：12" />
 
                 <TextView
                     android:id="@+id/tv_advertoral_author1"
@@ -236,7 +243,7 @@
                     android:textColor="@color/textHomeGray"
                     android:textSize="13sp"
                     android:layout_toRightOf="@id/iv_advertoral_icon1"
-                    android:text="作者：科技美学" />
+                    android:text="库存量：100" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>

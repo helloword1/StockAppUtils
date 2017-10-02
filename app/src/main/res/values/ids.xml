@@ -8,4 +8,5 @@
     <item name="titleBar" type="id"/>
     <item name="loginView" type="id"/>
     <item name="login_tv" type="id"/>
+    <item name="toolbar_bg_bmp" type="id">toolbar_bg_bmp</item>
 </resources>

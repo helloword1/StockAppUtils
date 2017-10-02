@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/StockApp.iml" filepath="$PROJECT_DIR$/StockApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zxing_sdk/zxing_sdk.iml" filepath="$PROJECT_DIR$/zxing_sdk/zxing_sdk.iml" />
     </modules>
   </component>
 </project>
