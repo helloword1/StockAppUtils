@@ -19,10 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activities.CheckInventoryActivity" />
+        <activity android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:name=".view.activities.CheckInventoryActivity" />
         <activity android:name=".view.activities.InventoryActivity" />
-        <activity android:name=".view.activities.InInventoryActivity" />
-        <activity android:name=".view.activities.OutInventoryActivity" />
+        <activity android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:name=".view.activities.InInventoryActivity" />
+        <activity android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:name=".view.activities.OutInventoryActivity" />
+        <activity android:name=".view.activities.EnterGoodsActivity" />
         <activity
             android:name=".view.activities.HomeActivity" />
         <activity android:name=".view.activities.MoreActivity" />

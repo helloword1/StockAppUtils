@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context context;
     private List<MoreAdapterModel> data;
     private int sum;
+    private AdapterListener listener;
 
     public OutInventoryAdapter(Context context, List<MoreAdapterModel> data) {
         this.context = context;
@@ -60,7 +62,9 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             addViewHolder.addGoods.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    listener.setClick();
+//                        initpermission();
+//                        showActivityForResult(CaptureActivity.class,111);
                 }
             });
         } else if (position < 3) {
@@ -135,7 +139,7 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView title;
         TextView num;
         TextView date;
-        TextView tvNumCount;
+        EditText tvNumCount;
         ImageView ivDelive;
         ImageView ivAdd;
 
@@ -145,7 +149,7 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             title = ((TextView) inflate.findViewById(R.id.tv_title));
             num = ((TextView) inflate.findViewById(R.id.tv_num));
             date = ((TextView) inflate.findViewById(R.id.tv_date));
-            tvNumCount = (TextView) inflate.findViewById(R.id.tvNumCount);
+            tvNumCount = (EditText) inflate.findViewById(R.id.tvNumCount);
             ivDelive = (ImageView) inflate.findViewById(R.id.ivDelive);
             ivAdd = (ImageView) inflate.findViewById(R.id.ivAdd);
         }
@@ -165,6 +169,14 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(inflate);
             addGoods = (TextView) inflate.findViewById(R.id.addGoods);
         }
+    }
+
+    public void setAdapterListenerInterface(
+            AdapterListener listener) {
+        this.listener = listener;
+    }
+    public interface AdapterListener{
+        void setClick();
     }
 
 }

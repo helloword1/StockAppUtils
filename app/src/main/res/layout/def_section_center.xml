@@ -72,7 +72,7 @@
             android:paddingTop="@dimen/x5"
             android:src="@mipmap/delive_icon" />
 
-        <TextView
+        <EditText
             android:id="@+id/tvNumCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

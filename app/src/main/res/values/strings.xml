@@ -7,4 +7,5 @@
     <string name="inventory">库存商品</string>
     <string name="more">更多</string>
     <string name="outInventory">出库</string>
+    <string name="GoodsInfo">商品信息</string>
 </resources>

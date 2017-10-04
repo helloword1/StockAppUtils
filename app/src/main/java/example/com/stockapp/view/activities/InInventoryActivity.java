@@ -119,6 +119,13 @@ public class InInventoryActivity extends BaseActivity {
                 }
             }
         });
+        adapter.setAdapterListenerInterface(new OutInventoryAdapter.AdapterListener() {
+            @Override
+            public void setClick() {
+                initpermission();
+                showActivityForResult(CaptureActivity.class,111);
+            }
+        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

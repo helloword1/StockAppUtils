@@ -13,14 +13,14 @@
         android:background="#aaaaaa" />
 
     <TextView
-        android:id="@+id/item_section_content_title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/x12"
-        android:text="fafdafafdagdaga"
-        android:textColor="#222222"
-        android:textSize="15sp" />
+    android:id="@+id/item_section_content_title_tv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="@dimen/x12"
+    android:text="fafdafafdagdaga"
+    android:textColor="#222222"
+    android:textSize="15sp" />
 
     <TextView
         android:id="@+id/item_section_content"

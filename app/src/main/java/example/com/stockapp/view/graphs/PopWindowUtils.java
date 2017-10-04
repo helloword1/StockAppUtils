@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import example.com.stockapp.R;
 import example.com.stockapp.view.activities.BaseActivity;
+import example.com.stockapp.view.activities.EnterGoodsActivity;
 
 public class PopWindowUtils {
 
@@ -104,6 +105,12 @@ public class PopWindowUtils {
             public void onClick(View v) {
                 popView.setAnimation(AnimationUtils.loadAnimation(base, R.anim.adujst_close));
                 popWindow.dismiss();
+            }
+        });
+        tvChangeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                base.showActivity(EnterGoodsActivity.class);
             }
         });
         popWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT,

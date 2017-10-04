@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/x12"
+    android:background="@color/app_gray_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvAddPic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/x5"
+        android:drawableTop="@mipmap/add_pic"
+        android:padding="@dimen/x8"
+        android:text="添加照片"
+        android:background="@color/white"
+        android:textColor="@color/textHomeGray" />
+
+    <View
+        android:id="@+id/viewBg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x12"
+        android:background="@color/app_gray_color" />
+
+    <Button
+        android:id="@+id/btn_confir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/x12"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:background="@drawable/btn_corner"
+        android:padding="@dimen/x9"
+        android:textColor="@color/white"
+        android:text="保存"
+        android:textSize="17sp" />
+</LinearLayout>
