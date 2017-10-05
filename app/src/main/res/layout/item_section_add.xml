@@ -11,8 +11,9 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:drawablePadding="@dimen/x8"
-        android:layout_marginTop="@dimen/x12"
-        android:paddingBottom="@dimen/x12"
+        android:paddingTop="@dimen/x8"
         android:id="@+id/addGoods"
+        android:textSize="13sp"
+        android:textColor="#888888"
         android:text="扫码添加商品" />
 </RelativeLayout>

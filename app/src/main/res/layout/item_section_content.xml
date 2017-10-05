@@ -3,36 +3,37 @@
     android:id="@+id/card_view0"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:background="@color/white">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
+        android:layout_marginLeft="@dimen/x12"
+        android:layout_marginRight="@dimen/x12"
         android:layout_alignParentBottom="true"
-        android:background="#aaaaaa" />
+        android:background="#e9e7e7" />
 
     <TextView
-    android:id="@+id/item_section_content_title_tv"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerVertical="true"
-    android:layout_marginLeft="@dimen/x12"
-    android:text="fafdafafdagdaga"
-    android:textColor="#222222"
-    android:textSize="15sp" />
+        android:id="@+id/item_section_content_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x12"
+        android:text="fafdafafdagdaga"
+        android:layout_marginTop="@dimen/x8"
+        android:textColor="#222222"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/item_section_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_section_content_title_tv"
-        android:layout_marginBottom="@dimen/x5"
+        android:layout_marginBottom="@dimen/x8"
         android:layout_marginLeft="@dimen/x12"
-        android:layout_marginTop="@dimen/x16"
+        android:layout_marginTop="@dimen/x5"
         android:text="请点击选择"
         android:textColor="#888888"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
 
     <ImageView
         android:id="@+id/item_section_iv"
@@ -40,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="@dimen/x12"
         android:src="@mipmap/home_more_right" />
 
     <TextView
@@ -49,8 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="5dp"
-        android:visibility="gone"
         android:layout_toLeftOf="@id/item_section_iv"
-        android:text="XXXX" />
+        android:text="XXXX"
+        android:visibility="gone" />
 
 </RelativeLayout>

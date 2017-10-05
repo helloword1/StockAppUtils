@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:text="2017-09-20 至 2017-09-21"
             android:textColor="@color/textHome"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
             android:paddingTop="@dimen/x3"
             android:text="选择"
             android:textColor="@color/textHomered"
-            android:textSize="15sp"
+            android:textSize="14sp"
 
             />
     </LinearLayout>
@@ -74,7 +74,7 @@
             android:layout_weight="1"
             android:text="2017-09-20 至 2017-09-21"
             android:textColor="@color/textHome"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
             android:paddingTop="@dimen/x3"
             android:text="选择"
             android:textColor="@color/textHomered"
-            android:textSize="15sp"
+            android:textSize="14sp"
 
             />
     </LinearLayout>
@@ -105,7 +105,7 @@
             android:layout_weight="1"
             android:text="2017-09-20 至 2017-09-21"
             android:textColor="@color/textHome"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -117,7 +117,7 @@
             android:paddingTop="@dimen/x3"
             android:text="选择"
             android:textColor="@color/textHomered"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <TextView

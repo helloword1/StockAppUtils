@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
-        android:id="@+id/out_more_rv"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/x12"
         android:layout_weight="1"
-        android:layout_above="@+id/btn_confir"
-        android:layout_marginLeft="@dimen/x22"
-        android:layout_marginRight="@dimen/x22"
-        android:layout_marginTop="@dimen/x12"
-        android:paddingLeft="@dimen/x12"
-        android:paddingRight="@dimen/x12"
-        android:overScrollMode="never"
-        android:background="@drawable/home_bottom_bg" />
+        android:orientation="vertical"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/x5"
+        app:cardElevation="@dimen/x2">
+
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/out_more_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_confir"
+            android:overScrollMode="never" />
+    </android.support.v7.widget.CardView>
+
 
     <Button
         android:id="@+id/btn_out_inventory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/x18"
-        android:layout_marginLeft="@dimen/x22"
-        android:layout_marginRight="@dimen/x22"
+        android:layout_marginBottom="@dimen/x12"
+        android:layout_marginLeft="@dimen/x12"
+        android:layout_marginRight="@dimen/x12"
         android:background="@drawable/btn_corner"
         android:padding="@dimen/x5"
-        android:layout_marginTop="5dp"
         android:text="确认出库"
         android:textColor="@color/white"
         android:textSize="17sp" />

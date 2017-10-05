@@ -2,66 +2,70 @@
     android:id="@+id/card_view1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/x18"
-    android:layout_marginRight="@dimen/x18"
-    android:layout_marginTop="@dimen/x4"
-    android:padding="@dimen/x5">
+    android:paddingLeft="@dimen/x12"
+    android:paddingRight="@dimen/x12">
 
 
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/x12"
         android:layout_marginLeft="@dimen/x4"
         android:layout_marginRight="@dimen/x9"
         android:paddingTop="@dimen/x5"
+        android:layout_marginTop="@dimen/x5"
+        android:layout_marginBottom="@dimen/x18"
+        android:layout_centerVertical="true"
         android:src="@mipmap/advertol_icon" />
 
-    <TextView
-        android:id="@+id/tv_title"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/x5"
         android:layout_toRightOf="@id/iv_icon"
-        android:text="999感冒冲剂"
-        android:textColor="@color/textHome"
-        android:textSize="14sp" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/iv_icon"
-        android:layout_toRightOf="@id/iv_icon"
-        android:text="有效期：12"
-        android:textColor="@color/textHomeGray"
-        android:textSize="13sp" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="999感冒冲剂"
+            android:textColor="@color/textHome"
+            android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tv_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/tv_date"
-        android:layout_marginTop="@dimen/x8"
-        android:layout_toRightOf="@id/iv_icon"
-        android:text="库存量：100"
-        android:textColor="@color/textHomeGray"
-        android:textSize="13sp" />
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x5"
+            android:text="有效期：12"
+            android:textColor="#888888"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="库存量：100"
+            android:textColor="#888888"
+            android:textSize="13sp" />
+    </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="@dimen/x5"
-        android:background="#aaaaaa" />
+        android:background="#e9e7e7" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/tv_num"
         android:layout_alignParentRight="true"
         android:gravity="center"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_centerVertical="true"
         android:orientation="horizontal">
 
         <ImageView

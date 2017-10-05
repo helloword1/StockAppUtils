@@ -4,10 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +32,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private android.widget.TextView InInventory;
     private android.widget.TextView homePan;
     private android.widget.TextView homeKu;
-    private android.widget.LinearLayout llHome;
     private android.widget.TextView homeMore;
     private android.widget.ImageView ivadvertoralicon;
     private android.widget.TextView tvadvertoraltitle;
@@ -44,6 +43,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private android.widget.TextView tvadvertoralnum1;
     private android.widget.TextView tvadvertoralauthor1;
     private android.widget.RelativeLayout GoodTwo;
+    private CardView llHome;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         this.tvadvertoraltitle = (TextView) findViewById(R.id.tv_advertoral_title);
         this.ivadvertoralicon = (ImageView) findViewById(R.id.iv_advertoral_icon);
         this.homeMore = (TextView) findViewById(R.id.homeMore);
-        this.llHome = (LinearLayout) findViewById(R.id.llHome);
+        llHome = (CardView) findViewById(R.id.llHome);
         this.homeKu = (TextView) findViewById(R.id.homeKu);
         this.homePan = (TextView) findViewById(R.id.homePan);
         this.InInventory = (TextView) findViewById(R.id.InInventory);
