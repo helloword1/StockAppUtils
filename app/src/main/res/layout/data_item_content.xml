@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tv_strok_down"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/x12">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="2017-09-20 至 2017-09-21"
+        android:textColor="@color/textHome"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_strock_corner"
+        android:paddingBottom="@dimen/x3"
+        android:paddingLeft="@dimen/x8"
+        android:paddingRight="@dimen/x8"
+        android:paddingTop="@dimen/x3"
+        android:text="选择"
+        android:textColor="@color/textHomered"
+        android:textSize="14sp"
+        />
+
+</LinearLayout>

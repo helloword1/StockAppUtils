@@ -1,8 +1,10 @@
 package example.com.stockapp.view.graphs;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,6 +45,14 @@ public class PopWindowUtils {
 
         ImageView btnBlow = (ImageView) popView.findViewById(R.id.popu_delete);
         final TextView otherTime = (TextView) popView.findViewById(R.id.otherTime);
+        final AlighRecycleView alRView = (AlighRecycleView) popView.findViewById(R.id.alRView);
+
+        LinearLayoutManager manager=new LinearLayoutManager(context);
+        alRView.setLayoutManager(manager);
+
+
+
+
         final LinearLayout llBottom1 = (LinearLayout) popView.findViewById(R.id.llBottom1);
         final LinearLayout llBottom2 = (LinearLayout) popView.findViewById(R.id.llBottom2);
         final LinearLayout llBottom3 = (LinearLayout) popView.findViewById(R.id.llBottom3);
@@ -80,6 +90,7 @@ public class PopWindowUtils {
 //
 //			}
 //		});
+        popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popWindow.setOutsideTouchable(false);// 设置允许在外点击消失
 //		popView.setOnTouchListener(new OnTouchListener() {
 //
@@ -89,7 +100,7 @@ public class PopWindowUtils {
 //				return false;
 //			}
 //		});
-        popWindow.showAtLocation(button, Gravity.TOP, 0, 0);
+        popWindow.showAtLocation(new View(context), Gravity.TOP, 0, 0);
     }
 
     public void showGoodsPopwindow(Context context) {
@@ -117,6 +128,7 @@ public class PopWindowUtils {
                 LinearLayout.LayoutParams.MATCH_PARENT);
         popWindow.setOutsideTouchable(true);// 设置允许在外点击消失
         popView.setAnimation(AnimationUtils.loadAnimation(base, R.anim.adujst_open));
+        popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popWindow.showAtLocation(new View(context), Gravity.TOP, 0, 0);
     }
 

@@ -19,9 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:paddingLeft="@dimen/x19"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:paddingLeft="@dimen/x19"
             android:paddingTop="@dimen/x12"
             android:src="@mipmap/login_delete" />
 
@@ -30,14 +30,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:drawablePadding="@dimen/x8"
+            android:drawablePadding="@dimen/x3"
             android:drawableTop="@mipmap/good_details"
-            android:text="999感冒冲剂" />
+            android:gravity="center_horizontal"
+            android:text="999感冒冲剂"
+            android:textColor="@color/textHome" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_marginTop="@dimen/x12"
+            android:background="@color/homeLineColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/x18"
+            android:layout_marginTop="@dimen/x12"
             android:orientation="horizontal">
 
             <TextView
@@ -45,9 +55,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:lineSpacingExtra="@dimen/x3"
+                android:lineSpacingExtra="@dimen/x9"
                 android:text="商品编号：20170929001\n仓库：总部库\n生产日期：2017-09-14\n负责人：李某某"
-                android:textColor="@color/textHomeGray"
+                android:textColor="@color/textHome"
                 android:textSize="12sp" />
 
             <TextView
@@ -55,9 +65,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:lineSpacingExtra="@dimen/x3"
+                android:lineSpacingExtra="@dimen/x9"
                 android:text="条形码：20170929001\n仓库量：100\n有效日期：2018-09-25"
-                android:textColor="@color/textHomeGray"
+                android:textColor="@color/textHome"
                 android:textSize="12sp" />
         </LinearLayout>
 

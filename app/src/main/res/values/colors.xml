@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ceed3e3f</color>
-    <color name="colorPrimaryDark">#ceed3e3f</color>
-    <color name="colorAccent">#ceed3e3f</color>
+    <color name="colorPrimary">#e03e3f</color>
+    <color name="colorPrimaryDark">#e03e3f</color>
+    <color name="colorAccent">#e03e3f</color>
     <color name="white">#ffffff</color>
     <color name="font_color1">#666666</color>
     <color name="titleColor">#ffffff</color>
@@ -12,7 +12,7 @@
     <color name="dddddd">#dddddd</color>
     <color name="textHome">#222222</color>
     <color name="homeLineColor">#eeeeee</color>
-    <color name="textHomered">#ed3e3f</color>
+    <color name="textHomered">#e03e3f</color>
     <color name="textHomeGray">#888888</color>
     <color name="app_gray_color">#F2F2F2</color>
 </resources>

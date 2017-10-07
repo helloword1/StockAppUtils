@@ -213,6 +213,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.8dp"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginRight="@dimen/x5"
                     android:background="@color/homeLineColor" />
 
                 <RelativeLayout
