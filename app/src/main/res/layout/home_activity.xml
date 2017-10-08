@@ -178,36 +178,39 @@
                         android:paddingTop="@dimen/x5"
                         android:src="@mipmap/advertol_icon" />
 
-                    <TextView
-                        android:id="@+id/tv_advertoral_title"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/x5"
                         android:layout_toRightOf="@id/iv_advertoral_icon"
-                        android:text="999感冒冲剂"
-                        android:textColor="@color/textHome"
-                        android:textSize="14sp" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_advertoral_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/iv_advertoral_icon"
-                        android:layout_toRightOf="@id/iv_advertoral_icon"
-                        android:text="有效期：12"
-                        android:textColor="@color/textHomeGray"
-                        android:textSize="13sp" />
+                        <TextView
+                            android:id="@+id/tv_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="999感冒冲剂"
+                            android:textColor="@color/textHome"
+                            android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tv_advertoral_author"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@id/tv_advertoral_num"
-                        android:layout_marginTop="@dimen/x8"
-                        android:layout_toRightOf="@id/iv_advertoral_icon"
-                        android:text="库存量：100"
-                        android:textColor="@color/textHomeGray"
-                        android:textSize="13sp" />
+                        <TextView
+                            android:id="@+id/tv_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/x5"
+                            android:text="有效期：12"
+                            android:textColor="#888888"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="库存量：100"
+                            android:textColor="#888888"
+                            android:textSize="13sp" />
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <View
@@ -236,41 +239,42 @@
                         android:paddingTop="@dimen/x5"
                         android:src="@mipmap/advertol_icon" />
 
-                    <TextView
-                        android:id="@+id/tv_advertoral_title1"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/x5"
                         android:layout_toRightOf="@id/iv_advertoral_icon1"
-                        android:text="999感冒冲剂"
-                        android:textColor="@color/textHome"
-                        android:textSize="14sp" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_advertoral_num1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/iv_advertoral_icon1"
-                        android:layout_toRightOf="@id/iv_advertoral_icon1"
-                        android:text="有效期：12"
-                        android:textColor="@color/textHomeGray"
-                        android:textSize="13sp" />
+                        <TextView
+                            android:id="@+id/tv_advertoral_title1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="999感冒冲剂"
+                            android:textColor="@color/textHome"
+                            android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tv_advertoral_author1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@id/tv_advertoral_num1"
-                        android:layout_marginTop="@dimen/x8"
-                        android:layout_toRightOf="@id/iv_advertoral_icon1"
-                        android:text="库存量：100"
-                        android:textColor="@color/textHomeGray"
-                        android:textSize="13sp" />
+                        <TextView
+                            android:id="@+id/tv_advertoral_num1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/x5"
+                            android:text="有效期：12"
+                            android:textColor="#888888"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_advertoral_author1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="库存量：100"
+                            android:textColor="#888888"
+                            android:textSize="13sp" />
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
-
     </RelativeLayout>
 
 </ScrollView>

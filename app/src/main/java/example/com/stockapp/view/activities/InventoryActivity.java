@@ -62,6 +62,7 @@ public class InventoryActivity extends BaseActivity {
         tvDeaLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvDeaLine.setTextColor(getResources().getColor(R.color.colorAccent));
                 if (isDealine) {
                     isDealine = false;
                     tvDeaLine.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.choise_up, 0);
@@ -74,6 +75,7 @@ public class InventoryActivity extends BaseActivity {
         tvInvenSum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvInvenSum.setTextColor(getResources().getColor(R.color.colorAccent));
                 if (isInvenSum) {
                     isInvenSum = false;
                     tvInvenSum.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.choise_up, 0);

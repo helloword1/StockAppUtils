@@ -42,7 +42,7 @@
                 android:src="@mipmap/login_user_icon" />
 
             <View
-                android:layout_width="1dp"
+                android:layout_width="1px"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/x5"
                 android:layout_marginTop="@dimen/x5"
@@ -55,6 +55,7 @@
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_weight="1"
                 android:background="@null"
+                android:paddingLeft="@dimen/x8"
                 android:textSize="14sp"
                 android:drawableRight="@mipmap/login_delete"
                 android:hint="用户名"
@@ -93,7 +94,7 @@
                 android:src="@mipmap/password_icon" />
 
             <View
-                android:layout_width="1dp"
+                android:layout_width="1px"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/x5"
                 android:layout_marginTop="@dimen/x5"
@@ -107,9 +108,9 @@
                 android:layout_marginRight="@dimen/x5"
                 android:layout_weight="1"
                 android:background="@null"
-                android:paddingLeft="@dimen/x8"
                 android:textSize="14sp"
                 android:hint="密码"
+                android:paddingLeft="@dimen/x8"
                 android:paddingBottom="@dimen/x12"
                 android:paddingTop="@dimen/x12" />
 

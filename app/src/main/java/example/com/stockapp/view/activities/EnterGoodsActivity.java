@@ -44,7 +44,6 @@ public class EnterGoodsActivity extends BaseActivity {
         datas.add(new EnterGoodsBean("主供应商","输入商品供应商名称",false,true));
         datas.add(new EnterGoodsBean("备注","输入其他信息",false,true));
         datas.add(new EnterGoodsBean("","",false,false));
-        datas.add(new EnterGoodsBean("","",false,false));
         entergoodsrv.setAdapter(new EnterGoodsAdapter(this, datas));
     }
 }
