@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/x12"
-       >
+        android:paddingLeft="@dimen/x12">
 
         <ImageView
             android:id="@+id/tvChangeDelete"
@@ -21,22 +20,37 @@
             android:layout_gravity="right"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:paddingLeft="@dimen/x19"
-            android:paddingTop="@dimen/x12"
-            android:paddingRight="@dimen/x12"
             android:paddingBottom="@dimen/x19"
+            android:paddingLeft="@dimen/x19"
+            android:paddingRight="@dimen/x12"
+            android:paddingTop="@dimen/x12"
             android:src="@mipmap/login_delete" />
 
-        <TextView
-            android:id="@+id/tvChangeName"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:drawablePadding="@dimen/x3"
-            android:drawableTop="@mipmap/good_details"
             android:gravity="center_horizontal"
-            android:text="999感冒冲剂"
-            android:textColor="@color/textHome" />
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/x70"
+                android:layout_height="@dimen/x70"
+                android:scaleType="centerCrop"
+                android:id="@+id/ivChangeName"
+                android:src="@mipmap/good_details" />
+
+            <TextView
+                android:id="@+id/tvChangeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+
+android:layout_marginTop="@dimen/x3"                android:gravity="center_horizontal"
+                android:text="999感冒冲剂"
+                android:textColor="@color/textHome" />
+        </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"
@@ -65,8 +79,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingRight="@dimen/x12"
                 android:lineSpacingExtra="@dimen/x9"
+                android:paddingRight="@dimen/x12"
                 android:text="条形码：20170929001\n仓库量：100\n有效日期：2018-09-25"
                 android:textColor="@color/textHome"
                 android:textSize="12sp" />
@@ -77,8 +91,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x18"
-            android:layout_marginTop="@dimen/x18"
             android:layout_marginRight="@dimen/x12"
+            android:layout_marginTop="@dimen/x18"
             android:background="@drawable/btn_corner"
             android:text="修改商品信息"
             android:textColor="@color/white"

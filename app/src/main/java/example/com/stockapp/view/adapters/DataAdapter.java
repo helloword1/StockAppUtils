@@ -24,6 +24,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<String> datas;
     private popuOnClickListener listener;
     private boolean otherbl = false;
+    private boolean isOutInventor = false;
 
     public DataAdapter(Context context, List<String> datas) {
         this.context = context;
@@ -35,13 +36,17 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.otherbl = otherbl;
     }
 
+    public void setOutInventor(boolean isOutInventor) {
+        this.isOutInventor = isOutInventor;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TITLE_COMMIT) {
             return new CommitViewHolder(inflate.inflate(R.layout.data_item_commit, parent, false));
-        } else if (viewType == TITLE_OTHER){
+        } else if (viewType == TITLE_OTHER) {
             return new OtherTimeViewHolder(inflate.inflate(R.layout.data_item_bottom, parent, false));
-        }else {
+        } else {
             return new ContentViewHolder(inflate.inflate(R.layout.data_item_content, parent, false));
         }
     }
@@ -59,8 +64,13 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         listener.setCommit();
                     }
                 });
-            }else {
-                commitViewHolder.tvOtherTime.setVisibility(View.VISIBLE);
+            } else {
+                if (isOutInventor) {
+                    commitViewHolder.tvOtherTime.setVisibility(View.GONE);
+                } else {
+                    commitViewHolder.tvOtherTime.setVisibility(View.VISIBLE);
+                }
+
                 commitViewHolder.tvCommit.setVisibility(View.GONE);
                 commitViewHolder.tvOtherTime.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -75,15 +85,15 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (otherbl){
+        if (otherbl) {
             if (position == datas.size() - 1) {
                 return TITLE_COMMIT;
-            } else if (position==datas.size() - 2||position==datas.size() - 3||position==datas.size() - 4){
+            } else if (position == datas.size() - 2 || position == datas.size() - 3 || position == datas.size() - 4) {
                 return TITLE_OTHER;
-            }else{
+            } else {
                 return TITLE_CONTENT;
             }
-        }else {
+        } else {
             if (position == datas.size() - 1) {
                 return TITLE_COMMIT;
             } else {
@@ -120,6 +130,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tvData = ((TextView) inflate.findViewById(R.id.tvData));
         }
     }
+
     private class OtherTimeViewHolder extends RecyclerView.ViewHolder {
         TextView tvChoice;
         TextView tvData;
@@ -130,6 +141,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tvData = ((TextView) inflate.findViewById(R.id.tvData));
         }
     }
+
     public interface popuOnClickListener {
         void setMoreTime();
 

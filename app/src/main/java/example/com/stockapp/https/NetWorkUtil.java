@@ -17,12 +17,12 @@ public class NetWorkUtil {
     private static OkHttpClient okHttpClient;
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
-    private static LoginGetTokenApi loginGetTokenApi;
     private static Interceptor netCacheInterceptor1;
-    //    private static LoginGetTokenApi timeTextJokeApi;
-//    private static ImageJokeApi imageJokeApi;
-//    private static TimeImageJokeApi timeImageJokeApi;
-//    private static WeatherApi weatherApi ;
+    private static LoginGetTokenApi loginGetTokenApi;
+    private static GetUserInfoApi getUserInfoApi;
+    private static UpLoadImgApi upLoadImgApi;
+    private static AddGoodsApi addGoodsApi;
+    private static GetInventoryApi getInventoryApi;
     /**
      * 初始化okhttp
      */
@@ -53,78 +53,81 @@ public class NetWorkUtil {
             loginGetTokenApi = retrofit.create(LoginGetTokenApi.class);
         }
         return loginGetTokenApi;
+    }/**
+     * 获取登录用户信息
+     *
+     * @return
+     */
+    public static GetUserInfoApi getUserInfoApi(Interceptor netCacheInterceptor) {
+       netCacheInterceptor1 =netCacheInterceptor;
+        initOkhttp();
+        if (getUserInfoApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Constant.BASE_URL)
+                    .client(okHttpClient)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .addConverterFactory(gsonConverterFactory)
+                    .build();
+            getUserInfoApi = retrofit.create(GetUserInfoApi.class);
+        }
+        return getUserInfoApi;
     }
-//    /**
-//     * 获取全部按时间文本笑话
-//     *
-//     * @return
-//     */
-//    public static TimeTextJokeApi getTimeTextJokeApi() {
-//        initOkhttp();
-//        if (timeTextJokeApi == null) {
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl(Constant.BASE_URL)
-//                    .client(okHttpClient)
-//                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
-//                    .addConverterFactory(gsonConverterFactory)
-//                    .build();
-//            timeTextJokeApi = retrofit.create(TimeTextJokeApi.class);
-//        }
-//        return timeTextJokeApi;
-//    }
-//    /**
-//     * 获取最新图片笑话
-//     *
-//     * @return
-//     */
-//    public static ImageJokeApi getImageJokeApi() {
-//        initOkhttp();
-//        if (imageJokeApi == null) {
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl(Constant.RANDOM_BASE_URL)
-//                    .client(okHttpClient)
-//                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
-//                    .addConverterFactory(gsonConverterFactory)
-//                    .build();
-//            imageJokeApi = retrofit.create(ImageJokeApi.class);
-//        }
-//        return imageJokeApi;
-//    }
-//    /**
-//     * 获取按时间排序的图片笑话
-//     *
-//     * @return
-//     */
-//    public static TimeImageJokeApi getTimeImageJokeApi() {
-//        initOkhttp();
-//        if (timeImageJokeApi == null) {
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl(Constant.BASE_URL)
-//                    .client(okHttpClient)
-//                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
-//                    .addConverterFactory(gsonConverterFactory)
-//                    .build();
-//            timeImageJokeApi = retrofit.create(TimeImageJokeApi.class);
-//        }
-//        return timeImageJokeApi;
-//    }
-//
-//    /**
-//     * 获取天气数据
-//     * @return
-//     */
-//    public static WeatherApi getWeatherApi(){
-//        initOkhttp();
-//        if (weatherApi==null){
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl(Constant.BASE_WHEATHER)
-//                    .client(okHttpClient)
-//                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
-//                    .addConverterFactory(gsonConverterFactory)
-//                    .build();
-//            weatherApi = retrofit.create(WeatherApi.class);
-//        }
-//        return weatherApi;
-//    }
+    /**
+     * 上传图片
+     *
+     * @return
+     */
+    public static UpLoadImgApi getUpLoadImageApi(Interceptor netCacheInterceptor) {
+        netCacheInterceptor1 =netCacheInterceptor;
+        initOkhttp();
+        if (upLoadImgApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Constant.BASE_IMG_URL)
+                    .client(okHttpClient)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .addConverterFactory(gsonConverterFactory)
+                    .build();
+            upLoadImgApi = retrofit.create(UpLoadImgApi.class);
+        }
+        return upLoadImgApi;
+    }
+    /**
+     * 添加编辑商品
+     *
+     * @return
+     */
+    public static AddGoodsApi addGoodsApi(Interceptor netCacheInterceptor) {
+        netCacheInterceptor1 =netCacheInterceptor;
+        initOkhttp();
+        if (addGoodsApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Constant.BASE_URL)
+                    .client(okHttpClient)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .addConverterFactory(gsonConverterFactory)
+                    .build();
+            addGoodsApi = retrofit.create(AddGoodsApi.class);
+        }
+        return addGoodsApi;
+    }
+    /**
+     * 获取库存商品
+     *
+     * @return
+     */
+    public static GetInventoryApi getInventoryApi(Interceptor netCacheInterceptor) {
+        netCacheInterceptor1 =netCacheInterceptor;
+        initOkhttp();
+        if (getInventoryApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Constant.BASE_URL)
+                    .client(okHttpClient)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .addConverterFactory(gsonConverterFactory)
+                    .build();
+            getInventoryApi = retrofit.create(GetInventoryApi.class);
+        }
+        return getInventoryApi;
+    }
 
 }

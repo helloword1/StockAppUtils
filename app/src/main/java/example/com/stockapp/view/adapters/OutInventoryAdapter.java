@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         MoreAdapterModel mySection = data.get(position);
         if (position == 3) {
 
@@ -68,13 +69,28 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
             });
         } else if (position < 3) {
-            TopViewHolder topViewHolder = (TopViewHolder) holder;
+            final TopViewHolder topViewHolder = (TopViewHolder) holder;
             topViewHolder.title.setText(mySection.getTitle());
             if (position == 2) {
                 topViewHolder.ivRight.setVisibility(View.GONE);
+                topViewHolder.etContent.setVisibility(View.VISIBLE);
+                topViewHolder.content.setVisibility(View.GONE);
+                listener.getMoreText(topViewHolder.etContent);
             } else {
+                topViewHolder.etContent.setVisibility(View.GONE);
+                topViewHolder.content.setVisibility(View.VISIBLE);
                 topViewHolder.ivRight.setVisibility(View.VISIBLE);
             }
+            if (position == 1) {
+              listener.setUserText(topViewHolder.content);
+            }
+
+            topViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.setItemClick(position, topViewHolder.content);
+                }
+            });
         } else {
             final BottomViewHolder bottomViewHolder = (BottomViewHolder) holder;
             bottomViewHolder.tvNumCount.setText("0");
@@ -112,7 +128,7 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemViewType(int position) {
         if (position == 3) {
             return 3;
-        } else if (position == data.size()-1) {
+        } else if (position == data.size() - 1) {
             return 4;
         } else if (position < 3) {
             return 2;
@@ -124,13 +140,17 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private class TopViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView content;
+        EditText etContent;
         ImageView ivRight;
+        RelativeLayout cardView;
 
         public TopViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.item_section_content_title_tv);
+            cardView = (RelativeLayout) view.findViewById(R.id.card_view0);
             content = (TextView) view.findViewById(R.id.item_section_content);
             ivRight = (ImageView) view.findViewById(R.id.item_section_iv);
+            etContent = (EditText) view.findViewById(R.id.item_et_content);
         }
     }
 
@@ -175,8 +195,14 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             AdapterListener listener) {
         this.listener = listener;
     }
-    public interface AdapterListener{
+
+    public interface AdapterListener {
         void setClick();
+
+        void setUserText(TextView user);
+        void getMoreText(TextView user);
+
+        void setItemClick(int position, TextView content);
     }
 
 }

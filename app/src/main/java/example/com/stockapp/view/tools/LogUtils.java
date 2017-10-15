@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class LogUtils {
 
-	public final static boolean isDebug = ApplicationConfiguration.isDebug;
+	public final static boolean isDebug = SAApplication.isDebug;
 
 	private static final int LOG_LENGTH = 30000; // 分段打印Log
 

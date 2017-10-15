@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/GoodOne"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:layout_marginBottom="@dimen/x4"
+    android:layout_marginTop="@dimen/x4"
+    android:padding="@dimen/x5">
+
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/x12"
+        android:paddingBottom="@dimen/x8"
+        android:paddingTop="@dimen/x12">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="一 即将过期商品 一"
+            android:textColor="@color/textHome"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/homeMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x12"
+            android:drawablePadding="@dimen/x5"
+            android:drawableRight="@mipmap/home_more_right"
+            android:text="更多"
+            android:textColor="@color/textHomered"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_home_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x4"
+            android:layout_marginRight="@dimen/x3"
+            android:paddingTop="@dimen/x5"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/advertol_icon" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_toRightOf="@id/iv_advertoral_icon"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/x5">
+
+            <TextView
+                android:id="@+id/tv_home_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="999感冒冲剂"
+                android:textColor="@color/textHome"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/tv_home_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x8"
+                android:text="负责人：XX"
+                android:textColor="@color/textHomeGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_home_shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="所属仓库：100"
+                android:textColor="@color/textHomeGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_home_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="库存量：12"
+                android:textColor="@color/textHomeGray"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/ll1"
+        android:background="@color/homeLineColor" />
+</RelativeLayout>

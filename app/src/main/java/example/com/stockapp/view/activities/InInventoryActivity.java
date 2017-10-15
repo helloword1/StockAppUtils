@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jinlin.zxing.CaptureActivity;
@@ -40,6 +41,7 @@ import example.com.stockapp.R;
 import example.com.stockapp.entries.MoreAdapterModel;
 import example.com.stockapp.view.adapters.OutInventoryAdapter;
 import example.com.stockapp.view.graphs.PopWindowUtils;
+import example.com.stockapp.view.tools.LogUtils;
 
 /**
  * Created by Administrator on 2017/9/29.
@@ -125,6 +127,21 @@ public class InInventoryActivity extends BaseActivity {
                 initpermission();
                 showActivityForResult(CaptureActivity.class,111);
             }
+
+            @Override
+            public void setUserText(TextView user) {
+
+            }
+
+            @Override
+            public void getMoreText(TextView user) {
+
+            }
+
+            @Override
+            public void setItemClick(int position, TextView content) {
+                LogUtils.d("",""+position);
+            }
         });
     }
     @Override
@@ -193,7 +210,7 @@ public class InInventoryActivity extends BaseActivity {
             int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
             if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
                 Toast.makeText(InInventoryActivity.this, ""+adapterPosition, Toast.LENGTH_SHORT).show();
-                PopWindowUtils.getPopWindow().showButtonPopwindow(InInventoryActivity.this,btnoutinventory);
+                PopWindowUtils.getPopWindow().showButtonPopwindow(InInventoryActivity.this,false,new ArrayList<String>());
             }
         }
     };

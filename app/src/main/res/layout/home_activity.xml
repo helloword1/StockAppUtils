@@ -128,10 +128,17 @@
             app:cardCornerRadius="@dimen/x5"
             app:cardElevation="@dimen/x2">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/home_recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <LinearLayout
+                android:id="@+id/llHomeb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -140,6 +147,7 @@
                     android:paddingTop="@dimen/x12">
 
                     <TextView
+                        android:id="@+id/tv1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
@@ -151,12 +159,11 @@
                         android:id="@+id/homeMore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/x12"
-                        android:drawablePadding="@dimen/x5"
-                        android:drawableRight="@mipmap/home_more_right"
-                        android:text="更多"
-                        android:textColor="@color/textHomered"
+                        android:layout_below="@id/tv1"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/x12"
+                        android:text="暂无即将过期商品"
+                        android:textColor="@color/textHomeGray"
                         android:textSize="12sp" />
                 </RelativeLayout>
 
@@ -168,7 +175,8 @@
                     android:layout_marginLeft="@dimen/x18"
                     android:layout_marginRight="@dimen/x18"
                     android:layout_marginTop="@dimen/x4"
-                    android:padding="@dimen/x5">
+                    android:padding="@dimen/x5"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/iv_advertoral_icon"
@@ -219,7 +227,8 @@
                     android:layout_height="0.8dp"
                     android:layout_marginLeft="@dimen/x5"
                     android:layout_marginRight="@dimen/x5"
-                    android:background="@color/homeLineColor" />
+                    android:background="@color/homeLineColor"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/GoodTwo"
@@ -229,7 +238,8 @@
                     android:layout_marginLeft="@dimen/x18"
                     android:layout_marginRight="@dimen/x18"
                     android:layout_marginTop="@dimen/x4"
-                    android:padding="@dimen/x5">
+                    android:padding="@dimen/x5"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/iv_advertoral_icon1"

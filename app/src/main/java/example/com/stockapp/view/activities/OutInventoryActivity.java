@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jinlin.zxing.CaptureActivity;
@@ -37,9 +38,28 @@ import java.util.List;
 
 import cxx.utils.NotNull;
 import example.com.stockapp.R;
+import example.com.stockapp.entries.BaseEntity;
+import example.com.stockapp.entries.DialogBean;
 import example.com.stockapp.entries.MoreAdapterModel;
+import example.com.stockapp.entries.RequestParam;
+import example.com.stockapp.entries.SearchForCode;
+import example.com.stockapp.entries.UserInfo;
+import example.com.stockapp.entries.UserList;
+import example.com.stockapp.https.DefaultObserver;
+import example.com.stockapp.https.NetWorkUtil;
 import example.com.stockapp.view.adapters.OutInventoryAdapter;
+import example.com.stockapp.view.graphs.MyToast;
 import example.com.stockapp.view.graphs.PopWindowUtils;
+import example.com.stockapp.view.graphs.SADialogUtils;
+import example.com.stockapp.view.tools.FileCache;
+import example.com.stockapp.view.tools.LogUtils;
+import example.com.stockapp.view.tools.SysInterceptor;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static example.com.stockapp.view.tools.Constant.CURRENT_USER;
+import static example.com.stockapp.view.tools.Constant.M_USER_LIST;
+import static example.com.stockapp.view.tools.Constant.USER_LIST;
 
 /**
  * Created by Administrator on 2017/9/29.
@@ -54,6 +74,10 @@ public class OutInventoryActivity extends BaseActivity {
     int width;
     private RelativeLayout linearLayout6;
     private AlertDialog dialog6;
+    private List<DialogBean> datas;
+    private List<DialogBean> datas_M;
+    private TextView tvStock;
+    private String storeId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,13 +97,14 @@ public class OutInventoryActivity extends BaseActivity {
         linearLayout6 = (RelativeLayout) getLayoutInflater().inflate(R.layout.out_fail, null);
         customerPageSetting(linearLayout6);
 
+
     }
 
     private void customerPageSetting(RelativeLayout linearLayout6) {
         linearLayout6.findViewById(R.id.ivOutDelete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NotNull.isNotNull(dialog6)){
+                if (NotNull.isNotNull(dialog6)) {
                     dialog6.dismiss();
                 }
             }
@@ -89,6 +114,8 @@ public class OutInventoryActivity extends BaseActivity {
     @Override
     protected void initData() {
         mData = new ArrayList<>();
+        datas = new ArrayList<>();
+        datas_M = new ArrayList<>();
         outmorerv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new OutInventoryAdapter(this, mData);
         outmorerv.setAdapter(adapter);
@@ -101,47 +128,185 @@ public class OutInventoryActivity extends BaseActivity {
         btnoutinventory.setOnClickListener(new View.OnClickListener() {//出仓
             @Override
             public void onClick(View v) {
-                if (NotNull.isNotNull(dialog6)){
-                    dialog6.show();
-                    return;
-                }
-                dialog6 = getDialongView(linearLayout6);
-                setWindowCenter(dialog6);
+                setCode("81238140042562032329");
             }
         });
         outmorerv.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                if (position==6){
+                if (position == 6) {
                     initpermission();
-                    showActivityForResult(CaptureActivity.class,111);
+                    showActivityForResult(CaptureActivity.class, 111);
                 }
             }
         });
+
         adapter.setAdapterListenerInterface(new OutInventoryAdapter.AdapterListener() {
+
+
             @Override
             public void setClick() {
-                initpermission();
-                showActivityForResult(CaptureActivity.class,111);
+                if (!NotNull.isNotNull(tvStock)) {
+                    MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "请选择仓库");
+                } else {
+                    if (TextUtils.equals(tvStock.getText().toString(), "请点击选择")) {
+                        MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "请选择仓库");
+                    } else {
+                        initpermission();
+                        showActivityForResult(CaptureActivity.class, 111);
+                    }
+                }
+            }
+
+            @Override
+            public void setUserText(TextView user) {
+                user.setText(preferences.getStringValue(CURRENT_USER));
+            }
+
+            @Override
+            public void getMoreText(TextView user) {
+
+            }
+
+            @Override
+            public void setItemClick(int position, final TextView content) {
+                LogUtils.d("", "" + position);
+                if (position == 0) {//仓库
+                    tvStock = content;
+                    BaseEntity<UserInfo> baseEntity = (BaseEntity<UserInfo>) FileCache.get(OutInventoryActivity.this).getAsObject(USER_LIST);
+                    if (!NotNull.isNotNull(baseEntity)) return;
+                    List<UserInfo.StoresAuthorized> storesAuthorized = baseEntity.getData().getStoresAuthorized();
+                    if (!NotNull.isNotNull(storesAuthorized)) return;
+                    if (datas.size() == 0) {
+                        for (int i = 0; i < storesAuthorized.size(); i++) {
+                            UserInfo.StoresAuthorized authorized = storesAuthorized.get(i);
+                            datas.add(new DialogBean(authorized.getStoreName(), "" + authorized.getStoreId()));
+                        }
+                    }
+                    final SADialogUtils dialogUtils = new SADialogUtils(OutInventoryActivity.this);
+                    dialogUtils.showSADialog(datas);
+                    dialogUtils.setClickListenerInterface(new SADialogUtils.DialogClickListener() {
+
+
+                        @Override
+                        public void doClick(int position) {
+                            for (int i = 0; i < datas.size(); i++) {
+                                if (i == position) {
+                                    datas.get(position).setSelct(true);
+                                    storeId = datas.get(position).getId();
+                                } else {
+                                    datas.get(i).setSelct(false);
+                                }
+                            }
+                            dialogUtils.notifyAdapter();
+                            content.setText(datas.get(position).getTypeName());
+                        }
+                    });
+                } else if (position == 1) {//操作人
+                    BaseEntity<List<UserList>> baseEntity = (BaseEntity<List<UserList>>) FileCache.get(OutInventoryActivity.this).getAsObject(M_USER_LIST);
+                    if (!NotNull.isNotNull(baseEntity)) return;
+                    List<UserList> storesAuthorized = baseEntity.getData();
+                    if (!NotNull.isNotNull(storesAuthorized)) return;
+                    if (datas_M.size() == 0) {
+                        for (int i = 0; i < storesAuthorized.size(); i++) {
+                            UserList authorized = storesAuthorized.get(i);
+                            datas_M.add(new DialogBean(authorized.getUserName(), "" + authorized.getUserCode()));
+                        }
+                    }
+                    final SADialogUtils dialogUtils = new SADialogUtils(OutInventoryActivity.this);
+                    dialogUtils.showSADialog(datas_M);
+                    dialogUtils.setClickListenerInterface(new SADialogUtils.DialogClickListener() {
+                        @Override
+                        public void doClick(int position) {
+                            for (int i = 0; i < datas_M.size(); i++) {
+                                if (i == position) {
+                                    datas_M.get(position).setSelct(true);
+                                } else {
+                                    datas_M.get(i).setSelct(false);
+                                }
+                            }
+                            dialogUtils.notifyAdapter();
+                            content.setText(datas_M.get(position).getTypeName());
+                        }
+                    });
+                } else {//备注
+
+                }
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode==RESULT_OK){
-            if (requestCode==111){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 111) {
                 String dataStr = data.getStringExtra("DATA");
-                if (TextUtils.equals(dataStr,"Fail")){//扫描失败
+                if (TextUtils.equals(dataStr, "Fail")) {//扫描失败
 
-                }else{//成功
+                } else {//成功
                     Toast.makeText(this,
                             "识别结果:" + dataStr,
                             Toast.LENGTH_SHORT).show();
+                    setCode(dataStr);
+
                 }
 
             }
         }
     }
+
+    private void setCode(String dataStr) {
+        RequestParam param1 = new RequestParam();
+        param1.put("barcode",dataStr);
+        param1.put("storeid",storeId);
+        NetWorkUtil.getUserInfoApi(new SysInterceptor(this))
+                .getOutGoods(param1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DefaultObserver<BaseEntity<SearchForCode>>(this) {
+
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.d("onCompleted", "------->>");
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtils.d("onError", "------->>" + e);
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<SearchForCode> baseEntity) {
+                        super.onNext(baseEntity);
+                        SearchForCode searchFotCode = baseEntity.getData();
+                        List<SearchForCode.BatchNosBean> batchNos = searchFotCode.getBatchNos();
+
+                        if (NotNull.isNotNull(batchNos)||batchNos.size()==0){
+                            if (NotNull.isNotNull(dialog6)) {
+                                dialog6.show();
+                                return;
+                            }
+                            dialog6 = getDialongView(linearLayout6);
+                            setWindowCenter(dialog6);
+                        }else {
+
+                            List<String> datas = new ArrayList<>();
+                            datas.add("");
+                            for (int i = 0; i < batchNos.size(); i++) {
+                                SearchForCode.BatchNosBean batchNosBean = batchNos.get(i);
+                                String productDate = batchNosBean.getProductDate();
+                                if (!NotNull.isNotNull(productDate))productDate="";
+                                String batchNo = batchNosBean.getBatchNo();
+                                if (!NotNull.isNotNull(batchNo))batchNo="";
+                                datas.add(productDate +" 至 "+ batchNo);
+                            }
+                            PopWindowUtils.getPopWindow().showButtonPopwindow(OutInventoryActivity.this, true,datas);
+                        }
+
+                    }
+                });
+
+    }
+
     private void initpermission() {
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.CAMERA)
@@ -159,6 +324,7 @@ public class OutInventoryActivity extends BaseActivity {
                     public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {/* ... */}
                 }).check();
     }
+
     // 创建菜单：
     SwipeMenuCreator mSwipeMenuCreator = new SwipeMenuCreator() {
         // 1. MATCH_PARENT 自适应高度，保持和Item一样高;
@@ -187,12 +353,11 @@ public class OutInventoryActivity extends BaseActivity {
         @Override
         public void onItemClick(SwipeMenuBridge menuBridge) {
             menuBridge.closeMenu();
-
             int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
             int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
             if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
-                Toast.makeText(OutInventoryActivity.this, ""+adapterPosition, Toast.LENGTH_SHORT).show();
-                PopWindowUtils.getPopWindow().showButtonPopwindow(OutInventoryActivity.this,btnoutinventory);
+                Toast.makeText(OutInventoryActivity.this, "" + adapterPosition, Toast.LENGTH_SHORT).show();
+
             }
         }
     };
@@ -208,8 +373,6 @@ public class OutInventoryActivity extends BaseActivity {
 
         list.add(new MoreAdapterModel("出库商品", "", true));
 
-        list.add(new MoreAdapterModel("感冒灵", "", true));
-        list.add(new MoreAdapterModel("感冒灵", "", true));
         list.add(new MoreAdapterModel("last", "", true));
 
         mData.addAll(list);
@@ -217,13 +380,15 @@ public class OutInventoryActivity extends BaseActivity {
 
 
     }
+
     private void setWindowCenter(AlertDialog dialog) {
         Window window = dialog.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.CENTER;
-        lp.width= (int) getResources().getDimension(R.dimen.x240);
+        lp.width = (int) getResources().getDimension(R.dimen.x240);
         window.setAttributes(lp);
     }
+
     private AlertDialog getDialongView(View view) {
         final AlertDialog.Builder builder6 = new AlertDialog.Builder(this);
         builder6.setView(view);

@@ -2,13 +2,30 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/graphs/CleanableEditText.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/graphs/LoadingDialog.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/graphs/MyToast.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/graphs/PopWindowUtils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/tools/ApplicationConfiguration.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/tools/LogUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/tools/LogUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/tools/MyToast.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/example/com/stockapp/view/tools/SysSharedPreferences.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/anim/push_bottom_in.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/anim/push_bottom_out.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/loading_layout_bg.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/btn_corner.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/pop_first_normal.9.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/pop_first_pressed.9.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/pop_first_selector.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/pop_single_normal.9.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/pop_single_pressed.9.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/pop_single_selector.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/tv_strok_all.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/tv_strok_down.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/advertol_icon.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/loading_dialog.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/pop_menu_camara.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/toast_bg.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/toast_bg.png" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

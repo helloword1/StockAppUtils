@@ -9,10 +9,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".view.tools.SAApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activities.LoginActivity">
+        <activity android:name=".view.activities.LoginActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +30,8 @@
             android:name=".view.activities.OutInventoryActivity" />
         <activity android:name=".view.activities.EnterGoodsActivity" />
         <activity
-            android:name=".view.activities.HomeActivity" />
+            android:name=".view.activities.HomeActivity"
+            android:launchMode="singleInstance"/>
         <activity android:name=".view.activities.MoreActivity" />
     </application>
 

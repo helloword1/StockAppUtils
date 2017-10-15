@@ -36,7 +36,7 @@
                     android:overScrollMode="never" />
             </android.support.v7.widget.CardView>
             <Button
-                android:id="@+id/btn_commit"
+                android:id="@+id/btn_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x8"
@@ -47,6 +47,7 @@
                 android:layout_marginTop="@dimen/x12"
                 android:textColor="@color/white"
                 android:text="保存"
+                android:onClick="onSaveGoods"
                 android:textSize="16sp" />
         </LinearLayout>
 

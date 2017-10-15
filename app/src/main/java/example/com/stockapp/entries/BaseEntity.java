@@ -6,12 +6,12 @@ import java.io.Serializable;
  * Created by Administrator on 2017/10/10.
  */
 
-public class BaseEntity implements Serializable {
-    private String ver;
-    private boolean result;
-    private Object data;
-    private int errorcode;
-    private String errormsg;
+public class BaseEntity<T> implements Serializable {
+    protected String ver;
+    protected boolean result;
+    protected T data;
+    protected int errorcode;
+    protected String errormsg;
 
     public String getVer() {
         return ver;
@@ -29,11 +29,11 @@ public class BaseEntity implements Serializable {
         this.result = result;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 

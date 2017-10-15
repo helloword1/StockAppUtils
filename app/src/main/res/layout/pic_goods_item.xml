@@ -4,17 +4,30 @@
     android:layout_height="match_parent"
     android:background="@color/app_gray_color"
     android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tvAddPic"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/x5"
-        android:drawableTop="@mipmap/add_pic"
+        android:orientation="vertical"
+        android:gravity="center"
         android:padding="@dimen/x8"
-        android:text="添加照片"
         android:background="@color/white"
-        android:textColor="@color/textHomeGray" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/x40"
+            android:id="@+id/ivAddPic"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/add_pic"/>
+        <TextView
+            android:id="@+id/tvAddPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/x5"
+
+            android:text="添加照片"
+            android:textColor="@color/textHomeGray" />
+    </LinearLayout>
+
+
 
     <View
         android:id="@+id/viewBg"
