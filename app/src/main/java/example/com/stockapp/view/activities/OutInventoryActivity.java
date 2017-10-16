@@ -8,12 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,11 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +48,7 @@ import example.com.stockapp.R;
 import example.com.stockapp.entries.BaseEntity;
 import example.com.stockapp.entries.DialogBean;
 import example.com.stockapp.entries.MoreAdapterModel;
+import example.com.stockapp.entries.OutGoodsItems;
 import example.com.stockapp.entries.RequestParam;
 import example.com.stockapp.entries.SearchForCode;
 import example.com.stockapp.entries.UserInfo;
@@ -77,7 +85,13 @@ public class OutInventoryActivity extends BaseActivity {
     private List<DialogBean> datas;
     private List<DialogBean> datas_M;
     private TextView tvStock;
-    private String storeId;
+    private String storeId = "";
+    private String remarkStr = "";
+    private String dataStr;
+    private int addPotion = 3;
+    private String CurrentUserId = "";
+    private List<Integer> listInts = new ArrayList<>();
+    private List<OutGoodsItems> outGoodsItemses = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,13 +142,15 @@ public class OutInventoryActivity extends BaseActivity {
         btnoutinventory.setOnClickListener(new View.OnClickListener() {//出仓
             @Override
             public void onClick(View v) {
-                setCode("81238140042562032329");
+                AddGood();
+
             }
         });
         outmorerv.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 if (position == 6) {
+
                     initpermission();
                     showActivityForResult(CaptureActivity.class, 111);
                 }
@@ -152,8 +168,10 @@ public class OutInventoryActivity extends BaseActivity {
                     if (TextUtils.equals(tvStock.getText().toString(), "请点击选择")) {
                         MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "请选择仓库");
                     } else {
-                        initpermission();
-                        showActivityForResult(CaptureActivity.class, 111);
+                        dataStr = "6931037800803";
+                        setCode(dataStr);
+//                        initpermission();
+//                        showActivityForResult(CaptureActivity.class, 111);
                     }
                 }
             }
@@ -169,7 +187,7 @@ public class OutInventoryActivity extends BaseActivity {
             }
 
             @Override
-            public void setItemClick(int position, final TextView content) {
+            public void setItemClick(int position, final TextView content, EditText etContent) {
                 LogUtils.d("", "" + position);
                 if (position == 0) {//仓库
                     tvStock = content;
@@ -200,6 +218,7 @@ public class OutInventoryActivity extends BaseActivity {
                             }
                             dialogUtils.notifyAdapter();
                             content.setText(datas.get(position).getTypeName());
+                            CurrentUserId = datas.get(position).getId();
                         }
                     });
                 } else if (position == 1) {//操作人
@@ -230,7 +249,7 @@ public class OutInventoryActivity extends BaseActivity {
                         }
                     });
                 } else {//备注
-
+                    remarkStr = etContent.getText().toString();
                 }
             }
         });
@@ -256,9 +275,14 @@ public class OutInventoryActivity extends BaseActivity {
     }
 
     private void setCode(String dataStr) {
+
         RequestParam param1 = new RequestParam();
-        param1.put("barcode",dataStr);
-        param1.put("storeid",storeId);
+        param1.put("barcode", dataStr);
+        if (!NotNull.isNotNull(storeId)) {
+            MyToast.showToastCustomerStyleText(this, "请选择仓库");
+            return;
+        }
+        param1.put("storeid", storeId);
         NetWorkUtil.getUserInfoApi(new SysInterceptor(this))
                 .getOutGoods(param1)
                 .subscribeOn(Schedulers.io())
@@ -269,6 +293,7 @@ public class OutInventoryActivity extends BaseActivity {
                     public void onCompleted() {
                         LogUtils.d("onCompleted", "------->>");
                     }
+
                     @Override
                     public void onError(Throwable e) {
                         LogUtils.d("onError", "------->>" + e);
@@ -278,28 +303,84 @@ public class OutInventoryActivity extends BaseActivity {
                     public void onNext(BaseEntity<SearchForCode> baseEntity) {
                         super.onNext(baseEntity);
                         SearchForCode searchFotCode = baseEntity.getData();
-                        List<SearchForCode.BatchNosBean> batchNos = searchFotCode.getBatchNos();
-
-                        if (NotNull.isNotNull(batchNos)||batchNos.size()==0){
+                        if (!NotNull.isNotNull(searchFotCode)) {
                             if (NotNull.isNotNull(dialog6)) {
                                 dialog6.show();
                                 return;
                             }
                             dialog6 = getDialongView(linearLayout6);
                             setWindowCenter(dialog6);
-                        }else {
+                        }
+                        final SearchForCode.ItemBean item = searchFotCode.getItem();
+                        if (!NotNull.isNotNull(item)) {
+                            if (NotNull.isNotNull(dialog6)) {
+                                dialog6.show();
+                                return;
+                            }
+                            dialog6 = getDialongView(linearLayout6);
+                            setWindowCenter(dialog6);
+                        }
+                        final List<SearchForCode.BatchNosBean> batchNos = searchFotCode.getBatchNos();
+                        if (!NotNull.isNotNull(batchNos) || (NotNull.isNotNull(batchNos) && batchNos.size() == 0)) {
+                            if (NotNull.isNotNull(dialog6)) {
+                                dialog6.show();
+                                return;
+                            }
+                            dialog6 = getDialongView(linearLayout6);
+                            setWindowCenter(dialog6);
+                        } else {
 
                             List<String> datas = new ArrayList<>();
                             datas.add("");
                             for (int i = 0; i < batchNos.size(); i++) {
                                 SearchForCode.BatchNosBean batchNosBean = batchNos.get(i);
                                 String productDate = batchNosBean.getProductDate();
-                                if (!NotNull.isNotNull(productDate))productDate="";
+                                if (!NotNull.isNotNull(productDate)) productDate = "";
                                 String batchNo = batchNosBean.getBatchNo();
-                                if (!NotNull.isNotNull(batchNo))batchNo="";
-                                datas.add(productDate +" 至 "+ batchNo);
+                                if (!NotNull.isNotNull(batchNo)) batchNo = "";
+                                datas.add(productDate + " 至 " + batchNo);
                             }
-                            PopWindowUtils.getPopWindow().showButtonPopwindow(OutInventoryActivity.this, true,datas);
+                            PopWindowUtils popWindow = PopWindowUtils.getPopWindow();
+                            popWindow.showButtonPopwindow(OutInventoryActivity.this, true, datas);
+                            popWindow.setClickListenerInterface(new PopWindowUtils.PopWindowClickListener() {
+                                @Override
+                                public void doClick(int potion) {
+                                    if (listInts.contains(potion)) {
+                                        MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "你已选择该商品");
+                                        return;
+                                    }
+                                    listInts.add(potion);
+                                    Log.d("doClick", "------->>" + potion);
+                                    SearchForCode.BatchNosBean batchNosBean = batchNos.get(potion);
+                                    int stockQty = batchNosBean.getStockQty();
+                                    if (stockQty != 0) {
+                                        MoreAdapterModel moreAdapterModel = new MoreAdapterModel("", "", true);
+                                        moreAdapterModel.setPic1(item.getPic1());
+                                        moreAdapterModel.setStockQty(stockQty);
+                                        moreAdapterModel.setItemName(item.getItemName());
+                                        addPotion += 1;
+                                        mData.add(addPotion, moreAdapterModel);
+                                        Log.d("doClick", "------->>" + mData);
+                                        adapter.setBatchNosBean(batchNos);
+                                        OutGoodsItems outGoodsItems = new OutGoodsItems();
+                                        outGoodsItems.setItemName(batchNosBean.getItemName());
+                                        outGoodsItems.setBatchNo(batchNosBean.getBatchNo());
+                                        outGoodsItems.setImgUrl(item.getPic1());
+                                        outGoodsItems.setRemark(batchNosBean.getRemark());
+                                        outGoodsItems.setRemark(batchNosBean.getBarcode());
+                                        outGoodsItems.setRemark("" + batchNosBean.getItemID());
+                                        outGoodsItemses.add(outGoodsItems);
+                                        adapter.notifyDataSetChanged();
+                                    } else {
+                                        if (NotNull.isNotNull(dialog6)) {
+                                            dialog6.show();
+                                            return;
+                                        }
+                                        dialog6 = getDialongView(linearLayout6);
+                                        setWindowCenter(dialog6);
+                                    }
+                                }
+                            });
                         }
 
                     }
@@ -394,5 +475,68 @@ public class OutInventoryActivity extends BaseActivity {
         builder6.setView(view);
         builder6.create();
         return builder6.show();
+    }
+
+    private void AddGood() {
+        RequestParam param = new RequestParam();
+        JSONObject Bill = new JSONObject();
+        List<EditText> editTextList = adapter.getEditTextList();
+        try {
+            Bill.put("OutstockType", "100");
+            Bill.put("OutstockDate", getcurrentDate());
+            Bill.put("PrincipalID", CurrentUserId);
+            Bill.put("StoreID", storeId);
+            Bill.put("Remark", remarkStr);
+            param.put("Bill", Bill.toString());
+            JSONArray item = new JSONArray();
+            for (int i = 0; i < outGoodsItemses.size(); i++) {
+                JSONObject object = new JSONObject();
+                OutGoodsItems outGoodsItems = outGoodsItemses.get(i);
+                object.put("BatchNo",outGoodsItems.getBatchNo());
+                object.put("ItemID",outGoodsItems.getItemID());
+                object.put("ItemName",outGoodsItems.getItemName());
+                object.put("ItemBarcode",outGoodsItems.getItemBarcode());
+                object.put("ImgUrl",outGoodsItems.getImgUrl());
+                object.put("Qty",editTextList.get(i).getText());
+                object.put("Remark",outGoodsItems.getRemark());
+                item.put(i, object);
+            }
+            param.put("Items", item.toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        NetWorkUtil.getUserInfoApi(new SysInterceptor(this))
+                .AddOutGoods(param)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DefaultObserver<BaseEntity<Integer>>(this) {
+
+                    @Override
+                    public void onCompleted() {
+                        LogUtils.d("onCompleted", "------->>");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtils.d("onError", "------->>" + e);
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<Integer> baseEntity) {
+                        super.onNext(baseEntity);
+                        if (NotNull.isNotNull(baseEntity)) {
+
+                        }
+
+                    }
+                });
+    }
+
+    private String getcurrentDate() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(System.currentTimeMillis());
+
     }
 }

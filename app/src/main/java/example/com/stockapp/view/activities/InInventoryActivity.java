@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -139,7 +140,7 @@ public class InInventoryActivity extends BaseActivity {
             }
 
             @Override
-            public void setItemClick(int position, TextView content) {
+            public void setItemClick(int position, TextView content, EditText etContent) {
                 LogUtils.d("",""+position);
             }
         });

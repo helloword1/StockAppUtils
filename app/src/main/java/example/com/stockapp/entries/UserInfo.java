@@ -75,25 +75,25 @@ public class UserInfo extends BaseEntity {
         Email = email;
     }
     public class StoresAuthorized implements Serializable{
-        private int UserId;
-        private int StoreId;
+        private int UserID;
+        private int StoreID;
         private int OprtType;
         private String UserName;
 
         public int getUserId() {
-            return UserId;
+            return UserID;
         }
 
         public void setUserId(int userId) {
-            UserId = userId;
+            UserID = userId;
         }
 
         public int getStoreId() {
-            return StoreId;
+            return StoreID;
         }
 
         public void setStoreId(int storeId) {
-            StoreId = storeId;
+            StoreID = storeId;
         }
 
         public int getOprtType() {

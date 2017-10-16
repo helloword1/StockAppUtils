@@ -50,7 +50,7 @@ public class PopWindowUtils {
     private PopWindowClickListener clickListenerInterface;
 
     public interface PopWindowClickListener {
-        public void doClick(View v);
+        void doClick(int position);
     }
 
     public static PopWindowUtils getPopWindow() {
@@ -80,11 +80,6 @@ public class PopWindowUtils {
         final DataAdapter adapter = new DataAdapter(context, datas);
         adapter.setOutInventor(isOutInv);
         alRView.setAdapter(adapter);
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
         if (datas.size() > 7) {
             alRView.getLayoutParams().height = (int) context.getResources().getDimension(R.dimen.y240);
         }
@@ -97,6 +92,11 @@ public class PopWindowUtils {
                 datas.add("");
                 adapter.setOtherTime(true);
                 adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void setChoice(int position) {
+                clickListenerInterface.doClick(position);
             }
 
             @Override

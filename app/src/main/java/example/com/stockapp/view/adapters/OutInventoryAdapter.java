@@ -10,10 +10,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import cxx.utils.NotNull;
 import example.com.stockapp.R;
 import example.com.stockapp.entries.MoreAdapterModel;
+import example.com.stockapp.entries.SearchForCode;
+import example.com.stockapp.view.tools.Constant;
 
 /**
  * Created by Administrator on 2017/9/30.
@@ -24,11 +30,18 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<MoreAdapterModel> data;
     private int sum;
     private AdapterListener listener;
+    private List<SearchForCode.BatchNosBean> batchNosBean;
+    private int index = 0;
+    private List<EditText> editTextList = new ArrayList<>();
 
     public OutInventoryAdapter(Context context, List<MoreAdapterModel> data) {
         this.context = context;
         this.data = data;
 
+    }
+
+    public void setBatchNosBean(List<SearchForCode.BatchNosBean> batchNosBean) {
+        this.batchNosBean = batchNosBean;
     }
 
     @Override
@@ -82,17 +95,25 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 topViewHolder.ivRight.setVisibility(View.VISIBLE);
             }
             if (position == 1) {
-              listener.setUserText(topViewHolder.content);
+                listener.setUserText(topViewHolder.content);
             }
 
             topViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.setItemClick(position, topViewHolder.content);
+                    listener.setItemClick(position, topViewHolder.content, topViewHolder.etContent);
                 }
             });
         } else {
             final BottomViewHolder bottomViewHolder = (BottomViewHolder) holder;
+            if (NotNull.isNotNull(batchNosBean)) {
+                bottomViewHolder.title.setText(mySection.getItemName());
+                Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + mySection.getPic1()).placeholder(R.mipmap.advertol_icon).into(bottomViewHolder.ivIcon);
+                bottomViewHolder.date.setText("库存量：" + mySection.getStockQty());
+                bottomViewHolder.num.setText("有效期：" + batchNosBean.get(mySection.getIndex()).getBatchNo());
+                if (!editTextList.contains(bottomViewHolder.tvNumCount))
+                    editTextList.add(bottomViewHolder.tvNumCount);
+            }
             bottomViewHolder.tvNumCount.setText("0");
             bottomViewHolder.ivDelive.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -154,6 +175,10 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    public List<EditText> getEditTextList() {
+        return editTextList;
+    }
+
     private class BottomViewHolder extends RecyclerView.ViewHolder {
         ImageView ivIcon;
         TextView title;
@@ -200,9 +225,10 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         void setClick();
 
         void setUserText(TextView user);
+
         void getMoreText(TextView user);
 
-        void setItemClick(int position, TextView content);
+        void setItemClick(int position, TextView content, EditText etContent);
     }
 
 }

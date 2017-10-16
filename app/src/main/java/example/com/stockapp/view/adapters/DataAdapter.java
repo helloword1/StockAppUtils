@@ -52,10 +52,11 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position == datas.size() - 1) {
-            CommitViewHolder commitViewHolder = (CommitViewHolder) holder;
-            if (otherbl) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
+        if (otherbl) {
+            if (position == datas.size() - 1) {
+                CommitViewHolder commitViewHolder = (CommitViewHolder) holder;
                 commitViewHolder.tvOtherTime.setVisibility(View.GONE);
                 commitViewHolder.tvCommit.setVisibility(View.VISIBLE);
                 commitViewHolder.tvCommit.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +65,20 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         listener.setCommit();
                     }
                 });
+            } else if (position == datas.size() - 2 || position == datas.size() - 3 || position == datas.size() - 4) {
+
             } else {
+                ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
+                contentViewHolder.tvChoice.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+listener.setChoice(position);
+                    }
+                });
+            }
+        } else {
+            if (position == datas.size() - 1) {
+                CommitViewHolder commitViewHolder = (CommitViewHolder) holder;
                 if (isOutInventor) {
                     commitViewHolder.tvOtherTime.setVisibility(View.GONE);
                 } else {
@@ -78,9 +92,17 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         listener.setMoreTime();
                     }
                 });
+            } else {
+                ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
+                contentViewHolder.tvChoice.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.setChoice(position);
+                    }
+                });
             }
-
         }
+
     }
 
     @Override
@@ -144,7 +166,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public interface popuOnClickListener {
         void setMoreTime();
-
+        void setChoice(int position);
         void setCommit();
     }
 
