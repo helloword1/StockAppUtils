@@ -12,6 +12,16 @@ public class MoreAdapterModel {
 
     public boolean isGo;
 
+    public String getContent() {
+        return Content;
+    }
+
+    public void setContent(String content) {
+        Content = content;
+    }
+
+    public String Content;
+
     public int getIndex() {
         return index;
     }

@@ -2,6 +2,8 @@ package example.com.stockapp.view.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,11 +90,33 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 topViewHolder.ivRight.setVisibility(View.GONE);
                 topViewHolder.etContent.setVisibility(View.VISIBLE);
                 topViewHolder.content.setVisibility(View.GONE);
-                listener.getMoreText(topViewHolder.etContent);
+
+                topViewHolder.etContent.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        listener.getMoreEditText(topViewHolder.etContent);
+                    }
+                });
+                String content = mySection.getContent();
+                if (NotNull.isNotNull(content))
+                    topViewHolder.etContent.setText(content);
             } else {
                 topViewHolder.etContent.setVisibility(View.GONE);
                 topViewHolder.content.setVisibility(View.VISIBLE);
                 topViewHolder.ivRight.setVisibility(View.VISIBLE);
+                String content = mySection.getContent();
+                if (NotNull.isNotNull(content))
+                    topViewHolder.content.setText(content);
             }
             if (position == 1) {
                 listener.setUserText(topViewHolder.content);
@@ -226,7 +250,7 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         void setUserText(TextView user);
 
-        void getMoreText(TextView user);
+        void getMoreEditText(EditText etContent);
 
         void setItemClick(int position, TextView content, EditText etContent);
     }

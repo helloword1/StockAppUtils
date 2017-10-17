@@ -92,7 +92,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     preferences.putValue(CURRENT_USER, tvLoginUser.getText().toString());
                     Log.d("onNext", "------->>" + data);
                     showActivity(HomeActivity.class);
-                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                     finish();
                 }
 

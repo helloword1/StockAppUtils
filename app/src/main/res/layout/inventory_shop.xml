@@ -36,8 +36,8 @@
 
                 <ImageView
                     android:id="@+id/iv_advertoral_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/x58"
+                    android:layout_height="@dimen/x58"
                     android:layout_marginLeft="@dimen/x4"
                     android:layout_marginRight="@dimen/x3"
                     android:paddingTop="@dimen/x5"

@@ -134,7 +134,7 @@ public class CheckInventoryActivity extends BaseActivity {
             }
 
             @Override
-            public void getMoreText(TextView user) {
+            public void getMoreEditText(EditText etContent) {
 
             }
 

@@ -67,7 +67,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else {
             intenvoryViewHolder.endDate.setText("有效日期：");
         }
-        Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + dataSetBean.getPic1).placeholder(R.mipmap.advertol_icon).into(intenvoryViewHolder.ivadvertoralicon);
+        Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + dataSetBean.getPic2()).placeholder(R.mipmap.advertol_icon).into(intenvoryViewHolder.ivadvertoralicon);
         intenvoryViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -8,9 +8,10 @@ import example.com.stockapp.entries.RequestParam;
 import example.com.stockapp.entries.SearchForCode;
 import example.com.stockapp.entries.UserInfo;
 import example.com.stockapp.entries.UserList;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 import rx.Observable;
@@ -32,7 +33,7 @@ public interface GetUserInfoApi {
     @GET("Item/GetViewWithBatchNoByBarcode")
     Observable<BaseEntity<SearchForCode>> getOutGoods(@QueryMap RequestParam param);
 
-    @FormUrlEncoded
+    @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
     @POST("Stockout/AddEx")
-    Observable<BaseEntity<Integer>> AddOutGoods(@FieldMap RequestParam param);
+    Observable<BaseEntity<Integer>> AddOutGoods(@Body RequestBody param);
 }

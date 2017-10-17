@@ -69,25 +69,25 @@ public class InventoryEntity {
         private String Indate;
         private String PrincipalName;
 
-        public String getGetPic1() {
-            return getPic1;
+        public String getPic1() {
+            return Pic1;
         }
 
-        public void setGetPic1(String getPic1) {
-            this.getPic1 = getPic1;
+        public void setPic1(String pic1) {
+            Pic1 = pic1;
         }
 
-        public String getPic1;
-
-        public String getGetPic2() {
-            return getPic2;
+        public String getPic2() {
+            return Pic2;
         }
 
-        public void setGetPic2(String getPic2) {
-            this.getPic2 = getPic2;
+        public void setPic2(String pic2) {
+            Pic2 = pic2;
         }
 
-        public String getPic2;
+        public String Pic1;
+
+        public String Pic2;
 
         public String getBarcode() {
             return Barcode;

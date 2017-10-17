@@ -62,6 +62,7 @@ import example.com.stockapp.view.graphs.SADialogUtils;
 import example.com.stockapp.view.tools.FileCache;
 import example.com.stockapp.view.tools.LogUtils;
 import example.com.stockapp.view.tools.SysInterceptor;
+import okhttp3.RequestBody;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -92,6 +93,7 @@ public class OutInventoryActivity extends BaseActivity {
     private String CurrentUserId = "";
     private List<Integer> listInts = new ArrayList<>();
     private List<OutGoodsItems> outGoodsItemses = new ArrayList<>();
+    private BaseEntity<UserInfo> baseEntity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -150,7 +152,6 @@ public class OutInventoryActivity extends BaseActivity {
             @Override
             public void onItemClick(View itemView, int position) {
                 if (position == 6) {
-
                     initpermission();
                     showActivityForResult(CaptureActivity.class, 111);
                 }
@@ -168,22 +169,24 @@ public class OutInventoryActivity extends BaseActivity {
                     if (TextUtils.equals(tvStock.getText().toString(), "请点击选择")) {
                         MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "请选择仓库");
                     } else {
-                        dataStr = "6931037800803";
-                        setCode(dataStr);
-//                        initpermission();
-//                        showActivityForResult(CaptureActivity.class, 111);
+//                        dataStr = "6931037800803";
+//                        setCode(dataStr);
+                        initpermission();
+                        showActivityForResult(CaptureActivity.class, 111);
                     }
                 }
             }
 
             @Override
             public void setUserText(TextView user) {
-                user.setText(preferences.getStringValue(CURRENT_USER));
+//                user.setText(preferences.getStringValue(CURRENT_USER));
+//                mData.get(1).setContent(preferences.getStringValue(CURRENT_USER));
             }
 
             @Override
-            public void getMoreText(TextView user) {
-
+            public void getMoreEditText(EditText user) {
+                remarkStr = user.getText().toString();
+                mData.get(2).setContent(remarkStr);
             }
 
             @Override
@@ -191,7 +194,7 @@ public class OutInventoryActivity extends BaseActivity {
                 LogUtils.d("", "" + position);
                 if (position == 0) {//仓库
                     tvStock = content;
-                    BaseEntity<UserInfo> baseEntity = (BaseEntity<UserInfo>) FileCache.get(OutInventoryActivity.this).getAsObject(USER_LIST);
+
                     if (!NotNull.isNotNull(baseEntity)) return;
                     List<UserInfo.StoresAuthorized> storesAuthorized = baseEntity.getData().getStoresAuthorized();
                     if (!NotNull.isNotNull(storesAuthorized)) return;
@@ -201,6 +204,7 @@ public class OutInventoryActivity extends BaseActivity {
                             datas.add(new DialogBean(authorized.getStoreName(), "" + authorized.getStoreId()));
                         }
                     }
+
                     final SADialogUtils dialogUtils = new SADialogUtils(OutInventoryActivity.this);
                     dialogUtils.showSADialog(datas);
                     dialogUtils.setClickListenerInterface(new SADialogUtils.DialogClickListener() {
@@ -218,6 +222,7 @@ public class OutInventoryActivity extends BaseActivity {
                             }
                             dialogUtils.notifyAdapter();
                             content.setText(datas.get(position).getTypeName());
+                            mData.get(0).setContent(datas.get(position).getTypeName());
                             CurrentUserId = datas.get(position).getId();
                         }
                     });
@@ -246,10 +251,11 @@ public class OutInventoryActivity extends BaseActivity {
                             }
                             dialogUtils.notifyAdapter();
                             content.setText(datas_M.get(position).getTypeName());
+                            mData.get(1).setContent(datas_M.get(position).getTypeName());
                         }
                     });
                 } else {//备注
-                    remarkStr = etContent.getText().toString();
+
                 }
             }
         });
@@ -263,9 +269,9 @@ public class OutInventoryActivity extends BaseActivity {
                 if (TextUtils.equals(dataStr, "Fail")) {//扫描失败
 
                 } else {//成功
-                    Toast.makeText(this,
-                            "识别结果:" + dataStr,
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this,
+//                            "识别结果:" + dataStr,
+//                            Toast.LENGTH_SHORT).show();
                     setCode(dataStr);
 
                 }
@@ -335,9 +341,9 @@ public class OutInventoryActivity extends BaseActivity {
                             for (int i = 0; i < batchNos.size(); i++) {
                                 SearchForCode.BatchNosBean batchNosBean = batchNos.get(i);
                                 String productDate = batchNosBean.getProductDate();
-                                if (!NotNull.isNotNull(productDate)) productDate = "";
+                                if (!NotNull.isNotNull(productDate)) productDate = "--";
                                 String batchNo = batchNosBean.getBatchNo();
-                                if (!NotNull.isNotNull(batchNo)) batchNo = "";
+                                if (!NotNull.isNotNull(batchNo)) batchNo = "--";
                                 datas.add(productDate + " 至 " + batchNo);
                             }
                             PopWindowUtils popWindow = PopWindowUtils.getPopWindow();
@@ -345,15 +351,16 @@ public class OutInventoryActivity extends BaseActivity {
                             popWindow.setClickListenerInterface(new PopWindowUtils.PopWindowClickListener() {
                                 @Override
                                 public void doClick(int potion) {
-                                    if (listInts.contains(potion)) {
-                                        MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "你已选择该商品");
-                                        return;
-                                    }
-                                    listInts.add(potion);
+
                                     Log.d("doClick", "------->>" + potion);
                                     SearchForCode.BatchNosBean batchNosBean = batchNos.get(potion);
                                     int stockQty = batchNosBean.getStockQty();
                                     if (stockQty != 0) {
+                                        if (listInts.contains(potion)) {
+                                            MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "你已选择该商品");
+                                            return;
+                                        }
+                                        listInts.add(potion);
                                         MoreAdapterModel moreAdapterModel = new MoreAdapterModel("", "", true);
                                         moreAdapterModel.setPic1(item.getPic1());
                                         moreAdapterModel.setStockQty(stockQty);
@@ -367,8 +374,8 @@ public class OutInventoryActivity extends BaseActivity {
                                         outGoodsItems.setBatchNo(batchNosBean.getBatchNo());
                                         outGoodsItems.setImgUrl(item.getPic1());
                                         outGoodsItems.setRemark(batchNosBean.getRemark());
-                                        outGoodsItems.setRemark(batchNosBean.getBarcode());
-                                        outGoodsItems.setRemark("" + batchNosBean.getItemID());
+                                        outGoodsItems.setItemBarcode(batchNosBean.getBarcode());
+                                        outGoodsItems.setItemID(batchNosBean.getItemID());
                                         outGoodsItemses.add(outGoodsItems);
                                         adapter.notifyDataSetChanged();
                                     } else {
@@ -438,7 +445,8 @@ public class OutInventoryActivity extends BaseActivity {
             int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
             if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
                 Toast.makeText(OutInventoryActivity.this, "" + adapterPosition, Toast.LENGTH_SHORT).show();
-
+                outGoodsItemses.remove(adapterPosition - 4);
+                mData.remove(adapterPosition);
             }
         }
     };
@@ -449,13 +457,21 @@ public class OutInventoryActivity extends BaseActivity {
         }
         List<MoreAdapterModel> list = new ArrayList<>();
         list.add(new MoreAdapterModel("仓库", "", true));
-        list.add(new MoreAdapterModel("操作人", "", true));
+        MoreAdapterModel user = new MoreAdapterModel("操作人", "", true);
+        user.setContent(preferences.getStringValue(CURRENT_USER));
+        list.add(user);
         list.add(new MoreAdapterModel("备注", "", true));
 
         list.add(new MoreAdapterModel("出库商品", "", true));
 
         list.add(new MoreAdapterModel("last", "", true));
 
+        baseEntity = (BaseEntity<UserInfo>) FileCache.get(OutInventoryActivity.this).getAsObject(USER_LIST);
+        List<UserInfo.StoresAuthorized> storesAuthorized = baseEntity.getData().getStoresAuthorized();
+        if (storesAuthorized.size()==1){
+            mData.get(0).setContent(storesAuthorized.get(0).getStoreName());
+            storeId =""+storesAuthorized.get(0).getStoreId();
+        }
         mData.addAll(list);
         adapter.notifyDataSetChanged();
 
@@ -478,38 +494,42 @@ public class OutInventoryActivity extends BaseActivity {
     }
 
     private void AddGood() {
-        RequestParam param = new RequestParam();
         JSONObject Bill = new JSONObject();
+        JSONObject object1 = new JSONObject();
         List<EditText> editTextList = adapter.getEditTextList();
         try {
-            Bill.put("OutstockType", "100");
+            Bill.put("OutstockType", "101");
             Bill.put("OutstockDate", getcurrentDate());
             Bill.put("PrincipalID", CurrentUserId);
             Bill.put("StoreID", storeId);
             Bill.put("Remark", remarkStr);
-            param.put("Bill", Bill.toString());
             JSONArray item = new JSONArray();
             for (int i = 0; i < outGoodsItemses.size(); i++) {
                 JSONObject object = new JSONObject();
                 OutGoodsItems outGoodsItems = outGoodsItemses.get(i);
-                object.put("BatchNo",outGoodsItems.getBatchNo());
-                object.put("ItemID",outGoodsItems.getItemID());
-                object.put("ItemName",outGoodsItems.getItemName());
-                object.put("ItemBarcode",outGoodsItems.getItemBarcode());
-                object.put("ImgUrl",outGoodsItems.getImgUrl());
-                object.put("Qty",editTextList.get(i).getText());
-                object.put("Remark",outGoodsItems.getRemark());
+                object.put("BatchNo", outGoodsItems.getBatchNo());
+                object.put("ItemID", outGoodsItems.getItemID());
+                object.put("ItemName", outGoodsItems.getItemName());
+                object.put("ItemBarcode", outGoodsItems.getItemBarcode());
+                object.put("ImgUrl", outGoodsItems.getImgUrl());
+                String Qty = editTextList.get(i).getText().toString();
+                if (Integer.valueOf(Qty)==0){
+                    MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "出库数量不能为0");
+                    return;
+                }
+                object.put("Qty", Qty);
+                object.put("Remark", outGoodsItems.getRemark());
                 item.put(i, object);
             }
-            param.put("Items", item.toString());
-
+            object1.put("Bill", Bill);
+            object1.put("Items", item);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), object1.toString());
         NetWorkUtil.getUserInfoApi(new SysInterceptor(this))
-                .AddOutGoods(param)
+                .AddOutGoods(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultObserver<BaseEntity<Integer>>(this) {
@@ -528,7 +548,12 @@ public class OutInventoryActivity extends BaseActivity {
                     public void onNext(BaseEntity<Integer> baseEntity) {
                         super.onNext(baseEntity);
                         if (NotNull.isNotNull(baseEntity)) {
-
+                            if (baseEntity.getErrorcode() != 0) {
+                                MyToast.showToastCustomerStyleText(OutInventoryActivity.this, baseEntity.getErrormsg());
+                            } else {
+                                MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "出库成功");
+                                finish();
+                            }
                         }
 
                     }
