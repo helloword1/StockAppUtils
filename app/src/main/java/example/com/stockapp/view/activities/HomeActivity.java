@@ -40,6 +40,7 @@ import example.com.stockapp.https.NetWorkUtil;
 import example.com.stockapp.view.adapters.HomeAdapter;
 import example.com.stockapp.view.tools.FileCache;
 import example.com.stockapp.view.tools.LogUtils;
+import example.com.stockapp.view.tools.SAApplication;
 import example.com.stockapp.view.tools.SysInterceptor;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -281,7 +282,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 finish();
                 // TODO 退出客户端
                 // 退出
-                System.exit(0);
+                ((SAApplication) getApplication()).exit();
             }
             return true;
         }

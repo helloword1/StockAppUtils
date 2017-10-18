@@ -18,7 +18,7 @@ import example.com.stockapp.R;
  * Created by Administrator on 2017/9/30.
  */
 
-public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DataInAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TITLE_OTHER = 1;
     private static final int TITLE_CONTENT = 2;
     private static final int TITLE_COMMIT = 3;
@@ -30,7 +30,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private boolean isOutInventor = false;
     private String content;
 
-    public DataAdapter(Context context, List<String> datas) {
+    public DataInAdapter(Context context, List<String> datas) {
         this.context = context;
         this.datas = datas;
         inflate = LayoutInflater.from(context);

@@ -35,6 +35,7 @@ import example.com.stockapp.https.NetWorkUtil;
 import example.com.stockapp.view.graphs.LoadingDialog;
 import example.com.stockapp.view.graphs.PopWindowUtils;
 import example.com.stockapp.view.tools.LogUtils;
+import example.com.stockapp.view.tools.SAApplication;
 import example.com.stockapp.view.tools.SysInterceptor;
 import example.com.stockapp.view.tools.SysSharedPreferences;
 import okhttp3.MediaType;
@@ -61,6 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected View baseLine;
     protected String fileImagePath;
     private Bitmap bitmap;
+    private SAApplication saApplication;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.ll = (FrameLayout) findViewById(R.id.ll_title);
         baseLine = findViewById(R.id.baseLine);
         inflation = LayoutInflater.from(this);
+        saApplication = (SAApplication) getApplication();
+        saApplication.addActivity(this);
         initTitleView();
         initContentView();
         initView();
@@ -389,6 +393,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        saApplication.removeActivity(this);
         dismissDialog();
     }
 

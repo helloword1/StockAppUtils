@@ -44,6 +44,16 @@ public class MoreAdapterModel {
 
     private String ItemName;
 
+    public String getBatchNos() {
+        return batchNos;
+    }
+
+    public void setBatchNos(String batchNos) {
+        this.batchNos = batchNos;
+    }
+
+    private String batchNos;
+
     private int StockQty;
 
     public int getStockQty() {

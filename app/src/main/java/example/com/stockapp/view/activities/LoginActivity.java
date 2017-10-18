@@ -17,6 +17,7 @@ import example.com.stockapp.entries.BaseEntity;
 import example.com.stockapp.entries.RequestParam;
 import example.com.stockapp.https.NetWorkUtil;
 import example.com.stockapp.view.graphs.CleanableEditText;
+import example.com.stockapp.view.tools.SAApplication;
 import example.com.stockapp.view.tools.SysInterceptor;
 import rx.Observer;
 import rx.Subscription;
@@ -136,7 +137,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 finish();
                 // TODO 退出客户端
                 // 退出
-                System.exit(0);
+                ((SAApplication) getApplication()).exit();
             }
             return true;
         }

@@ -32,6 +32,7 @@ import example.com.stockapp.entries.GoodsDetails;
 import example.com.stockapp.view.activities.BaseActivity;
 import example.com.stockapp.view.activities.EnterGoodsActivity;
 import example.com.stockapp.view.adapters.DataAdapter;
+import example.com.stockapp.view.adapters.DataInAdapter;
 import example.com.stockapp.view.tools.Constant;
 
 import static cxx.utils.FileUtils.isHaveSdcard;
@@ -51,6 +52,19 @@ public class PopWindowUtils {
 
     public interface PopWindowClickListener {
         void doClick(int position);
+    }
+
+    private PopWindowInClickListener clickInListener;
+
+    public interface PopWindowInClickListener {
+        void doClick(int position);
+        void clickOther(List<String> datas);
+        void clickCommit();
+    }
+
+    public void setClickInListener(
+            PopWindowInClickListener clickInListener) {
+        this.clickInListener = clickInListener;
     }
 
     public static PopWindowUtils getPopWindow() {
@@ -87,10 +101,11 @@ public class PopWindowUtils {
         adapter.setOnpopuOnClickLIstener(new DataAdapter.popuOnClickListener() {
             @Override
             public void setMoreTime() {
-                datas.add("");
-                datas.add("");
-                datas.add("");
+                datas.add("自定义时间");
+                datas.add("生产日期");
+                datas.add("有效日期");
                 adapter.setOtherTime(true);
+                adapter.setCommitContet("确认入库");
                 adapter.notifyDataSetChanged();
             }
 
@@ -111,6 +126,108 @@ public class PopWindowUtils {
         popWindow.showAtLocation(new View(context), Gravity.TOP, 0, 0);
     }
 
+    public void showButtonInPopwindow(Context context, boolean isOutInv, final List<String> datas) {
+        isShow = true;
+        base = (BaseActivity) context;
+        View popView = View.inflate(context, R.layout.pop_list_item, null);
+        ImageView popuDelete = ((ImageView) popView.findViewById(R.id.popu_delete));
+        popuDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popWindow.dismiss();
+            }
+        });
+        final RecyclerView alRView = (RecyclerView) popView.findViewById(R.id.alRView);
+
+        LinearLayoutManager manager = new LinearLayoutManager(context);
+        alRView.setLayoutManager(manager);
+
+        final DataInAdapter adapter = new DataInAdapter(context, datas);
+        adapter.setOutInventor(isOutInv);
+        alRView.setAdapter(adapter);
+        if (datas.size() > 7) {
+            alRView.getLayoutParams().height = (int) context.getResources().getDimension(R.dimen.y240);
+        }
+        adapter.notifyDataSetChanged();
+        adapter.setOnpopuOnClickLIstener(new DataInAdapter.popuOnClickListener() {
+            @Override
+            public void setMoreTime() {
+                datas.add("自定义时间");
+                datas.add("生产日期");
+                datas.add("有效日期");
+                adapter.setOtherTime(true);
+                adapter.setCommitContet("确认入库");
+                adapter.notifyDataSetChanged();
+                clickInListener.clickOther(datas);
+            }
+
+            @Override
+            public void setChoice(int position) {
+                clickInListener.doClick(position);
+            }
+
+            @Override
+            public void setCommit() {
+                clickInListener.clickCommit();
+            }
+        });
+        popWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        popWindow.setOutsideTouchable(false);// 设置允许在外点击消失
+        popWindow.showAtLocation(new View(context), Gravity.TOP, 0, 0);
+    }
+
+    public void showButtonPanPopwindow(Context context, boolean isOutInv, final List<String> datas) {
+        isShow = true;
+        base = (BaseActivity) context;
+        View popView = View.inflate(context, R.layout.pop_list_item, null);
+        ImageView popuDelete = ((ImageView) popView.findViewById(R.id.popu_delete));
+        popuDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popWindow.dismiss();
+            }
+        });
+        final RecyclerView alRView = (RecyclerView) popView.findViewById(R.id.alRView);
+
+        LinearLayoutManager manager = new LinearLayoutManager(context);
+        alRView.setLayoutManager(manager);
+
+        final DataAdapter adapter = new DataAdapter(context, datas);
+        adapter.setOutInventor(isOutInv);
+        alRView.setAdapter(adapter);
+        if (datas.size() > 7) {
+            alRView.getLayoutParams().height = (int) context.getResources().getDimension(R.dimen.y240);
+        }
+        adapter.notifyDataSetChanged();
+        adapter.setOnpopuOnClickLIstener(new DataAdapter.popuOnClickListener() {
+            @Override
+            public void setMoreTime() {
+                datas.add("自定义时间");
+                datas.add("生产日期");
+                datas.add("有效日期");
+                adapter.setOtherTime(true);
+                adapter.setCommitContet("确认盘点");
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void setChoice(int position) {
+                clickListenerInterface.doClick(position);
+            }
+
+            @Override
+            public void setCommit() {
+            }
+        });
+        popWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        popWindow.setOutsideTouchable(false);// 设置允许在外点击消失
+        popWindow.showAtLocation(new View(context), Gravity.TOP, 0, 0);
+    }
+
     public void showGoodsPopwindow(Context context, final GoodsDetails data) {
 
         base = (BaseActivity) context;
@@ -122,26 +239,26 @@ public class PopWindowUtils {
         ImageView ivChangeName = (ImageView) popView.findViewById(R.id.ivChangeName);
 
         if (NotNull.isNotNull(data.getPic1()))
-        Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + data.getPic1())
-                .placeholder(R.mipmap.good_details).into(ivChangeName);
+            Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + data.getPic1())
+                    .placeholder(R.mipmap.good_details).into(ivChangeName);
 
         tvChangeName.setText(data.getItemName());
 
         tvChangeLeft.setText
-                (String.format("商品编号：%s\n仓库：%s\n生产日期：%s\n负责人：%s",""+data.getItemCode()
-                        ,"","",""));
+                (String.format("商品编号：%s\n仓库：%s\n生产日期：%s\n负责人：%s", "" + data.getItemCode()
+                        , "", "", ""));
         tvChangeRight.setText
-                (String.format("条形码：%s\n仓库量：%s\n有效日期：%s",""+data.getBarcode()
-                        ,""+data.getStock(),""+data.getKeepTime()));
+                (String.format("条形码：%s\n仓库量：%s\n有效日期：%s", "" + data.getBarcode()
+                        , "" + data.getStock(), "" + data.getKeepTime()));
         ImageView tvChangeDelete = (ImageView) popView.findViewById(R.id.tvChangeDelete);
 
 
         tvChangeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("ItemID",data);
-                base.showActivity(EnterGoodsActivity.class,bundle);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("ItemID", data);
+                base.showActivity(EnterGoodsActivity.class, bundle);
             }
         });
         tvChangeDelete.setOnClickListener(new View.OnClickListener() {

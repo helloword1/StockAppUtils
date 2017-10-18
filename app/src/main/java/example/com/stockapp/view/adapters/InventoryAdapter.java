@@ -57,9 +57,11 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         intenvoryViewHolder.tvAdvertoralShop.setText("所属仓库：" + dataSetBean.getStoreName());
         String productDate = dataSetBean.getProductDate();
         if (NotNull.isNotNull(productDate)) {
+            String[] split = productDate.split(" ");
+            productDate=split[0];
             intenvoryViewHolder.proDate.setText("生产日期：" + productDate);
         } else {
-            intenvoryViewHolder.proDate.setText("生产日期：");
+            intenvoryViewHolder.proDate.setText("生产日期：--");
         }
         String batchNo = dataSetBean.getBatchNo();
         if (NotNull.isNotNull(batchNo)) {
