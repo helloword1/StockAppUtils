@@ -468,11 +468,11 @@ public class OutInventoryActivity extends BaseActivity {
 
         baseEntity = (BaseEntity<UserInfo>) FileCache.get(OutInventoryActivity.this).getAsObject(USER_LIST);
         List<UserInfo.StoresAuthorized> storesAuthorized = baseEntity.getData().getStoresAuthorized();
+        mData.addAll(list);
         if (storesAuthorized.size()==1){
             mData.get(0).setContent(storesAuthorized.get(0).getStoreName());
             storeId =""+storesAuthorized.get(0).getStoreId();
         }
-        mData.addAll(list);
         adapter.notifyDataSetChanged();
 
 

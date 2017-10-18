@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import cxx.utils.NotNull;
 import example.com.stockapp.R;
 import example.com.stockapp.entries.InventoryEntity;
 import example.com.stockapp.view.activities.BaseActivity;
@@ -59,6 +60,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         intenvoryViewHolder.GoodOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (NotNull.isNotNull(listener))
                 listener.itemClick(position);
             }
         });
