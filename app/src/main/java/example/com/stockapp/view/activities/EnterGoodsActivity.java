@@ -150,7 +150,6 @@ public class EnterGoodsActivity extends BaseActivity {
                 getPopuData(extras.getString("ItemID"));
             }
 
-
         }
     }
     private void getPopuData(final String id) {
