@@ -57,7 +57,6 @@ public class SADialogUtils {
             @Override
             public void itemClick(int position) {
                 clickListenerInterface.doClick(position);
-
                 dialog6.dismiss();
             }
         });

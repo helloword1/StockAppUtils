@@ -24,6 +24,7 @@ public class SysInterceptor implements Interceptor {
 
     public SysInterceptor(Context context) {
        this.context=context;
+        ((BaseActivity) context).showProgressDialog();
     }
 
     @Override

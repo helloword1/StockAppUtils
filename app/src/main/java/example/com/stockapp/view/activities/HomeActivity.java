@@ -279,7 +279,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                finish();
                 // TODO 退出客户端
                 // 退出
                 ((SAApplication) getApplication()).exit();

@@ -50,7 +50,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        boolean islogin = (Boolean) preferences.getValue(IS_LOGIN, Boolean.class, false);
+        if (islogin) {
+            showActivity(HomeActivity.class);
+            finish();
+            return;
+        }
     }
 
     protected void initData() {
@@ -67,11 +72,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tvLoginUserDelete.setOnClickListener(this);
         tvLoginPassword.setInputType(InputType.TYPE_CLASS_TEXT
                 | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        boolean islogin = (Boolean) preferences.getValue(IS_LOGIN, Boolean.class, false);
-        if (islogin) {
-            showActivity(HomeActivity.class);
-            return;
-        }
+
         obLg = new Observer<BaseEntity>() {
 
             @Override
@@ -134,7 +135,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                finish();
                 // TODO 退出客户端
                 // 退出
                 ((SAApplication) getApplication()).exit();

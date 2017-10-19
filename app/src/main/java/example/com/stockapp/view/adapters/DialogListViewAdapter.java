@@ -39,7 +39,7 @@ public class DialogListViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         IntenvoryViewHolder holder1 = (IntenvoryViewHolder) holder;
         DialogBean dialogBean = datas.get(position);
-        if (dialogBean.isSelct()) {
+        if (dialogBean.isSelct()||datas.size()==1) {
             holder1.popuchioce.setImageResource(R.drawable.vector_ischoice);
         } else {
             holder1.popuchioce.setImageResource(R.drawable.vector_unchoice);

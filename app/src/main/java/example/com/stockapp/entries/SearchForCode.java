@@ -78,7 +78,7 @@ public class SearchForCode implements Serializable {
         private int PrincipalID;
         private Object TraderName;
         private int Stock;
-        private Object Remark;
+        private String Remark;
 
         public String getCategoryName() {
             return CategoryName;
@@ -240,11 +240,11 @@ public class SearchForCode implements Serializable {
             this.Stock = Stock;
         }
 
-        public Object getRemark() {
+        public String getRemark() {
             return Remark;
         }
 
-        public void setRemark(Object Remark) {
+        public void setRemark(String Remark) {
             this.Remark = Remark;
         }
     }

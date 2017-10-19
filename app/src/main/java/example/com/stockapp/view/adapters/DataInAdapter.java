@@ -67,9 +67,9 @@ public class DataInAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 CommitViewHolder commitViewHolder = (CommitViewHolder) holder;
                 commitViewHolder.tvOtherTime.setVisibility(View.GONE);
                 commitViewHolder.tvCommit.setVisibility(View.VISIBLE);
-if (NotNull.isNotNull(content)){
-    commitViewHolder.tvCommit.setText(content);
-}
+                if (NotNull.isNotNull(content)) {
+                    commitViewHolder.tvCommit.setText(content);
+                }
                 commitViewHolder.tvCommit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -77,7 +77,7 @@ if (NotNull.isNotNull(content)){
                     }
                 });
             } else if (position == datas.size() - 2 || position == datas.size() - 3 || position == datas.size() - 4) {
-                OtherTimeViewHolder otherTimeViewHolder = (OtherTimeViewHolder) holder;
+                final OtherTimeViewHolder otherTimeViewHolder = (OtherTimeViewHolder) holder;
                 if (position == datas.size() - 4) {
                     otherTimeViewHolder.tvDateContent.setVisibility(View.GONE);
                     otherTimeViewHolder.item_section_iv.setVisibility(View.GONE);
@@ -93,7 +93,7 @@ if (NotNull.isNotNull(content)){
                     otherTimeViewHolder.dateView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            listener.setChoice(position);
+                            listener.setChoice(position,otherTimeViewHolder.tvDateContent);
                         }
                     });
 //                    listener.setChoice(position);
@@ -104,7 +104,7 @@ if (NotNull.isNotNull(content)){
                 contentViewHolder.tvChoice.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        listener.setChoice(position);
+                        listener.setChoice(position, new TextView(context));
                     }
                 });
                 contentViewHolder.tvData.setText(datas.get(position + 1));
@@ -131,7 +131,7 @@ if (NotNull.isNotNull(content)){
                 contentViewHolder.tvChoice.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        listener.setChoice(position);
+                        listener.setChoice(position, new TextView(context));
                     }
                 });
                 contentViewHolder.tvData.setText(datas.get(position + 1));
@@ -206,7 +206,7 @@ if (NotNull.isNotNull(content)){
     public interface popuOnClickListener {
         void setMoreTime();
 
-        void setChoice(int position);
+        void setChoice(int position, TextView tvDateContent);
 
         void setCommit();
     }

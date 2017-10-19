@@ -36,4 +36,12 @@ public interface GetUserInfoApi {
     @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
     @POST("Stockout/AddEx")
     Observable<BaseEntity<Integer>> AddOutGoods(@Body RequestBody param);
+
+    @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
+    @POST("Stockin/AddEx")
+    Observable<BaseEntity<Integer>> AddInGoods(@Body RequestBody param);
+
+    @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
+    @POST("Inventory/AddEx2")
+    Observable<BaseEntity<Object>> InvertoryGoods(@Body RequestBody param);
 }

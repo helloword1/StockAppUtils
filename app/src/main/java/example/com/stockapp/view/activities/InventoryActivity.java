@@ -15,7 +15,6 @@ import java.util.List;
 import cxx.utils.NotNull;
 import example.com.stockapp.R;
 import example.com.stockapp.entries.BaseEntity;
-import example.com.stockapp.entries.GoodsDetails;
 import example.com.stockapp.entries.InventoryEntity;
 import example.com.stockapp.entries.RequestParam;
 import example.com.stockapp.https.DefaultObserver;
@@ -75,7 +74,8 @@ public class InventoryActivity extends BaseActivity {
         adapter.setoOnGetAdapterListener(new InventoryAdapter.OnGetAdapterListener() {
             @Override
             public void itemClick(int position) {
-                getPopuData(lists.get(position).getItemID());
+                PopWindowUtils.getPopWindow().showGoodsPopwindow(InventoryActivity.this, lists.get(position));
+//                getPopuData(lists.get(position).getItemID());
 
             }
 
@@ -83,41 +83,6 @@ public class InventoryActivity extends BaseActivity {
         });
     }
 
-    private void getPopuData(final String id) {
-        showProgressDialog();
-        RequestParam param = new RequestParam();
-        param.put("id", id);
-        NetWorkUtil.getInventoryApi(new SysInterceptor(this))
-                .getGoodDetail(param)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DefaultObserver<BaseEntity<GoodsDetails>>(InventoryActivity.this) {
-
-                    @Override
-                    public void onCompleted() {
-                        dismissDialog();
-                        Log.d("onCompleted", "------->>");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        dismissDialog();
-                        Log.d("onError", "------->>" + e);
-                    }
-
-                    @Override
-                    public void onNext(BaseEntity<GoodsDetails> objectBaseEntity) {
-                        super.onNext(objectBaseEntity);
-                        GoodsDetails data = objectBaseEntity.getData();
-                        if (NotNull.isNotNull(data)) {
-                            Log.d("onNext", "------->>" + objectBaseEntity);
-                            PopWindowUtils.getPopWindow().showGoodsPopwindow(InventoryActivity.this, data);
-                        }
-                    }
-                });
-
-
-    }
 
     protected void initData() {
         showProgressDialog();

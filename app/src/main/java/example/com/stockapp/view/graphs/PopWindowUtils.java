@@ -28,7 +28,7 @@ import java.util.List;
 import cxx.utils.NotNull;
 import cxx.utils.TimeUtils;
 import example.com.stockapp.R;
-import example.com.stockapp.entries.GoodsDetails;
+import example.com.stockapp.entries.InventoryEntity;
 import example.com.stockapp.view.activities.BaseActivity;
 import example.com.stockapp.view.activities.EnterGoodsActivity;
 import example.com.stockapp.view.adapters.DataAdapter;
@@ -57,7 +57,7 @@ public class PopWindowUtils {
     private PopWindowInClickListener clickInListener;
 
     public interface PopWindowInClickListener {
-        void doClick(int position);
+        void doClick(int position, TextView tvDateContent);
         void clickOther(List<String> datas);
         void clickCommit();
     }
@@ -156,14 +156,14 @@ public class PopWindowUtils {
                 datas.add("生产日期");
                 datas.add("有效日期");
                 adapter.setOtherTime(true);
-                adapter.setCommitContet("确认入库");
+                adapter.setCommitContet("确认");
                 adapter.notifyDataSetChanged();
                 clickInListener.clickOther(datas);
             }
 
             @Override
-            public void setChoice(int position) {
-                clickInListener.doClick(position);
+            public void setChoice(int position, TextView tvDateContent) {
+                clickInListener.doClick(position,tvDateContent);
             }
 
             @Override
@@ -228,7 +228,7 @@ public class PopWindowUtils {
         popWindow.showAtLocation(new View(context), Gravity.TOP, 0, 0);
     }
 
-    public void showGoodsPopwindow(Context context, final GoodsDetails data) {
+    public void showGoodsPopwindow(Context context, final InventoryEntity.DataSetBean data) {
 
         base = (BaseActivity) context;
         final View popView = View.inflate(context, R.layout.goods_details_item, null);
@@ -244,12 +244,26 @@ public class PopWindowUtils {
 
         tvChangeName.setText(data.getItemName());
 
+        String productDate = data.getProductDate();
+        if (!NotNull.isNotNull(productDate))productDate="--";
+        String storeName = data.getStoreName();
+        if (!NotNull.isNotNull(storeName))storeName="";
+        String principalName = data.getPrincipalName();
+        if (!NotNull.isNotNull(principalName))principalName="";
         tvChangeLeft.setText
                 (String.format("商品编号：%s\n仓库：%s\n生产日期：%s\n负责人：%s", "" + data.getItemCode()
-                        , "", "", ""));
+                        , storeName, productDate, principalName));
+
+
+        String qty = data.getQty();
+        if (!NotNull.isNotNull(qty))qty="";
+        String keepTime = data.getKeepTime();
+        if (!NotNull.isNotNull(keepTime))keepTime="--";
+        String barcode = data.getBarcode();
+        if (!NotNull.isNotNull(barcode))barcode="";
         tvChangeRight.setText
-                (String.format("条形码：%s\n仓库量：%s\n有效日期：%s", "" + data.getBarcode()
-                        , "" + data.getStock(), "" + data.getKeepTime()));
+                (String.format("条形码：%s\n仓库量：%s\n有效日期：%s", barcode
+                        , qty, keepTime));
         ImageView tvChangeDelete = (ImageView) popView.findViewById(R.id.tvChangeDelete);
 
 
@@ -257,7 +271,7 @@ public class PopWindowUtils {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("ItemID", data);
+                bundle.putSerializable("ItemID", data.getItemID());
                 base.showActivity(EnterGoodsActivity.class, bundle);
             }
         });

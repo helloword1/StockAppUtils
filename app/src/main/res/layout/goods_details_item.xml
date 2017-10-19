@@ -34,10 +34,10 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="@dimen/x70"
-                android:layout_height="@dimen/x70"
-                android:scaleType="centerCrop"
                 android:id="@+id/ivChangeName"
+                android:layout_width="@dimen/x78"
+                android:layout_height="@dimen/x78"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/good_details" />
 
             <TextView
@@ -46,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
 
-android:layout_marginTop="@dimen/x3"                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/x3"
+                android:gravity="center_horizontal"
                 android:text="999感冒冲剂"
                 android:textColor="@color/textHome" />
         </LinearLayout>

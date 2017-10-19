@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import cxx.utils.NotNull;
 import example.com.stockapp.R;
+import example.com.stockapp.entries.BaseEntity;
 import example.com.stockapp.entries.DialogBean;
 import example.com.stockapp.entries.EnterGoodsBean;
 import example.com.stockapp.entries.GoodsDetails;
@@ -144,9 +146,47 @@ public class EnterGoodsActivity extends BaseActivity {
         Intent intent = getIntent();
         if (NotNull.isNotNull(intent)) {
             Bundle extras = intent.getExtras();
-            data = (GoodsDetails) extras.getSerializable("ItemID");
-            getData();
+            if (NotNull.isNotNull(extras.getString("ItemID"))){
+                getPopuData(extras.getString("ItemID"));
+            }
+
+
         }
+    }
+    private void getPopuData(final String id) {
+        showProgressDialog();
+        RequestParam param = new RequestParam();
+        param.put("id", id);
+        NetWorkUtil.getInventoryApi(new SysInterceptor(this))
+                .getGoodDetail(param)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DefaultObserver<BaseEntity<GoodsDetails>>(EnterGoodsActivity.this) {
+
+                    @Override
+                    public void onCompleted() {
+                        dismissDialog();
+                        Log.d("onCompleted", "------->>");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismissDialog();
+                        Log.d("onError", "------->>" + e);
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<GoodsDetails> objectBaseEntity) {
+                        super.onNext(objectBaseEntity);
+                        data = objectBaseEntity.getData();
+                        if (NotNull.isNotNull(data)) {
+                            Log.d("onNext", "------->>" + objectBaseEntity);
+                            getData();
+                        }
+                    }
+                });
+
+
     }
 
     private void getData() {

@@ -233,7 +233,11 @@ public class OutInventoryActivity extends BaseActivity {
                     if (datas_M.size() == 0) {
                         for (int i = 0; i < storesAuthorized.size(); i++) {
                             UserList authorized = storesAuthorized.get(i);
-                            datas_M.add(new DialogBean(authorized.getUserName(), "" + authorized.getUserCode()));
+                            DialogBean bean = new DialogBean(authorized.getUserName(), "" + authorized.getUserCode());
+                            if (TextUtils.equals(authorized.getUserName(),preferences.getStringValue(CURRENT_USER))){
+                                bean.setSelct(true);
+                            }
+                            datas_M.add(bean);
                         }
                     }
                     final SADialogUtils dialogUtils = new SADialogUtils(OutInventoryActivity.this);
