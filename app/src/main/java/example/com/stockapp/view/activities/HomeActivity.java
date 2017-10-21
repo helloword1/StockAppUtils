@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jinlin.zxing.CaptureActivity;
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -81,7 +82,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
+        //设置右滑不finsh界面
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeBackEnable(false);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(true);
     }
 
     protected void initView() {
@@ -227,6 +231,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.titleRight://二维码
+//                showActivity(AddGoodsActivity.class);
                 initpermission();
                 showActivityForResult(CaptureActivity.class, 111);
                 break;
@@ -257,13 +262,45 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == 111) {
-                String dataStr = data.getStringExtra("DATA");
+                final String dataStr = data.getStringExtra("DATA");
                 if (TextUtils.equals(dataStr, "Fail")) {//扫描失败
 
                 } else {//成功
-                    Toast.makeText(this,
-                            "识别结果:" + dataStr,
-                            Toast.LENGTH_SHORT).show();
+                    RequestParam param = new RequestParam();
+                    param.put("barcode", dataStr);
+                    NetWorkUtil.getUserInfoApi(new SysInterceptor(this))
+                            .getCodeStr(param)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new DefaultObserver<BaseEntity<Boolean>>(this) {
+
+                                @Override
+                                public void onCompleted() {
+                                    Log.d("onCompleted", "------->>");
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    super.onError(e);
+                                    LogUtils.d("onError", "------->>" + e);
+                                }
+
+                                @Override
+                                public void onNext(BaseEntity<Boolean> baseEntity) {
+                                    super.onNext(baseEntity);
+                                    LogUtils.d("onNext", "------->>" + baseEntity);
+                                    if (baseEntity.getData()){
+                                        Bundle bundle=new Bundle();
+                                        bundle.putString("BARCODE",dataStr);
+                                        showActivity(InventoryActivity.class,bundle);
+                                    }else{
+                                        Bundle bundle=new Bundle();
+                                        bundle.putString("BARCODE",dataStr);
+                                        showActivity(AddGoodsActivity.class,bundle);
+                                    }
+
+                                }
+                            });
                 }
 
             }

@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.jinlin.zxing.CaptureActivity;
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -106,6 +107,11 @@ public class InInventoryActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //设置右滑不finsh界面
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeBackEnable(true);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(false);
+
     }
 
     @Override
@@ -228,7 +234,6 @@ public class InInventoryActivity extends BaseActivity {
                             dialogUtils.notifyAdapter();
                             content.setText(datas.get(position).getTypeName());
                             mData.get(0).setContent(datas.get(position).getTypeName());
-                            CurrentUserId = datas.get(position).getId();
                         }
                     });
                 } else if (position == 1) {//操作人
@@ -257,6 +262,7 @@ public class InInventoryActivity extends BaseActivity {
                             dialogUtils.notifyAdapter();
                             content.setText(datas_M.get(position).getTypeName());
                             mData.get(1).setContent(datas_M.get(position).getTypeName());
+                            CurrentUserId = datas.get(position).getId();
                         }
                     });
                 } else {//备注
@@ -270,17 +276,42 @@ public class InInventoryActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == 111) {
-                String dataStr = data.getStringExtra("DATA");
+                final String dataStr = data.getStringExtra("DATA");
                 if (TextUtils.equals(dataStr, "Fail")) {//扫描失败
 
                 } else {//成功
-//                    Toast.makeText(this,
-//                            "识别结果:" + dataStr,
-//                            Toast.LENGTH_SHORT).show();
-                    setCode(dataStr);
+                    RequestParam param = new RequestParam();
+                    param.put("barcode", dataStr);
+                    NetWorkUtil.getUserInfoApi(new SysInterceptor(this))
+                            .getCodeStr(param)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new DefaultObserver<BaseEntity<Boolean>>(this) {
 
+                                @Override
+                                public void onCompleted() {
+                                    Log.d("onCompleted", "------->>");
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    super.onError(e);
+                                    LogUtils.d("onError", "------->>" + e);
+                                }
+                                @Override
+                                public void onNext(BaseEntity<Boolean> baseEntity) {
+                                    super.onNext(baseEntity);
+                                    LogUtils.d("onNext", "------->>" + baseEntity);
+                                    if (baseEntity.getData()){
+                                        setCode(dataStr);
+                                    }else{
+                                        Bundle bundle=new Bundle();
+                                        bundle.putString("BARCODE",dataStr);
+                                        showActivity(AddGoodsActivity.class,bundle);
+                                    }
+                                }
+                            });
                 }
-
             }
         }
     }
@@ -315,32 +346,14 @@ public class InInventoryActivity extends BaseActivity {
                         super.onNext(baseEntity);
                         final SearchForCode searchFotCode = baseEntity.getData();
                         if (!NotNull.isNotNull(searchFotCode)) {
-//                            if (NotNull.isNotNull(dialog6)) {
-//                                dialog6.show();
-//                                return;
-//                            }
-//                            dialog6 = getDialongView(linearLayout6);
-//                            setWindowCenter(dialog6);
                             MyToast.showToastCustomerStyleText(InInventoryActivity.this, "该商品没有库存记录");
                         }
                         final SearchForCode.ItemBean item = searchFotCode.getItem();
                         if (!NotNull.isNotNull(item)) {
-//                            if (NotNull.isNotNull(dialog6)) {
-//                                dialog6.show();
-//                                return;
-//                            }
-//                            dialog6 = getDialongView(linearLayout6);
-//                            setWindowCenter(dialog6);
                             MyToast.showToastCustomerStyleText(InInventoryActivity.this, "该商品没有库存记录");
                         }
                         final List<SearchForCode.BatchNosBean> batchNos = searchFotCode.getBatchNos();
                         if (!NotNull.isNotNull(batchNos) || (NotNull.isNotNull(batchNos) && batchNos.size() == 0)) {
-//                            if (NotNull.isNotNull(dialog6)) {
-//                                dialog6.show();
-//                                return;
-//                            }
-//                            dialog6 = getDialongView(linearLayout6);
-//                            setWindowCenter(dialog6);
                             MyToast.showToastCustomerStyleText(InInventoryActivity.this, "该商品没有库存记录");
                         } else {
 
@@ -549,7 +562,8 @@ public class InInventoryActivity extends BaseActivity {
         List<MoreAdapterModel> list = new ArrayList<>();
         list.add(new MoreAdapterModel("仓库", "", true));
         MoreAdapterModel user = new MoreAdapterModel("操作人", "", true);
-        user.setContent(preferences.getStringValue(CURRENT_USER));
+        String stringValue = preferences.getStringValue(CURRENT_USER);
+        user.setContent(stringValue);
         list.add(user);
         list.add(new MoreAdapterModel("备注", "", true));
 
@@ -559,6 +573,11 @@ public class InInventoryActivity extends BaseActivity {
 
         baseEntity = (BaseEntity<UserInfo>) FileCache.get(InInventoryActivity.this).getAsObject(USER_LIST);
         List<UserInfo.StoresAuthorized> storesAuthorized = baseEntity.getData().getStoresAuthorized();
+        for (int i = 0; i < storesAuthorized.size(); i++) {
+            if (TextUtils.equals(stringValue,storesAuthorized.get(i).getUserName())){
+                CurrentUserId=String.valueOf(storesAuthorized.get(i).getUserId());
+            }
+        }
         mData.addAll(list);
         if (storesAuthorized.size() == 1) {
             mData.get(0).setContent(storesAuthorized.get(0).getStoreName());
@@ -594,7 +613,7 @@ public class InInventoryActivity extends BaseActivity {
         }
         List<EditText> editTextList = adapter.getEditTextList();
         try {
-            Bill.put("InstockType", "101");
+            Bill.put("InstockType", "0");
             Bill.put("InstockDate", getcurrentDate());
             Bill.put("TraderName", "供应商");
             Bill.put("PrincipalID", CurrentUserId);

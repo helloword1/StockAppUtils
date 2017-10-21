@@ -25,6 +25,7 @@
                 android:id="@+id/tvDeaLine"
                 android:drawableRight="@mipmap/choise_normal"
                 android:gravity="center"
+                android:textColor="@color/choice_text"
                 android:paddingBottom="@dimen/x8"
                 android:paddingTop="@dimen/x8"
                 android:text="有效期" />
@@ -42,6 +43,7 @@
                 android:drawablePadding="@dimen/x5"
                 android:drawableRight="@mipmap/choise_normal"
                 android:gravity="center"
+                android:textColor="@color/choice_text"
                 android:id="@+id/tvInvenSum"
                 android:paddingBottom="@dimen/x8"
                 android:paddingTop="@dimen/x8"

@@ -1,7 +1,10 @@
 package example.com.stockapp.https;
 
+import java.util.List;
+
 import example.com.stockapp.entries.BaseEntity;
 import example.com.stockapp.entries.GoodsDetails;
+import example.com.stockapp.entries.Grassify;
 import example.com.stockapp.entries.InventoryEntity;
 import example.com.stockapp.entries.RequestParam;
 import retrofit2.http.FieldMap;
@@ -26,4 +29,6 @@ public interface GetInventoryApi {
     @POST("Item/Update")
     Observable<BaseEntity<Object>> upDataGoods(@FieldMap RequestParam param);
 
+    @GET("ItemCategory/SelectAll")
+    Observable<BaseEntity<List<Grassify>>> getGlassify(@QueryMap RequestParam param);
 }

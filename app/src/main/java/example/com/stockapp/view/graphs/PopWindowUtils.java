@@ -30,7 +30,7 @@ import cxx.utils.TimeUtils;
 import example.com.stockapp.R;
 import example.com.stockapp.entries.InventoryEntity;
 import example.com.stockapp.view.activities.BaseActivity;
-import example.com.stockapp.view.activities.EnterGoodsActivity;
+import example.com.stockapp.view.activities.EditGoodsActivity;
 import example.com.stockapp.view.adapters.DataAdapter;
 import example.com.stockapp.view.adapters.DataInAdapter;
 import example.com.stockapp.view.tools.Constant;
@@ -255,8 +255,7 @@ public class PopWindowUtils {
                         , storeName, productDate, principalName));
 
 
-        String qty = data.getQty();
-        if (!NotNull.isNotNull(qty))qty="";
+        int qty = data.getQty();
         String keepTime = data.getKeepTime();
         if (!NotNull.isNotNull(keepTime))keepTime="--";
         String barcode = data.getBarcode();
@@ -272,7 +271,7 @@ public class PopWindowUtils {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("ItemID", data.getItemID());
-                base.showActivity(EnterGoodsActivity.class, bundle);
+                base.showActivity(EditGoodsActivity.class, bundle);
             }
         });
         tvChangeDelete.setOnClickListener(new View.OnClickListener() {

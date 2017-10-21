@@ -13,11 +13,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
+import cxx.utils.NotNull;
 import example.com.stockapp.R;
 import example.com.stockapp.entries.EnterGoodsBean;
 import example.com.stockapp.view.graphs.PopWindowUtils;
+import example.com.stockapp.view.tools.Constant;
+import example.com.stockapp.view.tools.LogUtils;
 
 /**
  * Created by Administrator on 2017/9/30.
@@ -41,7 +46,8 @@ public class EnterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 1) {
-            return new enterGoodsViewHolder(inflate.inflate(R.layout.enter_goods_item, null));
+            View inflate = this.inflate.inflate(R.layout.enter_goods_item, null);
+            return new enterGoodsViewHolder(inflate);
         } else {
             return new PicViewHolder(inflate.inflate(R.layout.pic_goods_item, null));
         }
@@ -67,16 +73,16 @@ public class EnterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        LogUtils.i("",""+position);
         if (isAdd && position > 10) {
             PicViewHolder picViewHolder = (PicViewHolder) holder;
             if (position == 11) {
                 picViewHolder.viewBg.setVisibility(View.GONE);
                 picViewHolder.btn_confir.setVisibility(View.GONE);
                 picViewHolder.tvAddPic.setVisibility(View.VISIBLE);
-                if (bitmap != null) {
-                    picViewHolder.ivAddPic.setImageBitmap(bitmap);
-                    picViewHolder.tvAddPic.setVisibility(View.GONE);
-                }
+                if (NotNull.isNotNull(datas.get(position).getPic2Url()))
+                Glide.with(context).load(Constant.BASE_IMG_HEAD_URL+datas.get(position).getPic2Url()).into(picViewHolder.ivAddPic);
+                picViewHolder.tvAddPic.setVisibility(View.GONE);
                 picViewHolder.ivAddPic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -90,16 +96,14 @@ public class EnterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 picViewHolder.tvAddPic.setVisibility(View.GONE);
             }
             return;
-        } else if (position > 8) {
+        } else if (!isAdd &&position > 8) {
             PicViewHolder picViewHolder = (PicViewHolder) holder;
             if (position == 9) {
                 picViewHolder.viewBg.setVisibility(View.GONE);
                 picViewHolder.btn_confir.setVisibility(View.GONE);
                 picViewHolder.tvAddPic.setVisibility(View.VISIBLE);
-                if (bitmap != null) {
-                    picViewHolder.ivAddPic.setImageBitmap(bitmap);
-                    picViewHolder.tvAddPic.setVisibility(View.GONE);
-                }
+                Glide.with(context).load(Constant.BASE_IMG_HEAD_URL+datas.get(position).getPic2Url()).into(picViewHolder.ivAddPic);
+                picViewHolder.tvAddPic.setVisibility(View.GONE);
                 picViewHolder.ivAddPic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -116,15 +120,10 @@ public class EnterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         EnterGoodsBean enterGoodsBean = datas.get(position);
         enterGoodsViewHolder goodsViewHolder = (enterGoodsViewHolder) holder;
+        goodsViewHolder.itemView.setTag(position);
         goodsViewHolder.itemsectioncontenttitletv.setText(enterGoodsBean.getTitle());
         if (enterGoodsBean.isHaveRight()) {
             goodsViewHolder.itemsectioniv.setVisibility(View.VISIBLE);
-            goodsViewHolder.cardview0.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.itemClick(position);
-                }
-            });
         } else {
             goodsViewHolder.itemsectioniv.setVisibility(View.GONE);
         }
@@ -132,7 +131,8 @@ public class EnterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (enterGoodsBean.isInput()) {
             goodsViewHolder.item_section_et.setVisibility(View.VISIBLE);
             goodsViewHolder.itemsectioncontent.setVisibility(View.GONE);
-            goodsViewHolder.item_section_et.setHint(enterGoodsBean.getContent());
+            goodsViewHolder.item_section_et.setText(enterGoodsBean.getContent());
+            goodsViewHolder.item_section_et.setHint(enterGoodsBean.getHint());
             listener.getEitTextData(position, goodsViewHolder.item_section_et);
         } else {
             goodsViewHolder.item_section_et.setVisibility(View.GONE);
@@ -167,6 +167,13 @@ public class EnterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             this.itemsectioncontent = (TextView) inflate.findViewById(R.id.item_section_content);
             this.itemsectioncontenttitletv = (TextView) inflate.findViewById(R.id.item_section_content_title_tv);
             this.item_section_et = (EditText) inflate.findViewById(R.id.item_section_et);
+            cardview0.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (NotNull.isNotNull(listener))
+                    listener.itemClick((int)v.getTag());
+                }
+            });
 
         }
     }

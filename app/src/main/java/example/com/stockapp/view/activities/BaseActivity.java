@@ -18,6 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jude.swipbackhelper.SwipeBackHelper;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -82,6 +84,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         inflation = LayoutInflater.from(this);
         saApplication = (SAApplication) getApplication();
         saApplication.addActivity(this);
+        //滑动删除库初始化
+        SwipeBackHelper.onCreate(this);
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeBackEnable(true)
+                .setSwipeSensitivity(0.5f)
+                .setSwipeRelateEnable(true)
+                .setSwipeRelateOffset(300);
+
         initTitleView();
         initContentView();
         initView();

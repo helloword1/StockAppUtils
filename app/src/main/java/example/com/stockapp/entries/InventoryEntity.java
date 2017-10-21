@@ -241,11 +241,11 @@ public class InventoryEntity {
             ItemID = itemID;
         }
 
-        public String getQty() {
+        public int getQty() {
             return Qty;
         }
 
-        public void setQty(String qty) {
+        public void setQty(int qty) {
             Qty = qty;
         }
 
@@ -312,7 +312,7 @@ public class InventoryEntity {
         private int StoreID;
         private String BatchNo;
         private String ItemID;
-        private String Qty;
+        private int Qty;
         private String OccupiedOutQty;
         private String OccupiedInQty;
         private String Remark;

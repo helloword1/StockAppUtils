@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.jude.swipbackhelper.SwipeBackHelper;
+
 import cxx.utils.NotNull;
 import example.com.stockapp.R;
 import example.com.stockapp.entries.BaseEntity;
@@ -50,12 +52,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        boolean islogin = (Boolean) preferences.getValue(IS_LOGIN, Boolean.class, false);
-        if (islogin) {
-            showActivity(HomeActivity.class);
-            finish();
-            return;
-        }
+        //设置右滑不finsh界面
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeBackEnable(false);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(true);
     }
 
     protected void initData() {

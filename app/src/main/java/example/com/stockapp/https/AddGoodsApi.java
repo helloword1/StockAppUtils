@@ -1,9 +1,9 @@
 package example.com.stockapp.https;
 
 import example.com.stockapp.entries.BaseEntity;
-import example.com.stockapp.entries.RequestParam;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -12,7 +12,7 @@ import rx.Observable;
  */
 
 public interface AddGoodsApi {
-    @FormUrlEncoded
-    @POST("Item/Add")
-    Observable<BaseEntity<Object>> addGoods(@FieldMap RequestParam param);
+    @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
+    @POST("Item/Save")
+    Observable<BaseEntity<Integer>> addGoods(@Body RequestBody param);
 }

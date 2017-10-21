@@ -28,7 +28,7 @@
                 app:cardElevation="@dimen/x2"
                 app:contentPaddingBottom="0dp">
 
-                <example.com.stockapp.view.graphs.AlighRecycleView
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/enter_goods_rv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

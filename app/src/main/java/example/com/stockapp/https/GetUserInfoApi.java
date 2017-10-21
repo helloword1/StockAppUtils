@@ -30,6 +30,9 @@ public interface GetUserInfoApi {
     @GET("User/SelectAll")
     Observable<BaseEntity<List<UserList>>> getUserList(@QueryMap RequestParam param);
 
+    @GET("item/ExistsByBarcode")
+    Observable<BaseEntity<Boolean>> getCodeStr(@QueryMap RequestParam param);
+
     @GET("Item/GetViewWithBatchNoByBarcode")
     Observable<BaseEntity<SearchForCode>> getOutGoods(@QueryMap RequestParam param);
 

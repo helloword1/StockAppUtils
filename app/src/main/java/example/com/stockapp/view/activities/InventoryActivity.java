@@ -1,12 +1,15 @@
 package example.com.stockapp.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
@@ -34,12 +37,15 @@ public class InventoryActivity extends BaseActivity {
     private android.widget.TextView tvDeaLine;
     private android.widget.TextView tvInvenSum;
     private com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView outinventoryrv;
-    private boolean isDealine = true;
-    private boolean isInvenSum = true;
+    private int isDealine = 1;
+    private int isInvenSum = 1;
     private List<InventoryEntity.DataSetBean> lists;
     private String barcode = "";
     private String ItemType = "";
     private String storeid = "";
+    private String Sort = "";
+    private String Indate = "";
+    private String Qty = "";
     private int PageIndex = 1;
     private InventoryAdapter adapter;
     private boolean isHaveMore;
@@ -47,7 +53,11 @@ public class InventoryActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
+        //设置右滑不finsh界面
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeBackEnable(true);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(true);
+
     }
 
     @Override
@@ -75,22 +85,28 @@ public class InventoryActivity extends BaseActivity {
             @Override
             public void itemClick(int position) {
                 PopWindowUtils.getPopWindow().showGoodsPopwindow(InventoryActivity.this, lists.get(position));
-//                getPopuData(lists.get(position).getItemID());
-
             }
 
 
         });
+
+        Intent intent = getIntent();
+        if (NotNull.isNotNull(intent)&&NotNull.isNotNull(intent.getExtras())){
+            Bundle extras = intent.getExtras();
+            String barcode = extras.getString("BARCODE");
+            if (NotNull.isNotNull(barcode)){
+                this.barcode = barcode;
+            }
+        }
     }
-
-
+    @Override
     protected void initData() {
-        showProgressDialog();
         RequestParam param = new RequestParam();
         param.put("barcode", barcode);
         param.put("ItemType", ItemType);
         param.put("storeid", storeid);
         param.put("PageIndex", PageIndex);
+        param.put("Sort", Sort);
         NetWorkUtil.getInventoryApi(new SysInterceptor(this))
                 .getUserInfo(param)
                 .subscribeOn(Schedulers.io())
@@ -150,29 +166,62 @@ public class InventoryActivity extends BaseActivity {
         tvDeaLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvDeaLine.setTextColor(getResources().getColor(R.color.colorAccent));
-                if (isDealine) {
-                    isDealine = false;
+                if (isDealine == 0) {//有效期排序
+                    isDealine = 1;
+                    tvDeaLine.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.choise_normal, 0);
+                    tvDeaLine.setTextColor(getResources().getColor(R.color.choice_text));
+                    Indate="";
+
+                } else if (isDealine == 1) {
+                    isDealine = 2;
                     tvDeaLine.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.choise_up, 0);
-                } else {
-                    isDealine = true;
+                    tvDeaLine.setTextColor(getResources().getColor(R.color.colorAccent));
+                    Indate="BatchNo:1";
+                } else if (isDealine == 2) {
+                    isDealine = 0;
                     tvDeaLine.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.choise_down, 0);
+                    tvDeaLine.setTextColor(getResources().getColor(R.color.colorAccent));
+                    Indate="BatchNo:2";
                 }
+                getSort();
             }
         });
         tvInvenSum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvInvenSum.setTextColor(getResources().getColor(R.color.colorAccent));
-                if (isInvenSum) {
-                    isInvenSum = false;
+                if (isInvenSum == 0) {//库存量排序
+                    isInvenSum = 1;
+                    tvInvenSum.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.choise_normal, 0);
+                    tvInvenSum.setTextColor(getResources().getColor(R.color.choice_text));
+                    Qty="";
+                } else if (isInvenSum == 1) {
+                    isInvenSum = 2;
                     tvInvenSum.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.choise_up, 0);
-                } else {
-                    isInvenSum = true;
+                    tvInvenSum.setTextColor(getResources().getColor(R.color.colorAccent));
+                    Qty="Qty:1";
+                } else if (isInvenSum == 2) {
+                    isInvenSum = 0;
                     tvInvenSum.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.choise_down, 0);
+                    tvInvenSum.setTextColor(getResources().getColor(R.color.colorAccent));
+                    Qty="Qty:2";
                 }
+                getSort();
             }
         });
+
+    }
+    private void getSort(){
+        if (TextUtils.equals(Qty,"")&&TextUtils.equals(Indate,"")){
+            Sort="";
+        }else if (TextUtils.equals(Qty,"")){
+            Sort=Indate;
+        }else if (TextUtils.equals(Indate,"")){
+            Sort=Qty;
+        }else {
+            Sort=Indate+","+Qty;
+        }
+        lists.clear();
+        initData();
 
     }
 }

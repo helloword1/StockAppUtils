@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.jinlin.zxing.CaptureActivity;
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -115,6 +116,11 @@ public class CheckInventoryActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        //设置右滑不finsh界面
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeBackEnable(true);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(false);
+
         title.setText(R.string.checkInventory);
         this.btnoutinventory = (Button) findViewById(R.id.btn_out_inventory);
         btnoutinventory.setText("确认盘点");
@@ -173,10 +179,10 @@ public class CheckInventoryActivity extends BaseActivity {
                 if (!NotNull.isNotNull(storeId) || TextUtils.equals("", storeId)) {
                     MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "请选择仓库");
                 } else {
-                    dataStr = "6931037800803";
-                    setCode(dataStr);
-//                    initpermission();
-//                    showActivityForResult(CaptureActivity.class, 111);
+//                    dataStr = "6931037800803";
+//                    setCode(dataStr);
+                    initpermission();
+                    showActivityForResult(CaptureActivity.class, 111);
                 }
             }
 
@@ -257,6 +263,7 @@ public class CheckInventoryActivity extends BaseActivity {
                             dialogUtils.notifyAdapter();
                             content.setText(datas_M.get(position).getTypeName());
                             mData.get(1).setContent(datas_M.get(position).getTypeName());
+                            CurrentUserId=datas_M.get(position).getId();
                         }
                     });
                 } else {//备注
@@ -550,7 +557,8 @@ public class CheckInventoryActivity extends BaseActivity {
         List<MoreAdapterModel> list = new ArrayList<>();
         list.add(new MoreAdapterModel("仓库", "", true));
         MoreAdapterModel user = new MoreAdapterModel("操作人", "", true);
-        user.setContent(preferences.getStringValue(CURRENT_USER));
+        String stringValue = preferences.getStringValue(CURRENT_USER);
+        user.setContent(stringValue);
         list.add(user);
         list.add(new MoreAdapterModel("备注", "", true));
 
@@ -560,6 +568,11 @@ public class CheckInventoryActivity extends BaseActivity {
 
         baseEntity = (BaseEntity<UserInfo>) FileCache.get(CheckInventoryActivity.this).getAsObject(USER_LIST);
         List<UserInfo.StoresAuthorized> storesAuthorized = baseEntity.getData().getStoresAuthorized();
+        for (int i = 0; i < storesAuthorized.size(); i++) {
+            if (TextUtils.equals(stringValue,storesAuthorized.get(i).getUserName())){
+                CurrentUserId=String.valueOf(storesAuthorized.get(i).getUserId());
+            }
+        }
         mData.addAll(list);
         if (storesAuthorized.size() == 1) {
             mData.get(0).setContent(storesAuthorized.get(0).getStoreName());

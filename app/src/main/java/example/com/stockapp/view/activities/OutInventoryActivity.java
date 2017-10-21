@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jinlin.zxing.CaptureActivity;
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -97,6 +98,11 @@ public class OutInventoryActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //设置右滑不finsh界面
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeBackEnable(true);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(false);
+
     }
 
     @Override
@@ -222,7 +228,6 @@ public class OutInventoryActivity extends BaseActivity {
                             dialogUtils.notifyAdapter();
                             content.setText(datas.get(position).getTypeName());
                             mData.get(0).setContent(datas.get(position).getTypeName());
-                            CurrentUserId = datas.get(position).getId();
                         }
                     });
                 } else if (position == 1) {//操作人
@@ -255,6 +260,7 @@ public class OutInventoryActivity extends BaseActivity {
                             dialogUtils.notifyAdapter();
                             content.setText(datas_M.get(position).getTypeName());
                             mData.get(1).setContent(datas_M.get(position).getTypeName());
+                            CurrentUserId = datas_M.get(position).getId();
                         }
                     });
                 } else {//备注
@@ -473,7 +479,8 @@ public class OutInventoryActivity extends BaseActivity {
         List<MoreAdapterModel> list = new ArrayList<>();
         list.add(new MoreAdapterModel("仓库", "", true));
         MoreAdapterModel user = new MoreAdapterModel("操作人", "", true);
-        user.setContent(preferences.getStringValue(CURRENT_USER));
+        String stringValue = preferences.getStringValue(CURRENT_USER);
+        user.setContent(stringValue);
         list.add(user);
         list.add(new MoreAdapterModel("备注", "", true));
 
@@ -483,6 +490,11 @@ public class OutInventoryActivity extends BaseActivity {
 
         baseEntity = (BaseEntity<UserInfo>) FileCache.get(OutInventoryActivity.this).getAsObject(USER_LIST);
         List<UserInfo.StoresAuthorized> storesAuthorized = baseEntity.getData().getStoresAuthorized();
+        for (int i = 0; i < storesAuthorized.size(); i++) {
+            if (TextUtils.equals(storesAuthorized.get(i).getUserName(),stringValue)){
+                CurrentUserId=String.valueOf(storesAuthorized.get(i).getUserId());
+            }
+        }
         mData.addAll(list);
         if (storesAuthorized.size() == 1) {
             mData.get(0).setContent(storesAuthorized.get(0).getStoreName());

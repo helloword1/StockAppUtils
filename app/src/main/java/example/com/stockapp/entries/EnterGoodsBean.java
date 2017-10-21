@@ -10,6 +10,46 @@ public class EnterGoodsBean {
     private boolean isHaveRight;
     private boolean isInput;
 
+    public String getPic2Url() {
+        return pic2Url;
+    }
+
+    public void setPic2Url(String pic2Url) {
+        this.pic2Url = pic2Url;
+    }
+
+    private String pic2Url;
+
+    public String getPic1Url() {
+        return pic1Url;
+    }
+
+    public void setPic1Url(String pic1Url) {
+        this.pic1Url = pic1Url;
+    }
+
+    private String pic1Url;
+
+    public String getHint() {
+        return Hint;
+    }
+
+    public void setHint(String hint) {
+        Hint = hint;
+    }
+
+    private String Hint;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
+
     public String getTitle() {
         return title;
     }
@@ -42,9 +82,9 @@ public class EnterGoodsBean {
         isInput = input;
     }
 
-    public EnterGoodsBean(String title, String content, boolean isHaveRight, boolean isInput) {
+    public EnterGoodsBean(String title, String hint, boolean isHaveRight, boolean isInput) {
         this.title = title;
-        this.content = content;
+        this.Hint = hint;
         this.isHaveRight = isHaveRight;
         this.isInput = isInput;
     }

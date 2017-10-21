@@ -5,14 +5,14 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableTop="@mipmap/add_view"
-        android:layout_centerInParent="true"
         android:gravity="center"
         android:drawablePadding="@dimen/x8"
         android:paddingTop="@dimen/x8"
         android:id="@+id/addGoods"
+        android:layout_marginLeft="@dimen/x8"
         android:textSize="13sp"
         android:paddingBottom="@dimen/x3"
         android:textColor="#888888"

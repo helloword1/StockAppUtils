@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activities.LoginActivity"
+        <activity android:name=".view.activities.StartActivity"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,15 +24,17 @@
         <activity android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:name=".view.activities.CheckInventoryActivity" />
         <activity android:name=".view.activities.InventoryActivity" />
+        <activity android:name=".view.activities.LoginActivity" />
         <activity android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:name=".view.activities.InInventoryActivity" />
         <activity android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:name=".view.activities.OutInventoryActivity" />
-        <activity android:name=".view.activities.EnterGoodsActivity" />
+        <activity android:name=".view.activities.EditGoodsActivity" />
         <activity
             android:name=".view.activities.HomeActivity"
             android:launchMode="singleInstance"/>
         <activity android:name=".view.activities.MoreActivity" />
+        <activity android:name=".view.activities.AddGoodsActivity" />
     </application>
 
 </manifest>

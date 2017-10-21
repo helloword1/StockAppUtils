@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import cxx.utils.NotNull;
 import example.com.stockapp.R;
 import example.com.stockapp.entries.DialogBean;
 
@@ -48,6 +49,7 @@ public class DialogListViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         holder1.item_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (NotNull.isNotNull(listener))
                 listener.itemClick(position);
             }
         });
