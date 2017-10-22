@@ -179,8 +179,7 @@ public class CheckInventoryActivity extends BaseActivity {
                 if (!NotNull.isNotNull(storeId) || TextUtils.equals("", storeId)) {
                     MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "请选择仓库");
                 } else {
-//                    dataStr = "6931037800803";
-//                    setCode(dataStr);
+//                    setCode("6932512600369");
                     initpermission();
                     showActivityForResult(CaptureActivity.class, 111);
                 }
@@ -242,7 +241,7 @@ public class CheckInventoryActivity extends BaseActivity {
                         for (int i = 0; i < storesAuthorized.size(); i++) {
                             UserList authorized = storesAuthorized.get(i);
                             DialogBean bean = new DialogBean(authorized.getUserName(), "" + authorized.getUserCode());
-                            if (TextUtils.equals(authorized.getUserName(),preferences.getStringValue(CURRENT_USER))){
+                            if (TextUtils.equals(authorized.getUserName(), preferences.getStringValue(CURRENT_USER))) {
                                 bean.setSelct(true);
                             }
                             datas_M.add(bean);
@@ -263,7 +262,7 @@ public class CheckInventoryActivity extends BaseActivity {
                             dialogUtils.notifyAdapter();
                             content.setText(datas_M.get(position).getTypeName());
                             mData.get(1).setContent(datas_M.get(position).getTypeName());
-                            CurrentUserId=datas_M.get(position).getId();
+                            CurrentUserId = datas_M.get(position).getId();
                         }
                     });
                 } else {//备注
@@ -285,6 +284,7 @@ public class CheckInventoryActivity extends BaseActivity {
 //                            "识别结果:" + dataStr,
 //                            Toast.LENGTH_SHORT).show();
                     setCode(dataStr);
+
 
                 }
 
@@ -328,160 +328,136 @@ public class CheckInventoryActivity extends BaseActivity {
 //                            }
 //                            dialog6 = getDialongView(linearLayout6);
 //                            setWindowCenter(dialog6);
-                            MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "该商品没有库存记录");
+                            MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "该商品不存在");
+                            return;
                         }
+                        listInts.clear();
                         final SearchForCode.ItemBean item = searchFotCode.getItem();
                         if (!NotNull.isNotNull(item)) {
-//                            if (NotNull.isNotNull(dialog6)) {
-//                                dialog6.show();
-//                                return;
-//                            }
-//                            dialog6 = getDialongView(linearLayout6);
-//                            setWindowCenter(dialog6);
-                            MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "该商品没有库存记录");
+//
+                            MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "该商品不存在");
                         }
                         final List<SearchForCode.BatchNosBean> batchNos = searchFotCode.getBatchNos();
-                        if (!NotNull.isNotNull(batchNos) || (NotNull.isNotNull(batchNos) && batchNos.size() == 0)) {
-//                            if (NotNull.isNotNull(dialog6)) {
-//                                dialog6.show();
-//                                return;
-//                            }
-//                            dialog6 = getDialongView(linearLayout6);
-//                            setWindowCenter(dialog6);
-                            MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "该商品没有库存记录");
-                        } else {
-
-                            datas1 = new ArrayList<>();
-                            datas1.add("");
-                            for (int i = 0; i < batchNos.size(); i++) {
-                                SearchForCode.BatchNosBean batchNosBean = batchNos.get(i);
-                                String productDate = batchNosBean.getProductDate();
-                                if (!NotNull.isNotNull(productDate)) {
-                                    productDate = "--";
-                                } else {
-                                    String[] split = productDate.split(" ");
-                                    productDate = split[0];
-                                }
-                                String batchNo = batchNosBean.getBatchNo();
-                                if (!NotNull.isNotNull(batchNo)) batchNo = "--";
-                                datas1.add(productDate + " 至 " + batchNo);
+                        datas1 = new ArrayList<>();
+                        datas1.add("");
+                        for (int i = 0; i < batchNos.size(); i++) {
+                            SearchForCode.BatchNosBean batchNosBean = batchNos.get(i);
+                            String productDate = batchNosBean.getProductDate();
+                            if (!NotNull.isNotNull(productDate)) {
+                                productDate = "--";
+                            } else {
+                                String[] split = productDate.split(" ");
+                                productDate = split[0];
                             }
-                            PopWindowUtils popWindow = PopWindowUtils.getPopWindow();
-                            popWindow.showButtonInPopwindow(CheckInventoryActivity.this, false, datas1);
-                            popWindow.setClickInListener(new PopWindowUtils.PopWindowInClickListener() {
-                                @Override
-                                public void doClick(final int potion, final TextView tvDateContent) {
-                                    if (potion == datas1.size() - 3 && isHaveOther) {//生产日期
-                                        Log.d("doClick", "------->>" + potion);
-                                        //时间选择器
-                                        TimePickerView pvTime = new TimePickerView.Builder(CheckInventoryActivity.this, new TimePickerView.OnTimeSelectListener() {
-                                            @Override
-                                            public void onTimeSelect(Date date, View v) {//选中事件回调
-                                                time1 = date.getTime();
-                                                tvDateContent.setText(getTime(date));
-                                                proDate = getTime(date);//生产日期
-                                            }
-                                        }).setLabel("", "", "", "", "", "").setSubCalSize(17).setSubmitColor(getResources().getColor(R.color.colorAccent)).setCancelColor(R.color.colorAccent).setType(new boolean[]{true, true, true, false, false, false}).isDialog(true).build();
-                                        pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
-                                        pvTime.show();
-                                    } else if (potion == datas1.size() - 2 && isHaveOther) {//有效日期
-                                        Log.d("doClick", "------->>" + potion);
-                                        TimePickerView pvTime = new TimePickerView.Builder(CheckInventoryActivity.this, new TimePickerView.OnTimeSelectListener() {
-
-
-                                            @Override
-                                            public void onTimeSelect(Date date, View v) {//选中事件回调
-                                                time2 = date.getTime();
-                                                tvDateContent.setText(getTime(date));
-                                                BatchNo = getTime(date);//有效日期
-                                            }
-                                        }).setLabel("", "", "", "", "", "").setSubCalSize(17).setSubmitColor(getResources().getColor(R.color.colorAccent)).setCancelColor(R.color.colorAccent).setType(new boolean[]{true, true, true, false, false, false}).isDialog(true).build();
-                                        pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
-                                        pvTime.show();
-                                    } else {
-                                        SearchForCode.BatchNosBean batchNosBean = batchNos.get(potion);
-                                        int stockQty = batchNosBean.getStockQty();
-                                        if (stockQty != 0) {
-                                            if (listInts.contains(potion)) {
-                                                MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "你已选择该商品");
-                                                return;
-                                            }
-                                            listInts.add(potion);
-                                            MoreAdapterModel moreAdapterModel = new MoreAdapterModel("", "", true);
-                                            moreAdapterModel.setPic1(item.getPic1());
-                                            moreAdapterModel.setStockQty(stockQty);
-                                            moreAdapterModel.setItemName(item.getItemName());
-                                            moreAdapterModel.setBatchNos(batchNosBean.getBatchNo());
-                                            addPotion += 1;
-                                            mData.add(addPotion, moreAdapterModel);
-                                            Log.d("doClick", "------->>" + mData);
-//                                        adapter.setBatchNosBean(batchNos);
-                                            OutGoodsItems outGoodsItems = new OutGoodsItems();
-                                            outGoodsItems.setItemName(batchNosBean.getItemName());
-                                            outGoodsItems.setBatchNo(batchNosBean.getBatchNo());
-                                            outGoodsItems.setImgUrl(item.getPic1());
-                                            outGoodsItems.setRemark(batchNosBean.getRemark());
-                                            outGoodsItems.setItemBarcode(batchNosBean.getBarcode());
-                                            outGoodsItems.setItemID(batchNosBean.getItemID());
-                                            outGoodsItemses.add(outGoodsItems);
-                                            adapter.notifyDataSetChanged();
-                                            MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "添加成功");
-                                        } else {
-//                                        if (NotNull.isNotNull(dialog6)) {
-//                                            dialog6.show();
-//                                            return;
-//                                        }
-//                                        dialog6 = getDialongView(linearLayout6);
-//                                        setWindowCenter(dialog6);
-                                            MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "该商品没有库存记录");
-                                        }
-                                    }
-
-
-                                }
-
-                                @Override
-                                public void clickOther(List<String> datas) {
-                                    isHaveOther = true;
-                                    datas1 = datas;
-                                }
-
-                                @Override
-                                public void clickCommit() {//底部确定按钮
-                                    LogUtils.i("", "");
-                                    if (time1 == 0) {
-                                        MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "请选择生产日期");
-                                        return;
-                                    }
-                                    if (time2 == 0) {
-                                        MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "请选择有效日期");
-                                        return;
-                                    }
-                                    if (time2 < time1) {
-                                        MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "有效日期不能小于生产日期");
-                                        return;
-                                    }
-                                    MoreAdapterModel moreAdapterModel = new MoreAdapterModel("", "", true);
-                                    moreAdapterModel.setPic1(item.getPic1());
-                                    moreAdapterModel.setStockQty(0);
-                                    moreAdapterModel.setItemName(item.getItemName());
-                                    moreAdapterModel.setBatchNos(BatchNo);
-                                    addPotion += 1;
-                                    mData.add(addPotion, moreAdapterModel);
-                                    OutGoodsItems outGoodsItems = new OutGoodsItems();
-                                    outGoodsItems.setItemName(item.getItemName());
-                                    outGoodsItems.setBatchNo(BatchNo);
-                                    outGoodsItems.setImgUrl(item.getPic1());
-                                    outGoodsItems.setRemark(item.getRemark());
-                                    outGoodsItems.setItemBarcode(item.getBarcode());
-                                    outGoodsItems.setItemID(item.getItemID());
-                                    outGoodsItems.setItemID(item.getStock());
-                                    outGoodsItemses.add(outGoodsItems);
-                                    adapter.notifyDataSetChanged();
-                                    MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "添加成功");
-                                }
-                            });
+                            String batchNo = batchNosBean.getBatchNo();
+                            if (!NotNull.isNotNull(batchNo)) batchNo = "--";
+                            datas1.add(productDate + " 至 " + batchNo);
                         }
+                        PopWindowUtils popWindow = PopWindowUtils.getPopWindow();
+                        popWindow.showButtonInPopwindow(CheckInventoryActivity.this, false, datas1);
+                        popWindow.setClickInListener(new PopWindowUtils.PopWindowInClickListener() {
+                            @Override
+                            public void doClick(final int potion, final TextView tvDateContent) {
+                                if (potion == datas1.size() - 3 && isHaveOther) {//生产日期
+                                    Log.d("doClick", "------->>" + potion);
+                                    //时间选择器
+                                    TimePickerView pvTime = new TimePickerView.Builder(CheckInventoryActivity.this, new TimePickerView.OnTimeSelectListener() {
+                                        @Override
+                                        public void onTimeSelect(Date date, View v) {//选中事件回调
+                                            time1 = date.getTime();
+                                            tvDateContent.setText(getTime(date));
+                                            proDate = getTime(date);//生产日期
+                                        }
+                                    }).setLabel("", "", "", "", "", "").setSubCalSize(17).setSubmitColor(getResources().getColor(R.color.colorAccent)).setCancelColor(R.color.colorAccent).setType(new boolean[]{true, true, true, false, false, false}).isDialog(true).build();
+                                    pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+                                    pvTime.show();
+                                } else if (potion == datas1.size() - 2 && isHaveOther) {//有效日期
+                                    Log.d("doClick", "------->>" + potion);
+                                    TimePickerView pvTime = new TimePickerView.Builder(CheckInventoryActivity.this, new TimePickerView.OnTimeSelectListener() {
+
+
+                                        @Override
+                                        public void onTimeSelect(Date date, View v) {//选中事件回调
+                                            time2 = date.getTime();
+                                            tvDateContent.setText(getTime(date));
+                                            BatchNo = getTime(date);//有效日期
+                                        }
+                                    }).setLabel("", "", "", "", "", "").setSubCalSize(17).setSubmitColor(getResources().getColor(R.color.colorAccent)).setCancelColor(R.color.colorAccent).setType(new boolean[]{true, true, true, false, false, false}).isDialog(true).build();
+                                    pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+                                    pvTime.show();
+                                } else {
+                                    SearchForCode.BatchNosBean batchNosBean = batchNos.get(potion);
+                                    int stockQty = batchNosBean.getStockQty();
+                                        if (listInts.contains(potion)) {
+                                            MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "你已选择该商品");
+                                            return;
+                                        }
+                                        listInts.add(potion);
+                                        MoreAdapterModel moreAdapterModel = new MoreAdapterModel("", "", true);
+                                        moreAdapterModel.setPic1(item.getPic1());
+                                        moreAdapterModel.setStockQty(stockQty);
+                                        moreAdapterModel.setItemName(item.getItemName());
+                                        moreAdapterModel.setBatchNos(batchNosBean.getBatchNo());
+                                        addPotion += 1;
+                                        mData.add(addPotion, moreAdapterModel);
+                                        Log.d("doClick", "------->>" + mData);
+//                                        adapter.setBatchNosBean(batchNos);
+                                        OutGoodsItems outGoodsItems = new OutGoodsItems();
+                                        outGoodsItems.setItemName(batchNosBean.getItemName());
+                                        outGoodsItems.setBatchNo(batchNosBean.getBatchNo());
+                                        outGoodsItems.setImgUrl(item.getPic1());
+                                        outGoodsItems.setRemark(batchNosBean.getRemark());
+                                        outGoodsItems.setItemBarcode(batchNosBean.getBarcode());
+                                        outGoodsItems.setItemID(batchNosBean.getItemID());
+                                        outGoodsItems.setStockQty(batchNosBean.getStockQty());
+                                        outGoodsItemses.add(outGoodsItems);
+                                        adapter.notifyDataSetChanged();
+                                        MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "添加成功");
+                                }
+                            }
+
+                            @Override
+                            public void clickOther(List<String> datas) {
+                                isHaveOther = true;
+                                datas1 = datas;
+                            }
+
+                            @Override
+                            public void clickCommit() {//底部确定按钮
+                                LogUtils.i("", "");
+                                if (time1 == 0) {
+                                    MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "请选择生产日期");
+                                    return;
+                                }
+                                if (time2 == 0) {
+                                    MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "请选择有效日期");
+                                    return;
+                                }
+                                if (time2 < time1) {
+                                    MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "有效日期不能小于生产日期");
+                                    return;
+                                }
+                                MoreAdapterModel moreAdapterModel = new MoreAdapterModel("", "", true);
+                                moreAdapterModel.setPic1(item.getPic1());
+                                moreAdapterModel.setStockQty(0);
+                                moreAdapterModel.setItemName(item.getItemName());
+                                moreAdapterModel.setBatchNos(BatchNo);
+                                addPotion += 1;
+                                mData.add(addPotion, moreAdapterModel);
+                                OutGoodsItems outGoodsItems = new OutGoodsItems();
+                                outGoodsItems.setItemName(item.getItemName());
+                                outGoodsItems.setBatchNo(BatchNo);
+                                outGoodsItems.setImgUrl(item.getPic1());
+                                outGoodsItems.setRemark(item.getRemark());
+                                outGoodsItems.setItemBarcode(item.getBarcode());
+                                outGoodsItems.setItemID(item.getItemID());
+                                outGoodsItems.setItemID(item.getStock());
+                                outGoodsItemses.add(outGoodsItems);
+                                adapter.notifyDataSetChanged();
+                                MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "添加成功");
+                            }
+                        });
+
 
                     }
                 });
@@ -569,8 +545,8 @@ public class CheckInventoryActivity extends BaseActivity {
         baseEntity = (BaseEntity<UserInfo>) FileCache.get(CheckInventoryActivity.this).getAsObject(USER_LIST);
         List<UserInfo.StoresAuthorized> storesAuthorized = baseEntity.getData().getStoresAuthorized();
         for (int i = 0; i < storesAuthorized.size(); i++) {
-            if (TextUtils.equals(stringValue,storesAuthorized.get(i).getUserName())){
-                CurrentUserId=String.valueOf(storesAuthorized.get(i).getUserId());
+            if (TextUtils.equals(stringValue, storesAuthorized.get(i).getUserName())) {
+                CurrentUserId = String.valueOf(storesAuthorized.get(i).getUserId());
             }
         }
         mData.addAll(list);
@@ -603,7 +579,7 @@ public class CheckInventoryActivity extends BaseActivity {
         JSONObject Bill = new JSONObject();
         JSONObject object1 = new JSONObject();
         if (outGoodsItemses.size() == 0) {
-            MyToast.showToastCustomerStyleText(this, "请添加出库商品");
+            MyToast.showToastCustomerStyleText(this, "请添加盘点商品");
             return;
         }
         List<EditText> editTextList = adapter.getEditTextList();
@@ -618,14 +594,12 @@ public class CheckInventoryActivity extends BaseActivity {
             for (int i = 0; i < outGoodsItemses.size(); i++) {
                 JSONObject object = new JSONObject();
                 OutGoodsItems outGoodsItems = outGoodsItemses.get(i);
-
-                object.put("StockQty", outGoodsItems.getBatchNo());
+                object.put("StockQty", outGoodsItems.getStockQty());
                 object.put("BatchNo", outGoodsItems.getBatchNo());
                 object.put("ItemID", outGoodsItems.getItemID());
                 object.put("ItemName", outGoodsItems.getItemName());
                 object.put("ItemBarcode", outGoodsItems.getItemBarcode());
                 object.put("ImgUrl", outGoodsItems.getImgUrl());
-                object.put("StockQty", outGoodsItems.getStockQty());
                 String Qty = editTextList.get(i).getText().toString();
                 if (Integer.valueOf(Qty) == 0) {
                     MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "实际盘点数量不能为0");
@@ -671,6 +645,7 @@ public class CheckInventoryActivity extends BaseActivity {
                                 MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, baseEntity.getErrormsg());
                             } else {
                                 MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "盘点成功");
+                                showActivity(CheckInventoryActivity.class);
                                 finish();
                             }
                         }

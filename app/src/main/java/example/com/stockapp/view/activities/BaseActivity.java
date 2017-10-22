@@ -76,6 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 //            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 //            window.setStatusBarColor(Color.TRANSPARENT);
 //        }
+
         setContentView(R.layout.base_content_view);
         preferences = SysSharedPreferences.getInstance(this);
         this.flbase = (FrameLayout) findViewById(R.id.fl_base_content_view);

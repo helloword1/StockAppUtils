@@ -62,8 +62,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         ll.setVisibility(View.GONE);
         tvLoginUser = (CleanableEditText) findViewById(R.id.tvLoginUser);
         tvLoginPassword = (EditText) findViewById(R.id.tvLoginPassword);
-        tvLoginUser.setText("AppTest");
-        tvLoginPassword.setText("a123456");
+//        tvLoginUser.setText("AppTest");
+//        tvLoginPassword.setText("a123456");
         tvLoginPasswordDelete = (ImageView) findViewById(R.id.tvLoginPasswordDelete);
         tvLoginUserDelete = (ImageView) findViewById(R.id.tvLoginUserDelete);
         login = (Button) findViewById(R.id.btn_confir);

@@ -34,6 +34,7 @@ import example.com.stockapp.entries.EnterGoodsBean;
 import example.com.stockapp.entries.GoodsDetails;
 import example.com.stockapp.entries.Grassify;
 import example.com.stockapp.entries.RequestParam;
+import example.com.stockapp.entries.ResultItem;
 import example.com.stockapp.entries.UserList;
 import example.com.stockapp.https.DefaultObserver;
 import example.com.stockapp.https.NetWorkUtil;
@@ -47,6 +48,7 @@ import okhttp3.RequestBody;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static example.com.stockapp.view.tools.Constant.CURRENT_USER;
 import static example.com.stockapp.view.tools.Constant.M_USER_LIST;
 
 /**
@@ -84,6 +86,7 @@ public class AddGoodsActivity extends BaseActivity {
     private AlertDialog dialog6;
     private long time1;
     private long time2;
+    private boolean in_inventory;
 
     @Override
     public int getContentView() {
@@ -103,7 +106,7 @@ public class AddGoodsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        editArrays=new EditText[6];
+        editArrays = new EditText[6];
         data = new GoodsDetails();
         data.setItemType(-1);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -127,20 +130,28 @@ public class AddGoodsActivity extends BaseActivity {
         datas.get(4).setContent("点击选择");
         datas.get(6).setContent("点击选择");
         datas.get(7).setContent("点击选择");
-        datas.get(8).setContent("点击选择");
-//首页二维码
+        String stringValue = preferences.getStringValue(CURRENT_USER);
+        datas.get(8).setContent(stringValue);
+        baseEntity = (BaseEntity<List<UserList>>) FileCache.get(AddGoodsActivity.this).getAsObject(M_USER_LIST);
+        for (int i = 0; i < baseEntity.getData().size(); i++) {
+            if (TextUtils.equals(baseEntity.getData().get(i).getUserName(), stringValue)) {
+                datas.get(8).setId(String.valueOf(baseEntity.getData().get(i).getUserID()));
+            }
+        }
+        //首页二维码
         Intent intent = getIntent();
-        if (NotNull.isNotNull(intent)&&NotNull.isNotNull(intent.getExtras())){
+        if (NotNull.isNotNull(intent) && NotNull.isNotNull(intent.getExtras())) {
             Bundle extras = intent.getExtras();
             String barcode = extras.getString("BARCODE");
-            if (NotNull.isNotNull(barcode)){
-                barCode=barcode;
+            if (NotNull.isNotNull(barcode)) {
+                barCode = barcode;
                 datas.get(2).setContent(barCode);
             }
+            in_inventory = extras.getBoolean("IN_INVENTORY", false);
+
         }
 
         mAdapter = new EnterGoodsAdapter(this, datas, true);
-        baseEntity = (BaseEntity<List<UserList>>) FileCache.get(AddGoodsActivity.this).getAsObject(M_USER_LIST);
         entergoodsrv.setAdapter(mAdapter);
         mAdapter.setoOnGetAdapterListener(new EnterGoodsAdapter.OnGetAdapterListener() {
 
@@ -149,24 +160,24 @@ public class AddGoodsActivity extends BaseActivity {
             public void getEitTextData(int position, EditText editText) {
                 Log.d("getEitTextData", "------->>" + position);
 
-                switch (position){
+                switch (position) {
                     case 0:
-                        editArrays[0]=editText;
+                        editArrays[0] = editText;
                         break;
                     case 1:
-                        editArrays[1]=editText;
+                        editArrays[1] = editText;
                         break;
                     case 2:
-                        editArrays[2]=editText;
+                        editArrays[2] = editText;
                         break;
                     case 5:
-                        editArrays[3]=editText;
+                        editArrays[3] = editText;
                         break;
                     case 9:
-                        editArrays[4]=editText;
+                        editArrays[4] = editText;
                         break;
                     case 10:
-                        editArrays[5]=editText;
+                        editArrays[5] = editText;
                         break;
                 }
 
@@ -242,8 +253,8 @@ public class AddGoodsActivity extends BaseActivity {
                         @Override
                         public void onTimeSelect(Date date, View v) {//选中事件回调
                             time2 = date.getTime();
-                            if (time2<time1){
-                                MyToast.showToastCustomerStyleText(AddGoodsActivity.this,"有效日期不能少于生产日期");
+                            if (time2 < time1) {
+                                MyToast.showToastCustomerStyleText(AddGoodsActivity.this, "有效日期不能少于生产日期");
                                 return;
                             }
                             Indate = getTime(date);//生产日期
@@ -381,7 +392,7 @@ public class AddGoodsActivity extends BaseActivity {
             object.put("Spec", Spec);
             object.put("Pic1", Pic1);
             object.put("Pic2", Pic2);
-            object.put("KeepTime", "");
+            object.put("KeepTime", "30");
             object.put("Status", "1");
             object.put("PrincipalID", PrincipalID);
             object.put("TraderName", shopAuhtor);
@@ -413,6 +424,18 @@ public class AddGoodsActivity extends BaseActivity {
                     public void onNext(BaseEntity<Integer> response) {
                         LogUtils.d("onNext", "------->>" + response);
                         if (NotNull.isNotNull(response) && response.getErrorcode() == 0) {
+                            if (in_inventory) {//表示入库进来，返回要新增一条
+                                Intent intent = new Intent();
+                                ResultItem resultItem = new ResultItem();
+                                resultItem.setPic1(Pic1);
+                                resultItem.setItemName(name);
+                                resultItem.setBatchNo(Indate);
+                                resultItem.setRemark(textMore);
+                                resultItem.setBarcode(barCode);
+                                resultItem.setItemID(response.getData());
+                                intent.putExtra("RESULT_ITEM", resultItem);
+                                setResult(RESULT_OK, intent);
+                            }
                             MyToast.showToastCustomerStyleText(AddGoodsActivity.this, "新增成功");
                             finish();
                         }

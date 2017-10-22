@@ -176,8 +176,14 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 });
 
     }
+
     @Override
-    protected void initData() {
+    protected void onResume() {
+        super.onResume();
+        initMyData();
+    }
+
+    protected void initMyData() {
         titleRight.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         datas = new ArrayList<>();

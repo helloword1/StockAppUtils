@@ -30,7 +30,6 @@ import example.com.stockapp.view.tools.Constant;
 public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<MoreAdapterModel> data;
-    private int sum;
     private AdapterListener listener;
     private List<SearchForCode.BatchNosBean> batchNosBean;
     private int index = 0;
@@ -61,7 +60,7 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if (viewType == 2) {
             return new TopViewHolder(LayoutInflater.from(context).inflate(R.layout.item_section_content, null));
         } else if (viewType == 4) {
-            return new AddViewHolder(LayoutInflater.from(context).inflate(R.layout.item_section_add, null));
+            return new AddViewHolder(LayoutInflater.from(context).inflate(R.layout.item_section_add, parent,false));
         } else {
             return new BottomViewHolder(LayoutInflater.from(context).inflate(R.layout.def_section_center, null));
         }
@@ -70,7 +69,7 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        MoreAdapterModel mySection = data.get(position);
+        final MoreAdapterModel mySection = data.get(position);
         if (position == 3) {
 
         } else if (position == data.size() - 1) {//添加商品
@@ -79,8 +78,6 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onClick(View v) {
                     listener.setClick();
-//                        initpermission();
-//                        showActivityForResult(CaptureActivity.class,111);
                 }
             });
         } else if (position < 3) {
@@ -140,22 +137,26 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             bottomViewHolder.ivDelive.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int  sum = mySection.getSum();
                     if (sum <= 0) {
                         sum = 0;
                     } else {
                         sum--;
                     }
+                    mySection.setSum(sum);
                     bottomViewHolder.tvNumCount.setText(String.valueOf(sum));
                 }
             });
             bottomViewHolder.ivAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                   int sum = mySection.getSum();
                     if (sum >= 999) {
                         sum = 999;
                     } else {
                         sum++;
                     }
+                    mySection.setSum(sum);
                     bottomViewHolder.tvNumCount.setText(String.valueOf(sum));
                 }
             });

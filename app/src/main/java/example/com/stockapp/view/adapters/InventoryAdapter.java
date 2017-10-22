@@ -52,8 +52,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         intenvoryViewHolder.tvadvertoraltitle.setText(dataSetBean.getItemName());
         intenvoryViewHolder.tvadvertoralauthor.setText("负责人：" + dataSetBean.getPrincipalName());
         double aDouble = Double.valueOf(dataSetBean.getQty());
-        intenvoryViewHolder.tvadvertoralnum.setText("库存量：" + (int) aDouble);
-        intenvoryViewHolder.tvAdvertoralShop.setText("所属仓库：" + dataSetBean.getStoreName());
+        intenvoryViewHolder.tvadvertoralnum.setText("库存数量：" + (int) aDouble);
         intenvoryViewHolder.tvAdvertoralShop.setText("所属仓库：" + dataSetBean.getStoreName());
         String productDate = dataSetBean.getProductDate();
         if (NotNull.isNotNull(productDate)) {
@@ -65,9 +64,17 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
         String batchNo = dataSetBean.getBatchNo();
         if (NotNull.isNotNull(batchNo)) {
-            intenvoryViewHolder.endDate.setText("有效日期：" + batchNo);
+            intenvoryViewHolder.endDate.setText("有效期至：" + batchNo);
         } else {
-            intenvoryViewHolder.endDate.setText("有效日期：");
+            intenvoryViewHolder.endDate.setText("有效期至：--");
+        }
+        int itemType = dataSetBean.getItemType();
+        if (itemType==0){
+            intenvoryViewHolder.tvadvertoraltype.setText("食");
+            intenvoryViewHolder.tvadvertoraltype.setBackgroundResource(R.drawable.type_bg_green);
+        }else if (itemType==1){
+            intenvoryViewHolder.tvadvertoraltype.setText("药");
+            intenvoryViewHolder.tvadvertoraltype.setBackgroundResource(R.drawable.type_bg);
         }
         Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + dataSetBean.getPic2()).placeholder(R.mipmap.advertol_icon).into(intenvoryViewHolder.ivadvertoralicon);
         intenvoryViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +98,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView tvAdvertoralShop;
         private TextView proDate;
         private TextView endDate;
+        private TextView tvadvertoraltype;
         private android.widget.RelativeLayout GoodOne;
         private View viewSpace;
         private CardView cardView;
@@ -102,6 +110,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             this.tvadvertoralnum = (TextView) view.findViewById(R.id.tv_advertoral_num);
             this.tvAdvertoralShop = (TextView) view.findViewById(R.id.tv_advertoral_shop);
             this.tvadvertoraltitle = (TextView) view.findViewById(R.id.tv_advertoral_title);
+            this.tvadvertoraltype = (TextView) view.findViewById(R.id.tv_advertoral_type);
             this.proDate = (TextView) view.findViewById(R.id.pro_date);
             this.endDate = (TextView) view.findViewById(R.id.end_date);
             this.ivadvertoralicon = (ImageView) view.findViewById(R.id.iv_advertoral_icon);

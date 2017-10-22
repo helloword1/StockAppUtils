@@ -6,8 +6,6 @@ import android.app.Application;
 import java.util.LinkedList;
 import java.util.List;
 
-import example.com.stockapp.view.activities.LoginActivity;
-
 /**
  * Created by Administrator on 2017/10/15.
  */
@@ -36,11 +34,11 @@ public class SAApplication extends Application {
 
     public void exit() {
         for (Activity activity : activityList) {
-            if (activity instanceof LoginActivity)
-                continue;
-            else {
+//            if (activity instanceof LoginActivity)
+//                continue;
+//            else {
                 activity.finish();
-            }
+//            }
         }
     }
 }

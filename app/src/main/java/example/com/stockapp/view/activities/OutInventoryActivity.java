@@ -327,6 +327,7 @@ public class OutInventoryActivity extends BaseActivity {
 //                            setWindowCenter(dialog6);
                             MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "该商品没有库存记录");
                         }
+                        listInts.clear();
                         final SearchForCode.ItemBean item = searchFotCode.getItem();
                         if (!NotNull.isNotNull(item)) {
 //                            if (NotNull.isNotNull(dialog6)) {
@@ -583,6 +584,7 @@ public class OutInventoryActivity extends BaseActivity {
                                 MyToast.showToastCustomerStyleText(OutInventoryActivity.this, baseEntity.getErrormsg());
                             } else {
                                 MyToast.showToastCustomerStyleText(OutInventoryActivity.this, "出库成功");
+                                showActivity(OutInventoryActivity.class);
                                 finish();
                             }
                         }

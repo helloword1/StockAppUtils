@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:lineSpacingExtra="@dimen/x9"
-                android:text="商品编号：20170929001\n仓库：总部库\n生产日期：2017-09-14\n负责人：李某某"
+                android:text="商品编号：20170929001\n仓库：总部库\n生产日期：2017-09-14"
                 android:textColor="@color/textHome"
                 android:textSize="12sp" />
 
@@ -86,7 +86,16 @@
                 android:textColor="@color/textHome"
                 android:textSize="12sp" />
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/tvitemCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:lineSpacingExtra="@dimen/x9"
+            android:text="111"
+            android:layout_marginTop="@dimen/x5"
+            android:textColor="@color/textHome"
+            android:textSize="12sp" />
         <Button
             android:id="@+id/tvChangeBtn"
             android:layout_width="match_parent"

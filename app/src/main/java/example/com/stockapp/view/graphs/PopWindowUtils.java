@@ -58,7 +58,9 @@ public class PopWindowUtils {
 
     public interface PopWindowInClickListener {
         void doClick(int position, TextView tvDateContent);
+
         void clickOther(List<String> datas);
+
         void clickCommit();
     }
 
@@ -163,7 +165,7 @@ public class PopWindowUtils {
 
             @Override
             public void setChoice(int position, TextView tvDateContent) {
-                clickInListener.doClick(position,tvDateContent);
+                clickInListener.doClick(position, tvDateContent);
             }
 
             @Override
@@ -235,6 +237,7 @@ public class PopWindowUtils {
         Button tvChangeBtn = (Button) popView.findViewById(R.id.tvChangeBtn);
         TextView tvChangeRight = (TextView) popView.findViewById(R.id.tvChangeRight);
         TextView tvChangeLeft = (TextView) popView.findViewById(R.id.tvChangeLeft);
+        TextView tvitemCode = (TextView) popView.findViewById(R.id.tvitemCode);
         TextView tvChangeName = (TextView) popView.findViewById(R.id.tvChangeName);
         ImageView ivChangeName = (ImageView) popView.findViewById(R.id.ivChangeName);
 
@@ -245,23 +248,30 @@ public class PopWindowUtils {
         tvChangeName.setText(data.getItemName());
 
         String productDate = data.getProductDate();
-        if (!NotNull.isNotNull(productDate))productDate="--";
+        if (!NotNull.isNotNull(productDate)) productDate = "--";
+        else{
+            if (productDate.contains(" ")){
+                String[] split = productDate.split(" ");
+                productDate=split[0];
+            }
+        }
+
         String storeName = data.getStoreName();
-        if (!NotNull.isNotNull(storeName))storeName="";
+        if (!NotNull.isNotNull(storeName)) storeName = "";
         String principalName = data.getPrincipalName();
-        if (!NotNull.isNotNull(principalName))principalName="";
+        if (!NotNull.isNotNull(principalName)) principalName = "";
         tvChangeLeft.setText
-                (String.format("商品编号：%s\n仓库：%s\n生产日期：%s\n负责人：%s", "" + data.getItemCode()
-                        , storeName, productDate, principalName));
+                (String.format("负责人：%s\n仓库名：%s\n生产日期：%s", principalName
+                        , storeName, productDate));
 
-
+        tvitemCode.setText("商品编码："+data.getItemCode());
         int qty = data.getQty();
-        String keepTime = data.getKeepTime();
-        if (!NotNull.isNotNull(keepTime))keepTime="--";
+        String keepTime = data.getBatchNo();
+        if (!NotNull.isNotNull(keepTime)) keepTime = "--";
         String barcode = data.getBarcode();
-        if (!NotNull.isNotNull(barcode))barcode="";
+        if (!NotNull.isNotNull(barcode)) barcode = "";
         tvChangeRight.setText
-                (String.format("条形码：%s\n仓库量：%s\n有效日期：%s", barcode
+                (String.format("条形码：%s\n库存量：%s\n有效期至：%s", barcode
                         , qty, keepTime));
         ImageView tvChangeDelete = (ImageView) popView.findViewById(R.id.tvChangeDelete);
 

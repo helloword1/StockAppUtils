@@ -6,7 +6,6 @@ import android.content.Intent;
 import example.com.stockapp.entries.BaseEntity;
 import example.com.stockapp.view.activities.BaseActivity;
 import example.com.stockapp.view.activities.LoginActivity;
-import example.com.stockapp.view.graphs.MyToast;
 import rx.Observer;
 
 import static example.com.stockapp.view.tools.Constant.IS_LOGIN;
@@ -29,7 +28,7 @@ public abstract class DefaultObserver<T> implements Observer<T> {
         if (((BaseEntity) response).getErrorcode() == 401) {
             baseBctivity.preferences.putValue(IS_LOGIN, false);
             baseBctivity.showActivityByFlags(LoginActivity.class, Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            MyToast.showToastCustomerStyleText(baseBctivity, "登录过期");
+//            MyToast.showToastCustomerStyleText(baseBctivity, "登录过期");
         }
         baseBctivity.dismissDialog();
     }

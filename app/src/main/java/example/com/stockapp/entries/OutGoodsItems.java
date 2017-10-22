@@ -24,15 +24,15 @@ public class OutGoodsItems {
     private double Qty;
     private String Remark;
 
-    public double getStockQty() {
+    public int getStockQty() {
         return StockQty;
     }
 
-    public void setStockQty(double stockQty) {
+    public void setStockQty(int stockQty) {
         StockQty = stockQty;
     }
 
-    private double StockQty;
+    private int StockQty;
 
     public String getBatchNo() {
         return BatchNo;

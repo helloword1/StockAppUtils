@@ -56,6 +56,16 @@ public class MoreAdapterModel {
 
     private int StockQty;
 
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
+
+    private int sum;
+
     public int getStockQty() {
         return StockQty;
     }
