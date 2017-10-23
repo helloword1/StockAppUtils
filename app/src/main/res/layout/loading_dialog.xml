@@ -9,7 +9,11 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/loading_layout_bg"
+        android:background="@drawable/loading_bg"
+        android:paddingLeft="@dimen/x12"
+        android:paddingRight="@dimen/x12"
+        android:paddingTop="@dimen/x9"
+        android:paddingBottom="@dimen/x9"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -22,13 +26,13 @@
 
         <TextView
             android:id="@+id/tipTextView"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="@dimen/x8"
             android:text="@string/loading"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
 </RelativeLayout>

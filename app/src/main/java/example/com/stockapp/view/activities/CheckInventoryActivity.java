@@ -165,8 +165,8 @@ public class CheckInventoryActivity extends BaseActivity {
             @Override
             public void onItemClick(View itemView, int position) {
                 if (position == 6) {
-                    initpermission();
-                    showActivityForResult(CaptureActivity.class, 111);
+//                    initpermission();
+//                    showActivityForResult(CaptureActivity.class, 111);
                 }
             }
         });
@@ -240,7 +240,7 @@ public class CheckInventoryActivity extends BaseActivity {
                     if (datas_M.size() == 0) {
                         for (int i = 0; i < storesAuthorized.size(); i++) {
                             UserList authorized = storesAuthorized.get(i);
-                            DialogBean bean = new DialogBean(authorized.getUserName(), "" + authorized.getUserCode());
+                            DialogBean bean = new DialogBean(authorized.getUserName(), "" + authorized.getUserID());
                             if (TextUtils.equals(authorized.getUserName(), preferences.getStringValue(CURRENT_USER))) {
                                 bean.setSelct(true);
                             }
@@ -388,31 +388,35 @@ public class CheckInventoryActivity extends BaseActivity {
                                 } else {
                                     SearchForCode.BatchNosBean batchNosBean = batchNos.get(potion);
                                     int stockQty = batchNosBean.getStockQty();
-                                        if (listInts.contains(potion)) {
-                                            MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "你已选择该商品");
-                                            return;
-                                        }
-                                        listInts.add(potion);
-                                        MoreAdapterModel moreAdapterModel = new MoreAdapterModel("", "", true);
-                                        moreAdapterModel.setPic1(item.getPic1());
-                                        moreAdapterModel.setStockQty(stockQty);
-                                        moreAdapterModel.setItemName(item.getItemName());
-                                        moreAdapterModel.setBatchNos(batchNosBean.getBatchNo());
-                                        addPotion += 1;
-                                        mData.add(addPotion, moreAdapterModel);
-                                        Log.d("doClick", "------->>" + mData);
+                                    if (listInts.contains(potion)) {
+                                        MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "你已选择该商品");
+                                        return;
+                                    }
+                                    listInts.add(potion);
+                                    List<EditText> editTextList = adapter.getEditTextList();
+                                    if (NotNull.isNotNull(editTextList)) {
+                                        mData.get(addPotion).setSum(Integer.valueOf(editTextList.get(addPotion - 4).getText().toString()));
+                                    }
+                                    MoreAdapterModel moreAdapterModel = new MoreAdapterModel("", "", true);
+                                    moreAdapterModel.setPic1(item.getPic1());
+                                    moreAdapterModel.setStockQty(stockQty);
+                                    moreAdapterModel.setItemName(item.getItemName());
+                                    moreAdapterModel.setBatchNos(batchNosBean.getBatchNo());
+                                    addPotion += 1;
+                                    mData.add(addPotion, moreAdapterModel);
+                                    Log.d("doClick", "------->>" + mData);
 //                                        adapter.setBatchNosBean(batchNos);
-                                        OutGoodsItems outGoodsItems = new OutGoodsItems();
-                                        outGoodsItems.setItemName(batchNosBean.getItemName());
-                                        outGoodsItems.setBatchNo(batchNosBean.getBatchNo());
-                                        outGoodsItems.setImgUrl(item.getPic1());
-                                        outGoodsItems.setRemark(batchNosBean.getRemark());
-                                        outGoodsItems.setItemBarcode(batchNosBean.getBarcode());
-                                        outGoodsItems.setItemID(batchNosBean.getItemID());
-                                        outGoodsItems.setStockQty(batchNosBean.getStockQty());
-                                        outGoodsItemses.add(outGoodsItems);
-                                        adapter.notifyDataSetChanged();
-                                        MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "添加成功");
+                                    OutGoodsItems outGoodsItems = new OutGoodsItems();
+                                    outGoodsItems.setItemName(batchNosBean.getItemName());
+                                    outGoodsItems.setBatchNo(batchNosBean.getBatchNo());
+                                    outGoodsItems.setImgUrl(item.getPic1());
+                                    outGoodsItems.setRemark(batchNosBean.getRemark());
+                                    outGoodsItems.setItemBarcode(batchNosBean.getBarcode());
+                                    outGoodsItems.setItemID(batchNosBean.getItemID());
+                                    outGoodsItems.setStockQty(batchNosBean.getStockQty());
+                                    outGoodsItemses.add(outGoodsItems);
+                                    adapter.notifyDataSetChanged();
+                                    MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "添加成功");
                                 }
                             }
 
@@ -436,6 +440,10 @@ public class CheckInventoryActivity extends BaseActivity {
                                 if (time2 < time1) {
                                     MyToast.showToastCustomerStyleText(CheckInventoryActivity.this, "有效日期不能小于生产日期");
                                     return;
+                                }
+                                List<EditText> editTextList = adapter.getEditTextList();
+                                if (NotNull.isNotNull(editTextList)) {
+                                    mData.get(addPotion).setSum(Integer.valueOf(editTextList.get(addPotion - 4).getText().toString()));
                                 }
                                 MoreAdapterModel moreAdapterModel = new MoreAdapterModel("", "", true);
                                 moreAdapterModel.setPic1(item.getPic1());
