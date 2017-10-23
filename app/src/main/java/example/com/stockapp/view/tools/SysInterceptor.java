@@ -20,11 +20,15 @@ import static example.com.stockapp.view.tools.Constant.TOKEN;
  */
 
 public class SysInterceptor implements Interceptor {
-    private  Context context;
+    private Context context;
 
     public SysInterceptor(Context context) {
-       this.context=context;
+        this.context = context;
         ((BaseActivity) context).showProgressDialog();
+    }
+
+    public SysInterceptor(Context context, int in) {
+        this.context = context;
     }
 
     @Override
@@ -32,9 +36,9 @@ public class SysInterceptor implements Interceptor {
         Request request = chain.request();
         HttpUrl httpUrl = request.url().newBuilder() // add common parameter
                 .build();
-        String token= ((BaseActivity) context).preferences.getStringValue(TOKEN);
-        if (!NotNull.isNotNull(token)){
-            token="";
+        String token = ((BaseActivity) context).preferences.getStringValue(TOKEN);
+        if (!NotNull.isNotNull(token)) {
+            token = "";
         }
         String value = token + "|" + getSign() + "|" + getTime();
         Log.d("intercept", "------->>" + value);

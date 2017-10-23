@@ -56,7 +56,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         double aDouble = Double.valueOf(dataSetBean.getQty());
         intenvoryViewHolder.tvhomenum.setText("有效期至：" + dataSetBean.getBatchNo());
         intenvoryViewHolder.tvhomeshop.setText("库存数量：" + (int) aDouble);
-        Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + dataSetBean.getPic2()).placeholder(R.mipmap.advertol_icon).into(intenvoryViewHolder.ivhomeicon);
+        Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + dataSetBean.getPic2()).placeholder(R.mipmap.empty_icon).into(intenvoryViewHolder.ivhomeicon);
         intenvoryViewHolder.GoodOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

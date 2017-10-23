@@ -128,12 +128,12 @@ public class OutInventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else {
             final BottomViewHolder bottomViewHolder = (BottomViewHolder) holder;
             bottomViewHolder.title.setText(mySection.getItemName());
-            Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + mySection.getPic1()).placeholder(R.mipmap.advertol_icon).into(bottomViewHolder.ivIcon);
+            Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + mySection.getPic1()).placeholder(R.mipmap.empty_icon).into(bottomViewHolder.ivIcon);
             bottomViewHolder.date.setText("库存量：" + mySection.getStockQty());
             bottomViewHolder.num.setText("有效期：" + mySection.getBatchNos());
             if (!editTextList.contains(bottomViewHolder.tvNumCount))
                 editTextList.add(bottomViewHolder.tvNumCount);
-            bottomViewHolder.tvNumCount.setText("0");
+            bottomViewHolder.tvNumCount.setText(String.valueOf(mySection.getSum()));
             bottomViewHolder.ivDelive.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -243,7 +243,7 @@ public class PopWindowUtils {
 
         if (NotNull.isNotNull(data.getPic1()))
             Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + data.getPic1())
-                    .placeholder(R.mipmap.good_details).into(ivChangeName);
+                    .placeholder(R.mipmap.empty_icon).into(ivChangeName);
 
         tvChangeName.setText(data.getItemName());
 

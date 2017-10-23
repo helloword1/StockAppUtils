@@ -76,7 +76,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             intenvoryViewHolder.tvadvertoraltype.setText("药");
             intenvoryViewHolder.tvadvertoraltype.setBackgroundResource(R.drawable.type_bg);
         }
-        Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + dataSetBean.getPic2()).placeholder(R.mipmap.advertol_icon).into(intenvoryViewHolder.ivadvertoralicon);
+        Glide.with(context).load(Constant.BASE_IMG_HEAD_URL + dataSetBean.getPic2()).placeholder(R.mipmap.empty_icon).into(intenvoryViewHolder.ivadvertoralicon);
         intenvoryViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

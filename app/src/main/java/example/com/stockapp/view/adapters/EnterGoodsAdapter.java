@@ -81,7 +81,7 @@ public class EnterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 picViewHolder.btn_confir.setVisibility(View.GONE);
                 picViewHolder.tvAddPic.setVisibility(View.VISIBLE);
                 if (NotNull.isNotNull(datas.get(position).getPic2Url()))
-                Glide.with(context).load(Constant.BASE_IMG_HEAD_URL+datas.get(position).getPic2Url()).into(picViewHolder.ivAddPic);
+                Glide.with(context).load(Constant.BASE_IMG_HEAD_URL+datas.get(position).getPic2Url()).placeholder(R.mipmap.empty_icon).into(picViewHolder.ivAddPic);
                 picViewHolder.tvAddPic.setVisibility(View.GONE);
                 picViewHolder.ivAddPic.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -102,7 +102,7 @@ public class EnterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 picViewHolder.viewBg.setVisibility(View.GONE);
                 picViewHolder.btn_confir.setVisibility(View.GONE);
                 picViewHolder.tvAddPic.setVisibility(View.VISIBLE);
-                Glide.with(context).load(Constant.BASE_IMG_HEAD_URL+datas.get(position).getPic2Url()).into(picViewHolder.ivAddPic);
+                Glide.with(context).load(Constant.BASE_IMG_HEAD_URL+datas.get(position).getPic2Url()).placeholder(R.mipmap.empty_icon).into(picViewHolder.ivAddPic);
                 picViewHolder.tvAddPic.setVisibility(View.GONE);
                 picViewHolder.ivAddPic.setOnClickListener(new View.OnClickListener() {
                     @Override
